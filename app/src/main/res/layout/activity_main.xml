@@ -19,11 +19,11 @@
             android:textColor="#FFF"
             android:textAppearance="?android:attr/textAppearanceLarge"
             />
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="10px"
-            android:background="@color/light_blue" />
+            android:layout_height="@dimen/line_height"
+            android:background="@color/light_blue"
+            android:layout_marginBottom="@dimen/main_activity_bottom_margin"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -39,7 +39,8 @@
             android:id="@+id/txtInventoryState"
             android:textColor="@color/flashy"
             android:text="Avancement de votre inventaire : xx/yy"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginBottom="@dimen/main_activity_bottom_margin" />
 
         <TextView
             android:layout_width="match_parent"
@@ -51,8 +52,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10px"
-            android:background="@color/light_blue" />
+            android:layout_height="@dimen/line_height"
+            android:background="@color/light_blue"
+            android:layout_marginBottom="@dimen/main_activity_bottom_margin" />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -64,8 +67,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10px"
-            android:background="@color/light_blue" />
+            android:layout_height="@dimen/line_height"
+            android:background="@color/light_blue"
+            android:layout_marginBottom="@dimen/main_activity_bottom_margin" />
 
         <TextView
             android:layout_width="match_parent"
@@ -77,8 +81,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10px"
-            android:background="@color/light_blue" />
+            android:layout_height="@dimen/line_height"
+            android:background="@color/light_blue"
+            android:layout_marginBottom="@dimen/main_activity_bottom_margin" />
 
         <Button
             android:layout_width="wrap_content"
@@ -88,18 +93,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="#fff"
             android:background="#aaa"
-            android:layout_margin="20px"/>
-
-
-
-
-
-
-
-
-
-
-
+            android:layout_margin="@dimen/main_activity_margin"/>
     </LinearLayout>
 
 </RelativeLayout>
