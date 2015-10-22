@@ -8,4 +8,8 @@
     <string name="category_access">Accès par catégorie</string>
     <string name="warehouse_access">Accès par magasin</string>
     <string name="start_inventory">  Démarrer inventaire  </string>
+    <string name="title_activity_popup_start_inventory">PopupStartInventory</string>
+    <string name="title_activity_activity_popup_ok_cancel">ActivityPopupOkCancel</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
 </resources>
