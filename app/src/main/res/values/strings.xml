@@ -12,4 +12,5 @@
     <string name="title_activity_activity_popup_ok_cancel">ActivityPopupOkCancel</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
+    <string name="title_activity_my_products">MyProducts</string>
 </resources>

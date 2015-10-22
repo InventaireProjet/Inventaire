@@ -20,6 +20,10 @@
             android:name=".ActivityPopupOkCancel"
             android:label="@string/title_activity_activity_popup_ok_cancel" >
         </activity>
+        <activity
+            android:name=".MyProducts"
+            android:label="@string/title_activity_my_products" >
+        </activity>
     </application>
 
 </manifest>
