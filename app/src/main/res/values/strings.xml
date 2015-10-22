@@ -13,4 +13,6 @@
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
     <string name="title_activity_my_products">MyProducts</string>
+    <string name="my_products">Mes produits</string>
+    <string name="modify">Modifier</string>
 </resources>

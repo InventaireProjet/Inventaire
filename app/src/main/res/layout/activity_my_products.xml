@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -6,9 +6,65 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.androidprojects.inventaireii.MyProducts">
 
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTitle"
+            android:text="@string/my_products"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <include layout="@layout/blue_line" />
+
+        <!--GridLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+
+        </GridLayout-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/layoutStock">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@color/indicator_doing"
+                android:id="@+id/squareTotalStock" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtStock"
+                android:text="Stock 00000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtStockValue"
+                android:text="Valeur du Stock 840 000 CHF"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonModify"
+                android:text="@string/modify"/>
+
+        </LinearLayout>
 
 
-</LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

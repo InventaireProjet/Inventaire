@@ -22,7 +22,8 @@
         </activity>
         <activity
             android:name=".MyProducts"
-            android:label="@string/title_activity_my_products" >
+            android:label="@string/title_activity_my_products"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 

@@ -1,5 +1,6 @@
 package com.androidprojects.inventaireii;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     // Declarations
     TextView txtInventoryRunning;
     TextView txtInventoryState;
+    TextView txtProductAccess;
     PopupWindow popupWindow;
     Button buttonStartInventory;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Display of Inventory-depending fields
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
         txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
         if (inventoryIsRunning) {
@@ -40,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
             txtInventoryRunning.setVisibility(View.INVISIBLE);
             txtInventoryState.setVisibility(View.INVISIBLE);
         }
+
+        // Access by product
+        txtProductAccess = (TextView) findViewById(R.id.txtProductAccess);
+        txtProductAccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MyProducts.class);
+                startActivity(intent);
+            }
+        });
 
         // Pop-up Window on click on 'New Inventory'
         buttonStartInventory = (Button) findViewById(R.id.buttonStartInventory);
