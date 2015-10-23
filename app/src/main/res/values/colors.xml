@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="text_color">#fff</color>
+    <color name="back_color">#000</color>
+    <color name="button_text">#fff</color>
+    <color name="button_background">#aaa</color>
     <color name="flashy">#ff6019</color>
     <color name="light_blue">#01B0F0</color>
     <color name="indicator_doing">#ff6019</color>
+    <color name="indicator_to_do">#f0371a</color>
+    <color name="indicator_done">#00f000</color>
 </resources>
