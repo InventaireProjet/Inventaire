@@ -2,6 +2,7 @@ package com.androidprojects.inventaireii;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,12 @@ import java.util.List;
 
 public class MyProducts extends AppCompatActivity {
     // Données provisoires
-    private List<String> list = new ArrayList<String>();
+    private List<String> squareList = new ArrayList<String>(),
+            artNbList = new ArrayList<String>(),
+            nameList = new ArrayList<String>(),
+            categoryList = new ArrayList<String>(),
+            quantityList = new ArrayList<String>(),
+            priceList = new ArrayList<String>() ;
 
 
     @Override
@@ -26,20 +32,24 @@ public class MyProducts extends AppCompatActivity {
         setContentView(R.layout.activity_my_products);
 
         // Créer les données provisoires
-        list.add("todo");
-        list.add("1235-1");
-        list.add("Sonotone Arfid");
-        list.add("Médical");
-        list.add("200");
-        list.add("350 CHF");
-        list.add("done");
-        list.add("46454-9");
-        list.add("Balle");
-        list.add("Jeux");
-        list.add("3500");
-        list.add("22 CHF");
+        squareList.add("todo");
+        artNbList.add("1235-1");
+        nameList.add("Sonotone Arfid");
+        categoryList.add("Médical");
+        quantityList.add("200");
+        priceList.add("350 CHF");
+        squareList.add("done");
+        artNbList.add("46454-9");
+        nameList.add("Balle");
+        categoryList.add("Jeux");
+        quantityList.add("3500");
+        priceList.add("22 CHF");
 
+        // Fill the ListView
+        ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
+        lvProducts.setAdapter(new ProductsAdapter());
 
+        /*
         // Fill the ListView : without ArrayAdapter, while the column
         // width is not allways the same and the first object
         // in each line is a square
@@ -66,7 +76,7 @@ public class MyProducts extends AppCompatActivity {
 
         }
 
-
+        */
 
         /*ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
@@ -78,10 +88,10 @@ public class MyProducts extends AppCompatActivity {
 
     private int giveColor(String s) {
         if(s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do, getTheme());
+            return getResources().getColor(R.color.indicator_to_do);
         if(s.equals("done"))
-            return getResources().getColor(R.color.indicator_done, getTheme());
-        return getResources().getColor(R.color.indicator_doing, getTheme());
+            return getResources().getColor(R.color.indicator_done);
+        return getResources().getColor(R.color.indicator_doing);
     }
 
     @Override
@@ -104,5 +114,86 @@ public class MyProducts extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ProductsAdapter extends ArrayAdapter {
+        // Ref: http://stackoverflow.com/questions/11281952/listview-with-customized-row-layout-android
+        public ProductsAdapter() {
+            super(MyProducts.this, R.layout.product_row);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+            LayoutInflater inflater = getLayoutInflater();
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.product_row, null, false);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            }
+            else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            holder.getSquare().setBackgroundColor(giveColor(squareList.get(position)));
+            holder.getNo_art().setText(artNbList.get(position));
+            holder.getName().setText(nameList.get(position));
+            holder.getCategory().setText("fake"); // categoryList.get(position)
+            holder.getQuantity().setText(quantityList.get(position));
+            holder.getPrice().setText(priceList.get(position));
+            return convertView;
+        }
+    }
+
+    public class ViewHolder {
+        private View row;
+        private View square;
+        private TextView no_art, name, category, quantity, price;
+
+        public ViewHolder(View row) {
+            this.row = row;
+        }
+
+        public View getSquare() {
+            if (this.square == null) {
+                this.square = (View) row.findViewById(R.id.square);
+            }
+            return this.square;
+        }
+
+        public TextView getNo_art() {
+            if (this.no_art == null) {
+                this.no_art = (TextView) row.findViewById(R.id.no_art);
+            }
+            return this.no_art;
+        }
+
+        public TextView getName() {
+            if (this.name == null) {
+                this.name = (TextView) row.findViewById(R.id.name);
+            }
+            return this.name;
+        }
+
+        public TextView getCategory() {
+            if (this.category == null) {
+                this.category = (TextView) row.findViewById(R.id.category);
+            }
+            return this.category;
+        }
+
+        public TextView getQuantity() {
+            if (this.quantity == null) {
+                this.quantity = (TextView) row.findViewById(R.id.quantity);
+            }
+            return this.quantity;
+        }
+
+        public TextView getPrice() {
+            if (this.price == null) {
+                this.price = (TextView) row.findViewById(R.id.price);
+            }
+            return this.price;
+        }
     }
 }
