@@ -15,4 +15,8 @@
     <string name="title_activity_my_products">MyProducts</string>
     <string name="my_products">Mes produits</string>
     <string name="modify">Modifier</string>
+    <string name="my_categories">Mes catégories</string>
+    <string name="alphabetical_sort"><![CDATA[a>z]]></string>
+    <string name="inventory_state">Etat d\'inventaire</string>
+    <string name="title_activity_my_categories">Mes catégories</string>
 </resources>

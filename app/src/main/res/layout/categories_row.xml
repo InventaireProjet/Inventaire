@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/interCategories_bottomMargin"
+    android:background="@color/back_color">
+
+    <View
+        android:layout_width="@dimen/square_width"
+        android:layout_height="@dimen/square_height"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="@dimen/interCategories_bottomMargin"
+        android:id="@+id/square"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:id="@+id/name"
+        android:textColor="@color/text_color"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:id="@+id/inventoryState"
+        android:textColor="@color/text_color"/>
+
+
+</LinearLayout>

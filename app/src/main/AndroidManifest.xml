@@ -25,6 +25,10 @@
             android:label="@string/title_activity_my_products"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".MyCategories"
+            android:label="@string/title_activity_my_categories">
+        </activity>
     </application>
 
 </manifest>

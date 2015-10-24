@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtInventoryRunning;
     TextView txtInventoryState;
     TextView txtProductAccess;
+    TextView txtCategoryAccess;
     PopupWindow popupWindow;
     Button buttonStartInventory;
 
@@ -50,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), MyProducts.class);
+                startActivity(intent);
+            }
+        });
+
+        // Access by category
+        txtCategoryAccess = (TextView) findViewById(R.id.txtCategoryAccess);
+        txtCategoryAccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MyCategories.class);
                 startActivity(intent);
             }
         });
