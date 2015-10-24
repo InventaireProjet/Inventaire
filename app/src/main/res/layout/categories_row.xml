@@ -24,6 +24,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:layout_weight="10"
         android:id="@+id/inventoryState"
         android:textColor="@color/text_color"/>

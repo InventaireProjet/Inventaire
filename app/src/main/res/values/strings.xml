@@ -19,4 +19,7 @@
     <string name="alphabetical_sort"><![CDATA[a>z]]></string>
     <string name="inventory_state">Etat d\'inventaire</string>
     <string name="title_activity_my_categories">Mes catégories</string>
+    <string name="add">+</string>
+    <string name="validate">valider</string>
+    <string name="category_popup_title">Ajout d\'une catégorie</string>
 </resources>

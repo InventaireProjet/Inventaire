@@ -10,18 +10,31 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
-
-
-        <TextView
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtTitle"
-            android:text="@string/my_categories"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/text_color"/>
+            android:id="@+id/subtitle_layout"
+            android:baselineAligned="false">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTitle"
+                android:text="@string/my_categories"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/text_color"/>
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_gravity="center"
+                android:background="@drawable/add"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
         <include layout="@layout/blue_line" />
 
 
@@ -32,8 +45,8 @@
             android:id="@+id/layoutCategories">
 
             <View
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/square_width"
+                android:layout_height="@dimen/square_height"
                 android:layout_marginRight="20dp"
                 android:background="@color/indicator_neutral"
                 android:id="@+id/squareSortbyState" />
@@ -50,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
+                android:gravity="right"
                 android:id="@+id/txtStockValue"
                 android:text="@string/inventory_state"
                 android:textColor="@color/text_color"/>

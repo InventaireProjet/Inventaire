@@ -9,7 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,13 +20,13 @@ import java.util.ArrayList;
 public class MyCategories extends AppCompatActivity {
 
 
-
+    PopupWindow popupWindow;
+    Button addButton;
     private ArrayList<ObjectCategories> categoryList = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
-
 
         //Fake data
         ObjectCategories games = new ObjectCategories("done", "Jeux", "1/1");
@@ -38,12 +41,61 @@ public class MyCategories extends AppCompatActivity {
         categoryList.add(biology);
 
         //Using adapter
-        ArrayAdapter adapter = new CategoriesAdapter(this, categoryList);
+        final ArrayAdapter adapter = new CategoriesAdapter(this, categoryList);
 
 
         // Fill the ListView
         ListView lvCategories = (ListView) findViewById(R.id.lvCategories);
         lvCategories.setAdapter(adapter);
+
+
+        //Adding Categories
+        addButton = (Button) findViewById(R.id.btnAdd);
+        addButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflater =
+                        (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                View popupView = layoutInflater.inflate(R.layout.categories_popup, null);
+                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+
+                //Um die Tastatur zu sehen
+                popupWindow.setFocusable(true);
+
+                // Catch the elements of the pop-up view
+                TextView txtQuestion = (TextView) popupView.findViewById(R.id.txtQuestion);
+                Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
+                Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
+                final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
+
+
+                txtQuestion.setText("Entrez le nom de la nouvelle catégorie :");
+
+                //Saving the new category by validating the text entry
+                buttonValidate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
+                        adapter.add(newCategory);
+                        popupWindow.dismiss();
+
+                    }
+                });
+
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+                popupWindow.showAsDropDown(addButton, 0, -100);
+
+            }
+        });
 
     }
 
