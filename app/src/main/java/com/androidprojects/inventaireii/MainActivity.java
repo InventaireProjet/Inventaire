@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView =
-                        layoutInflater.inflate(R.layout.activity_activity_popup_ok_cancel, null);
+                        layoutInflater.inflate(R.layout.activity_popup_ok_cancel, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
 
