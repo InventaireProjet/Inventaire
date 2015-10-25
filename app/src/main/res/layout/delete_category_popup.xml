@@ -1,52 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="@color/dark_Grey"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:id="@+id/txtTitle"
+        android:id="@+id/deleteQuestion"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/category_popup_title"
-        android:textColor="@color/light_blue"
-        android:textSize="20dp"/>
+        android:text="@string/delete_question"
+        android:textColor="@color/text_color"
+        android:textSize="30dp"/>
+
+
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/txtTitle"
-        android:background="@color/light_blue"/>
-
-    <TextView
-        android:id="@+id/addCategory"
+        android:id="@+id/deleteInfo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtTitle"
-        android:layout_marginTop="30dp"
-        android:text="@string/newCategory"
-        android:textColor="@color/text_color"/>
-
-
-
-    <EditText
-        android:id="@+id/userEntry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtQuestion"
+        android:layout_below="@id/deleteQuestion"
         android:layout_marginBottom="40dp"
-        android:layout_marginTop="100dp"
-        android:inputType="text"
+        android:layout_marginTop="10dp"
+        android:text="@string/deleteInfo"
         android:textColor="@color/text_color"/>
 
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userEntry"
-        android:orientation="horizontal">
+        android:layout_below="@+id/deleteInfo">
 
 
         <Button

@@ -30,6 +30,10 @@
             android:label="@string/title_activity_my_categories">
         </activity>
         <activity android:name=".Category"
+            android:screenOrientation="landscape" >
+
+        </activity>
+        <activity android:name=".CategoryModify"
             android:screenOrientation="landscape" ></activity>
     </application>
 

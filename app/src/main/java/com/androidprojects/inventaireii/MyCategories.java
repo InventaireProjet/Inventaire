@@ -20,10 +20,15 @@ import java.util.ArrayList;
 
 public class MyCategories extends AppCompatActivity {
 
-
     PopupWindow popupWindow;
     Button addButton;
-    private ArrayList<ObjectCategories> categoryList = new ArrayList<>();
+
+    ArrayList<ObjectCategories> categoryList = new ArrayList<>();
+
+    public ArrayList<ObjectCategories> getCategoryList() {
+        return categoryList;
+    }
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,7 @@ public class MyCategories extends AppCompatActivity {
         categoryList.add(medical);
         categoryList.add(biology);
 
+
         //Using adapter
         final ArrayAdapter adapter = new CategoriesAdapter(this, categoryList);
 
@@ -48,8 +54,6 @@ public class MyCategories extends AppCompatActivity {
         // Fill the ListView
         ListView lvCategories = (ListView) findViewById(R.id.lvCategories);
         lvCategories.setAdapter(adapter);
-
-
 
 
         //Adding Categories
@@ -69,13 +73,11 @@ public class MyCategories extends AppCompatActivity {
                 popupWindow.setFocusable(true);
 
                 // Catch the elements of the pop-up view
-                TextView txtQuestion = (TextView) popupView.findViewById(R.id.txtQuestion);
                 Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
                 final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
 
 
-                txtQuestion.setText("Entrez le nom de la nouvelle catégorie :");
 
                 //Saving the new category by validating the text entry
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +162,7 @@ public class MyCategories extends AppCompatActivity {
             tvSquare.setBackgroundColor(giveColor(category.getColor()));
             tvState.setText(category.getInventoryState());
 
-
+            //Sending the category name to the next screen
 
             tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
