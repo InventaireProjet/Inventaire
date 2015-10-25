@@ -1,8 +1,10 @@
 package com.androidprojects.inventaireii;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,10 @@ public class MyProducts extends AppCompatActivity {
 
         // Fill the ListView
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
+        View header = (View) getLayoutInflater().inflate(R.layout.product_row_header, null);
+        lvProducts.addHeaderView(header);
         lvProducts.setAdapter(new ProductsAdapter(this, productsList));
+
 
         // Total quantity of products and value of stock
         int totalQuantity = 0;
@@ -92,6 +99,7 @@ public class MyProducts extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
             final ObjectProducts product = (ObjectProducts) getItem(position);
 
             // Creation of the link with the product_row layout if not already existing
@@ -119,78 +127,8 @@ public class MyProducts extends AppCompatActivity {
             // Sending the product to the next field
             // TODO
 
-            /*
-            ViewHolder holder = null;
-            LayoutInflater inflater = getLayoutInflater();
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.product_row, null, false);
-                holder = new ViewHolder(convertView);
-                convertView.setTag(holder);
-            }
-            else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.getSquare().setBackgroundColor(giveColor(squareList.get(position)));
-            holder.getNo_art().setText(artNbList.get(position));
-            holder.getName().setText(nameList.get(position));
-            holder.getCategory().setText("fake"); // categoryList.get(position)
-            holder.getQuantity().setText(quantityList.get(position));
-            holder.getPrice().setText(priceList.get(position));
-            */
             return convertView;
 
-        }
-    }
-
-    public class ViewHolder {
-        private View row;
-        private View square;
-        private TextView no_art, name, category, quantity, price;
-
-        public ViewHolder(View row) {
-            this.row = row;
-        }
-
-        public View getSquare() {
-            if (this.square == null) {
-                this.square = (View) row.findViewById(R.id.square);
-            }
-            return this.square;
-        }
-
-        public TextView getNo_art() {
-            if (this.no_art == null) {
-                this.no_art = (TextView) row.findViewById(R.id.no_art);
-            }
-            return this.no_art;
-        }
-
-        public TextView getName() {
-            if (this.name == null) {
-                this.name = (TextView) row.findViewById(R.id.name);
-            }
-            return this.name;
-        }
-
-        public TextView getCategory() {
-            if (this.category == null) {
-                this.category = (TextView) row.findViewById(R.id.category);
-            }
-            return this.category;
-        }
-
-        public TextView getQuantity() {
-            if (this.quantity == null) {
-                this.quantity = (TextView) row.findViewById(R.id.quantity);
-            }
-            return this.quantity;
-        }
-
-        public TextView getPrice() {
-            if (this.price == null) {
-                this.price = (TextView) row.findViewById(R.id.price);
-            }
-            return this.price;
         }
     }
 }

@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="25dp">
+    android:layout_height="25dp"
+    android:background="@color/list_header_backcolor">
 
-    <View
+    <TextView
         android:layout_width="@dimen/square_width"
         android:layout_height="@dimen/square_height"
         android:layout_weight="0"
-        android:id="@+id/square"/>
+        android:id="@+id/square"
+        android:text="Inventaire"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/no_art"/>
+        android:id="@+id/no_art"
+        android:text="N° Art"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="4"
-        android:id="@+id/name"/>
+        android:id="@+id/name"
+        android:text="Nom"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:id="@+id/category"/>
+        android:id="@+id/category"
+        android:text="Catégorie"/>
+
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/quantity"/>
+        android:id="@+id/quantity"
+        android:text="Qté"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:id="@+id/price"/>
+        android:id="@+id/price"
+        android:text="Prix"/>
 
 </LinearLayout>
