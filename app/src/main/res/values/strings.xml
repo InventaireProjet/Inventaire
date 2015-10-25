@@ -26,4 +26,5 @@
     <string name="delete_question">Etes-vous sûr de vouloir supprimer cette catégorie ?</string>
     <string name="newCategory">Entrez le nom de la nouvelle catégorie :</string>
     <string name="deleteInfo">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
+    <string name="my_warehouses">Mes magasins</string>
 </resources>

@@ -20,10 +20,9 @@ import java.util.ArrayList;
 
 public class MyCategories extends AppCompatActivity {
 
+    final ArrayList<ObjectCategories> categoryList = new ArrayList<>();
     PopupWindow popupWindow;
     Button addButton;
-
-    ArrayList<ObjectCategories> categoryList = new ArrayList<>();
 
     public ArrayList<ObjectCategories> getCategoryList() {
         return categoryList;
