@@ -31,13 +31,16 @@ public class MyWarehouses extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_warehouses);
-//int stockCapacity, String telNumber, String strasse, String strasseNumber, String npa, String ort, String land
+        setContentView(R.layout.activity_my_categories);
+        TextView title = (TextView) findViewById(R.id.txtTitle);
+        title.setText("Mes magasins");
+
+
         //Fake data (ObjectWarehouse used again because the structure of data needed is the same
         ObjectWarehouse freezer = new ObjectWarehouse("doing", "Frigo", 5, 39, 52, "0900 985 65 32", "Rue Veermeil", "22B", "32AE6", "Wistchick", "Inconnu");
-        ObjectWarehouse eliteLib = new ObjectWarehouse("doing", "Bibliothèque Elite", 1, 3, 68, "024 656 98 76", "Rue des Tonneliers", "7", "1006", "Lausanne", "Suisse" );
-        ObjectWarehouse polarisLib = new ObjectWarehouse("todo", "Bibliothèque Polaris", 0,2, 36, "041 156 98 76", "Rue des Camps", "4", "1265", "Terre-Pleine", "Suisse" );
-        ObjectWarehouse cabinet = new ObjectWarehouse("done", "Armoire", 12, 12, 658, "056 874 98 12", "Strada  Egoisti", "70", "3814", "Stereo", "Italie" );
+        ObjectWarehouse eliteLib = new ObjectWarehouse("doing", "Bibliothèque Elite", 1, 3, 68, "024 656 98 76", "Rue des Tonneliers", "7", "1006", "Lausanne", "Suisse");
+        ObjectWarehouse polarisLib = new ObjectWarehouse("todo", "Bibliothèque Polaris", 0, 2, 36, "041 156 98 76", "Rue des Camps", "4", "1265", "Terre-Pleine", "Suisse");
+        ObjectWarehouse cabinet = new ObjectWarehouse("done", "Armoire", 12, 12, 658, "056 874 98 12", "Strada  Egoisti", "70", "3814", "Stereo", "Italie");
 
         // Adding objects to the list
         warehouseList.add(freezer);
@@ -51,7 +54,7 @@ public class MyWarehouses extends AppCompatActivity {
 
 
         // Fill the ListView
-        ListView lvWarehouses = (ListView) findViewById(R.id.lvWarehouses);
+        ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);
         lvWarehouses.setAdapter(adapter);
 
 
@@ -68,9 +71,9 @@ public class MyWarehouses extends AppCompatActivity {
     }
 
     private int giveColor(String s) {
-        if(s.equals("todo"))
+        if (s.equals("todo"))
             return getResources().getColor(R.color.indicator_to_do);
-        if(s.equals("done"))
+        if (s.equals("done"))
             return getResources().getColor(R.color.indicator_done);
         return getResources().getColor(R.color.indicator_doing);
     }
@@ -101,7 +104,7 @@ public class MyWarehouses extends AppCompatActivity {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
 
-        public WarehousesAdapter(Context context,ArrayList <ObjectWarehouse>  warehouses) {
+        public WarehousesAdapter(Context context, ArrayList<ObjectWarehouse> warehouses) {
             super(context, 0, warehouses);
 
         }
@@ -140,8 +143,4 @@ public class MyWarehouses extends AppCompatActivity {
             return convertView;
         }
     }
-
-
-
-
 }
