@@ -23,30 +23,31 @@
         <activity
             android:name=".MyProducts"
             android:label="@string/title_activity_my_products"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name=".MyCategories"
-            android:label="@string/title_activity_my_categories">
+            android:label="@string/title_activity_my_categories" >
         </activity>
-
-        <activity android:name=".Category"
+        <activity
+            android:name=".Category"
             android:screenOrientation="landscape" >
         </activity>
-
-        <activity android:name=".CategoryModify"
-            android:screenOrientation="landscape" ></activity>
-
-        <activity android:name=".MyWarehouses"
-            android:label="Mes magasins">
+        <activity
+            android:name=".CategoryModify"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MyWarehouses"
+            android:label="Mes magasins" >
         </activity>
-
         <activity android:name=".Warehouse" >
         </activity>
-
         <activity android:name=".NewWarehouse" >
         </activity>
-
+        <activity
+            android:name=".Product"
+            android:label="@string/title_activity_product" >
+        </activity>
     </application>
 
 </manifest>

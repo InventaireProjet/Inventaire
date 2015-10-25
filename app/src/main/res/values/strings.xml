@@ -27,4 +27,5 @@
     <string name="newCategory">Entrez le nom de la nouvelle catégorie :</string>
     <string name="deleteInfo">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
     <string name="my_warehouses">Mes magasins</string>
+    <string name="title_activity_product">Product</string>
 </resources>
