@@ -29,12 +29,24 @@
             android:name=".MyCategories"
             android:label="@string/title_activity_my_categories">
         </activity>
+
         <activity android:name=".Category"
             android:screenOrientation="landscape" >
-
         </activity>
+
         <activity android:name=".CategoryModify"
             android:screenOrientation="landscape" ></activity>
+
+        <activity android:name=".MyWarehouses"
+            android:label="Mes magasins">
+        </activity>
+
+        <activity android:name=".Warehouse" >
+        </activity>
+
+        <activity android:name=".NewWarehouse" >
+        </activity>
+
     </application>
 
 </manifest>

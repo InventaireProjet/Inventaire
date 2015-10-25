@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtInventoryState;
     TextView txtProductAccess;
     TextView txtCategoryAccess;
+    TextView txtWarehouseAccess;
     PopupWindow popupWindow;
     Button buttonStartInventory;
 
@@ -65,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Access by warehouse
+        txtWarehouseAccess = (TextView) findViewById(R.id.txtWarehouseAccess);
+        txtWarehouseAccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
+                startActivity(intent);
+            }
+        });
+
         // Pop-up Window on click on 'New Inventory'
         buttonStartInventory = (Button) findViewById(R.id.buttonStartInventory);
         buttonStartInventory.setOnClickListener(new Button.OnClickListener() {
@@ -78,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 View popupView =
                         layoutInflater.inflate(R.layout.activity_popup_ok_cancel, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT);
+                        ViewGroup.LayoutParams.MATCH_PARENT);
 
                 // Catch the elements of the pop-up view
                 TextView txtQuestion = (TextView) popupView.findViewById(R.id.txtQuestion);
