@@ -10,7 +10,7 @@ public class ActivityPopupOkCancel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_popup_ok_cancel);
+        setContentView(R.layout.activity_popup_ok_cancel);
     }
 
     @Override
