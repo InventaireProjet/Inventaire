@@ -10,4 +10,5 @@
     <color name="indicator_to_do">#f0371a</color>
     <color name="indicator_done">#00f000</color>
     <color name="indicator_neutral">#fff</color>
+    <color name="dark_Grey">#8f8f8f</color>
 </resources>

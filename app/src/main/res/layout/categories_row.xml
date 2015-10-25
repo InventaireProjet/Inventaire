@@ -6,27 +6,29 @@
     android:background="@color/back_color">
 
     <View
+        android:id="@+id/square"
         android:layout_width="@dimen/square_width"
         android:layout_height="@dimen/square_height"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="@dimen/interCategories_bottomMargin"
-        android:id="@+id/square"/>
+        android:layout_marginRight="20dp"/>
 
 
     <TextView
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="9"
-        android:id="@+id/name"
+        android:clickable="true"
+        android:onClick="onClick"
         android:textColor="@color/text_color"/>
 
 
     <TextView
+        android:id="@+id/inventoryState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
         android:layout_weight="10"
-        android:id="@+id/inventoryState"
+        android:gravity="right"
         android:textColor="@color/text_color"/>
 
 

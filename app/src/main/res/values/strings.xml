@@ -22,4 +22,5 @@
     <string name="add">+</string>
     <string name="validate">valider</string>
     <string name="category_popup_title">Ajout d\'une catégorie</string>
+    <string name="delete">Supprimer</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.androidprojects.inventaireii;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -47,6 +48,8 @@ public class MyCategories extends AppCompatActivity {
         // Fill the ListView
         ListView lvCategories = (ListView) findViewById(R.id.lvCategories);
         lvCategories.setAdapter(adapter);
+
+
 
 
         //Adding Categories
@@ -140,7 +143,7 @@ public class MyCategories extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ObjectCategories category = (ObjectCategories) getItem(position);
+            final ObjectCategories category = (ObjectCategories) getItem(position);
 
             //Creation of the link with the categories_row layout if not already existing
             if (convertView == null) {
@@ -153,9 +156,21 @@ public class MyCategories extends AppCompatActivity {
             TextView tvState = (TextView) convertView.findViewById(R.id.inventoryState);
 
             //Data to display are retrieved
-            tvName.setText(category.name);
-            tvSquare.setBackgroundColor(giveColor(category.color));
-            tvState.setText(category.inventoryState);
+            tvName.setText(category.getName());
+            tvSquare.setBackgroundColor(giveColor(category.getColor()));
+            tvState.setText(category.getInventoryState());
+
+
+
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), Category.class);
+                    String categoryName = category.getName();
+                    intent.putExtra( "categoryName",categoryName);
+                    startActivity(intent);
+                }
+            });
 
             return convertView;
         }

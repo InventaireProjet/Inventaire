@@ -29,6 +29,8 @@
             android:name=".MyCategories"
             android:label="@string/title_activity_my_categories">
         </activity>
+        <activity android:name=".Category"
+            android:screenOrientation="landscape" ></activity>
     </application>
 
 </manifest>
