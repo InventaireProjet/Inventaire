@@ -64,7 +64,7 @@ public class MyCategories extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                View popupView = layoutInflater.inflate(R.layout.categories_popup, null);
+                View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
 

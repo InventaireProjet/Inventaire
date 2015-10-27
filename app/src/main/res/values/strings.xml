@@ -24,8 +24,18 @@
     <string name="category_popup_title">Ajout d\'une catégorie</string>
     <string name="delete">Supprimer</string>
     <string name="delete_question">Etes-vous sûr de vouloir supprimer cette catégorie ?</string>
-    <string name="newCategory">Entrez le nom de la nouvelle catégorie :</string>
-    <string name="deleteInfo">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
-    <string name="my_warehouses">Mes magasins</string>
+    <string name="new_category">Entrez le nom de la nouvelle catégorie :</string>
+    <string name="delete_info">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
     <string name="title_activity_product">Product</string>
+    <string name="new_warehouse_name">Nom du magasin</string>
+    <string name="instruction">Entrez les informations suivantes :</string>
+    <string name="warehouse_capacity">Capacité de stockage</string>
+    <string name="warehouse_address">Coordonnées du magasin</string>
+    <string name="warehouse_phone">Tél. :</string>
+    <string name="warehouse_location">Adresse :</string>
+    <string name="street">Rue</string>
+    <string name="streetNo">N°</string>
+    <string name="postalCode">NPA</string>
+    <string name="city">Localité</string>
+    <string name="country">Pays</string>
 </resources>
