@@ -2,6 +2,8 @@ package com.androidprojects.inventaireii;
 
 public class ObjectCategories {
 
+
+    private  int id;
     private String color;
     private String name;
     private String inventoryState;
@@ -13,6 +15,14 @@ public class ObjectCategories {
 
         this.inventoryState = inventoryState;
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getColor() {

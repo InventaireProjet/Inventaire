@@ -20,34 +20,39 @@ import java.util.ArrayList;
 
 public class MyCategories extends AppCompatActivity {
 
-    final ArrayList<ObjectCategories> categoryList = new ArrayList<>();
+    ObjectsLists objectsLists = new ObjectsLists();
     PopupWindow popupWindow;
     Button addButton;
-
-    public ArrayList<ObjectCategories> getCategoryList() {
-        return categoryList;
-    }
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
 
-        //Fake data
-        ObjectCategories games = new ObjectCategories("done", "Jeux", "1/1");
-        ObjectCategories fishing = new ObjectCategories("doing", "Pêche", "6/8");
-        ObjectCategories medical = new ObjectCategories("todo", "Médical", "0/36");
-        ObjectCategories biology = new ObjectCategories("done", "Biologie", "11/11");
+        if (objectsLists.getCategoryList().size() == 0)
+        {
+            //Fake data
+            ObjectCategories games = new ObjectCategories("done", "Jeux", "1/1");
+            ObjectCategories fishing = new ObjectCategories("doing", "Pêche", "6/8");
+            ObjectCategories medical = new ObjectCategories("todo", "Médical", "0/36");
+            ObjectCategories biology = new ObjectCategories("done", "Biologie", "11/11");
 
-        // Adding objects to the list
-        categoryList.add(games);
-        categoryList.add(fishing);
-        categoryList.add(medical);
-        categoryList.add(biology);
+
+
+            // Adding objects to the list
+            objectsLists.getCategoryList().add(games);
+            objectsLists.getCategoryList().add(fishing);
+            objectsLists.getCategoryList().add(medical);
+            objectsLists.getCategoryList().add(biology);
+        }
+
+
+
+
 
 
         //Using adapter
-        final ArrayAdapter adapter = new CategoriesAdapter(this, categoryList);
+        final ArrayAdapter adapter = new CategoriesAdapter(this, objectsLists.getCategoryList());
 
 
         // Fill the ListView
@@ -83,7 +88,7 @@ public class MyCategories extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
-                        adapter.add(newCategory);
+                        objectsLists.getCategoryList().add(newCategory);
                         popupWindow.dismiss();
 
                     }

@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 
 public class Category extends AppCompatActivity {
 
+    ObjectsLists objectsLists = new ObjectsLists();
     Button btnModify;
     Button btnDelete;
     PopupWindow popupWindow;
@@ -61,11 +61,20 @@ public class Category extends AppCompatActivity {
 
 
 
-                //Deleting the new category by validating the text entry
+                //Deleting the category by validating the text entry
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        ArrayList<ObjectCategories> categories = objectsLists.getCategoryList();
+
+                        for (int i = 0; i <categories.size() ; i++) {
+
+                            if (categories.get(i).getName().equals(category)){
+
+                                objectsLists.getCategoryList().remove(i);
+                            }
+                        }
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyCategories.class);

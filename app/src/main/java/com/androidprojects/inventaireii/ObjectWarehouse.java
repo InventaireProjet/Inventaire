@@ -2,6 +2,7 @@ package com.androidprojects.inventaireii;
 
 public class ObjectWarehouse {
 
+    private  int id;
     private String color;
     private String name;
     private int inventoriedObjects;
@@ -28,7 +29,13 @@ public class ObjectWarehouse {
         this.ort = ort;
         this.land = land;
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public int getStockCapacity() {
         return stockCapacity;
     }
