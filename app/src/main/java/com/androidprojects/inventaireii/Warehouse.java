@@ -63,9 +63,13 @@ public class Warehouse extends AppCompatActivity {
 
                 //Second part
                 int freeSpace = warehouse.getStockCapacity()-warehouse.getNumberObjects();
-                int freeSpaceInPercent = freeSpace*100/warehouse.getStockCapacity();
-                freeSpaceNumber.setText(freeSpace +" places");
-                freeSpacePercentage.setText(freeSpaceInPercent +"%");
+                freeSpaceNumber.setText(freeSpace + " places");
+
+                if (warehouse.getStockCapacity()!=0) {
+                    int freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
+                    freeSpacePercentage.setText(freeSpaceInPercent + "%");
+                }
+
 
                 //Third part
                 capacityNumber.setText(warehouse.getStockCapacity() +" places");

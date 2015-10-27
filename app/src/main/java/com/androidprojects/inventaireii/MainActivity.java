@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // TODO suppress those Fake values
-        ObjectCategories medical = new ObjectCategories("", "Médical", "done");
-        ObjectCategories jeux = new ObjectCategories("", "Jeux", "doing");
+        ObjectCategories medical = new ObjectCategories("done", "Médical", "3/5");
+        ObjectCategories jeux = new ObjectCategories("doing", "Jeux", "2/7");
         ObjectProducts sonotone = new ObjectProducts("1235-1", "Sonotone Arfid", medical, 200, 350.0, "todo");
         ObjectProducts balle = new ObjectProducts("46454-9", "Balle", jeux, 3500, 22.00, "doing");
-        ObjectWarehouse biblio = new ObjectWarehouse("todo", "Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
-        ObjectWarehouse armoire = new ObjectWarehouse("todo", "Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse biblio = new ObjectWarehouse( "Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse armoire = new ObjectWarehouse( "Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
         ObjectStock stockBiblio = new ObjectStock(35000, false, sonotone, biblio);
         ObjectStock stockArmoire = new ObjectStock(1, true, balle, armoire);
         sonotone.addStock(stockBiblio);
