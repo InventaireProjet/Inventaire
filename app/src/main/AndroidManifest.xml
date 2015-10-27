@@ -48,6 +48,9 @@
             android:name=".Product"
             android:label="@string/title_activity_product" >
         </activity>
+        <activity android:name=".WarehouseModify">
+
+        </activity>
     </application>
 
 </manifest>

@@ -48,4 +48,8 @@
     <string name="free_space">Espace libre</string>
     <string name="phone_short">Tél. :</string>
     <string name="warehouse_address_colon">Adresse :</string>
+    <string name="delete_warehouse_option1">Si vous désirez supprimer le magasin, mais pas les éléments qu\'il contient : cliquez sur \"Supprimer seulement le magasin\".</string>
+    <string name="delete_warehouse_option2">Si vous désirez supprimer le magasin et tous ses éléments : cliquez sur \"Tout supprimer\".</string>
+    <string name="btn_delete_only_warehouse">Supprimer seulement le magasin</string>
+    <string name="btn_delete_all">Tout supprimer</string>
 </resources>
