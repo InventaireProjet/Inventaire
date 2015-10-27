@@ -59,7 +59,7 @@ public class Warehouse extends AppCompatActivity {
 
                 //First part
                 squareInventoryState.setBackgroundColor(giveColor(warehouse.getColor()));
-                inventoryState.setText(warehouse.getInventoriedObjects() +"/" +warehouse.getNumberObjects());
+                inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
                 //Second part
                 int freeSpace = warehouse.getStockCapacity()-warehouse.getNumberObjects();
@@ -77,6 +77,17 @@ public class Warehouse extends AppCompatActivity {
                 postalCode.setText(warehouse.getPostalCode());
                 city.setText(warehouse.getLocation());
                 country.setText((warehouse.getCountry()));
+
+
+                viewStockBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(getBaseContext(), StockWarehouse.class);
+                        intent.putExtra( "warehouseName",name);
+                        startActivity(intent);
+                    }
+                });
 
 
                 btnModify = (Button) findViewById(R.id.buttonModify);
