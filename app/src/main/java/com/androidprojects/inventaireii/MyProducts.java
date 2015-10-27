@@ -1,6 +1,7 @@
 package com.androidprojects.inventaireii;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -125,7 +126,22 @@ public class MyProducts extends AppCompatActivity {
             txtPrice.setText("CHF " + Double.toString(product.getPrice()));
 
             // Sending the product to the next field
-            // TODO
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), Product.class);
+                    // TODO in the final version, send only the product Id...
+                    intent.putExtra("productName", product.getName());
+                    intent.putExtra("productSquare", product.getInventoryState());
+                    intent.putExtra("productArtNb", product.getArtNb());
+                    intent.putExtra("productQuantity", Integer.toString(product.getQuantity()));
+                    intent.putExtra("productPrice", Double.toString(product.getPrice()));
+                    intent.putExtra("categoryName", product.getCategory().getName());
+                    intent.putExtra("categoryInventoryState", product.getCategory().getInventoryState());
+                    intent.putExtra("category", product.getCategory().getColor());
+                    startActivity(intent);
+                }
+            });
 
             return convertView;
 

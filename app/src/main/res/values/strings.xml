@@ -27,6 +27,11 @@
     <string name="new_category">Entrez le nom de la nouvelle catégorie :</string>
     <string name="delete_info">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
     <string name="title_activity_product">Product</string>
+    <string name="quantity_and_storage">Quantité et lieu de stockage</string>
+    <string name="total_stock">Stock total :</string>
+    <string name="stock_value">Valeur du stock :</string>
+    <string name="product_description">Description du produit</string>
+    <string name="suppress">Supprimer</string>
     <string name="new_warehouse_name">Nom du magasin</string>
     <string name="instruction">Entrez les informations suivantes :</string>
     <string name="warehouse_capacity">Capacité de stockage</string>
