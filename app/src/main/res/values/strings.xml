@@ -32,15 +32,15 @@
     <string name="stock_value">Valeur du stock :</string>
     <string name="product_description">Description du produit</string>
     <string name="suppress">Supprimer</string>
-    <string name="new_warehouse_name">Nom du magasin</string>
     <string name="instruction">Entrez les informations suivantes :</string>
+    <string name="new_warehouse_name">Nom du magasin</string>
     <string name="warehouse_capacity">Capacité de stockage</string>
     <string name="warehouse_address">Coordonnées du magasin</string>
-    <string name="warehouse_phone">Tél. :</string>
-    <string name="warehouse_location">Adresse :</string>
+    <string name="warehouse_phone">Téléphone</string>
+    <string name="warehouse_location">Adresse</string>
     <string name="street">Rue</string>
-    <string name="streetNo">N°</string>
-    <string name="postalCode">NPA</string>
+    <string name="streetNo">N° de rue</string>
+    <string name="postalCode">Code postal</string>
     <string name="city">Localité</string>
     <string name="country">Pays</string>
 </resources>

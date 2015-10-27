@@ -46,11 +46,6 @@ public class MyCategories extends AppCompatActivity {
             objectsLists.getCategoryList().add(biology);
         }
 
-
-
-
-
-
         //Using adapter
         final ArrayAdapter adapter = new CategoriesAdapter(this, objectsLists.getCategoryList());
 

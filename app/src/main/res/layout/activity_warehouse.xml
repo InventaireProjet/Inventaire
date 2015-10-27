@@ -8,6 +8,172 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.androidprojects.inventaireii.Warehouse">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
+
+        <TextView
+            android:id="@+id/categoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instruction"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color"/>
+
+        <include layout="@layout/blue_line" />
+
+        <TextView
+            android:id="@+id/warehouseName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/new_warehouse_name"
+            android:textColor="@color/light_blue"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_blue"/>
+
+        <TextView
+            android:id="@+id/warehouseNameEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/warehouseCapacity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/warehouse_capacity"
+            android:textColor="@color/light_blue"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_blue"/>
+
+        <TextView
+            android:id="@+id/warehouseCapacityEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="@color/text_color"/>
+
+
+        <TextView
+            android:id="@+id/warehouseAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/warehouse_address"
+            android:textColor="@color/light_blue"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_blue"/>
+
+        <TextView
+            android:id="@+id/warehousePhone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/warehouse_phone"
+            android:textColor="@color/text_color"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/warehousePhoneEntry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/warehouseLocation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/warehouse_location"
+            android:textColor="@color/text_color"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/warehouseStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/street"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/warehouseStreetNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/streetNo"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/warehousePostalCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/postalCode"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/warehouseCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/city"
+            android:textColor="@color/text_color"/>
+
+        <TextView
+            android:id="@+id/warehouseCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="@string/country"
+            android:textColor="@color/text_color"/>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userEntry"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/button_background"
+                android:text="@string/cancel"
+                android:textColor="@color/text_color"/>
+
+            <Button
+                android:id="@+id/buttonValidate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@color/button_background"
+                android:text="@string/validate"
+                android:textColor="@color/text_color"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
+
+
+
+

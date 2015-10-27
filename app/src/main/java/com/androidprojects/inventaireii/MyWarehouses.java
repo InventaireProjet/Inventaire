@@ -20,37 +20,36 @@ import java.util.ArrayList;
 
 public class MyWarehouses extends AppCompatActivity {
 
-    final ArrayList<ObjectWarehouse> warehouseList = new ArrayList<>();
+    ObjectsLists objectsLists = new ObjectsLists();
     PopupWindow popupWindow;
     Button addButton;
 
-    public ArrayList<ObjectWarehouse> getWarehouseList() {
-        return warehouseList;
-    }
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //activity_my_categories reused because of same structure
         setContentView(R.layout.activity_my_categories);
         TextView title = (TextView) findViewById(R.id.txtTitle);
         title.setText("Mes magasins");
 
+        if (objectsLists.getWarehouseList().size()==0) {
 
-        //Fake data (ObjectWarehouse used again because the structure of data needed is the same
-        ObjectWarehouse freezer = new ObjectWarehouse("doing", "Frigo", 5, 39, 52, "0900 985 65 32", "Rue Veermeil", "22B", "32AE6", "Wistchick", "Inconnu");
-        ObjectWarehouse eliteLib = new ObjectWarehouse("doing", "Bibliothèque Elite", 1, 3, 68, "024 656 98 76", "Rue des Tonneliers", "7", "1006", "Lausanne", "Suisse");
-        ObjectWarehouse polarisLib = new ObjectWarehouse("todo", "Bibliothèque Polaris", 0, 2, 36, "041 156 98 76", "Rue des Camps", "4", "1265", "Terre-Pleine", "Suisse");
-        ObjectWarehouse cabinet = new ObjectWarehouse("done", "Armoire", 12, 12, 658, "056 874 98 12", "Strada  Egoisti", "70", "3814", "Stereo", "Italie");
+            //Fake data
+            ObjectWarehouse freezer = new ObjectWarehouse("doing", "Frigo", 5, 39, 52, "0900 985 65 32", "Rue Veermeil", "22B", "32AE6", "Wistchick", "Inconnu");
+            ObjectWarehouse eliteLib = new ObjectWarehouse("doing", "Bibliothèque Elite", 1, 3, 68, "024 656 98 76", "Rue des Tonneliers", "7", "1006", "Lausanne", "Suisse");
+            ObjectWarehouse polarisLib = new ObjectWarehouse("todo", "Bibliothèque Polaris", 0, 2, 36, "041 156 98 76", "Rue des Camps", "4", "1265", "Terre-Pleine", "Suisse");
+            ObjectWarehouse cabinet = new ObjectWarehouse("done", "Armoire", 12, 12, 658, "056 874 98 12", "Strada  Egoisti", "70", "3814", "Stereo", "Italie");
 
-        // Adding objects to the list
-        warehouseList.add(freezer);
-        warehouseList.add(eliteLib);
-        warehouseList.add(polarisLib);
-        warehouseList.add(cabinet);
-
+            // Adding objects to the list
+            objectsLists.getWarehouseList().add(freezer);
+            objectsLists.getWarehouseList().add(eliteLib);
+            objectsLists.getWarehouseList().add(polarisLib);
+            objectsLists.getWarehouseList().add(cabinet);
+        }
 
         //Using adapter
-        final ArrayAdapter adapter = new WarehousesAdapter(this, warehouseList);
+        final ArrayAdapter adapter = new WarehousesAdapter(this, objectsLists.getWarehouseList());
 
 
         // Fill the ListView
