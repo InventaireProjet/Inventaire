@@ -30,22 +30,27 @@
                 android:text="Machin Truc"
                 android:textColor="@color/text_color"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
-            <View
+            <Button
                 android:layout_width="@dimen/square_width"
                 android:layout_height="@dimen/square_height"
-                android:background="@color/indicator_done"/>
+                android:background="@color/indicator_done"
+                android:id="@+id/buttonControlled"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/dark_Grey"
-                android:text="&lt;" />
+                android:text="&lt;"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/buttonPrevious"/>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/dark_Grey"
-                android:text="&gt;"/>
+                android:text="&gt;"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/buttonNext"/>
         </LinearLayout>
 
         <include layout="@layout/blue_line"/>
@@ -90,7 +95,9 @@
         <ListView
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:background="@color/list_backcolor"
+            android:id="@+id/lvStocks">
         </ListView>
 
         <!-- Totals under the list of Warehouses stocks -->
@@ -102,12 +109,13 @@
             <View
                 android:layout_width="@dimen/square_width"
                 android:layout_height="@dimen/square_height"
-                android:id="@+id/squareTotalStock"/>
+                android:id="@+id/squareTotalStock"
+                android:background="@color/dark_Grey"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/squareTotalStock"
+                android:layout_toRightOf="@+id/squareTotalStock"
                 android:id="@+id/txtLabelTotalStock"
                 android:textColor="@color/text_color"
                 android:text="@string/total_stock"/>
@@ -115,7 +123,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/txtLabelTotalStock"
+                android:layout_toRightOf="@+id/txtLabelTotalStock"
+                android:layout_marginLeft="50dp"
                 android:id="@+id/txtValueTotalStock"
                 android:textColor="@color/text_color" />
 
@@ -168,23 +177,33 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
+            android:layout_gravity="center"
             android:id="@+id/buttonModify"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
-            android:text="@string/modify"/>
+            android:text="@string/modify" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
             android:id="@+id/buttonSuppress"
             android:background="@color/button_background"
             android:textColor="@color/button_text"

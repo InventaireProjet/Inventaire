@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,8 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyProducts extends AppCompatActivity {
-    // Données provisoires
+    // TODO Fake values
     private List<ObjectProducts> productsList = new ArrayList<ObjectProducts>();
+    private List<ObjectCategories> categoriesList = new ArrayList<>();
     public List<ObjectProducts> getProductsList(){
         return productsList;
     }
@@ -32,13 +34,19 @@ public class MyProducts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_products);
 
-        // Créer les données provisoires
-        ObjectCategories medical = new ObjectCategories("", "Médical", "done");
-        ObjectCategories jeux = new ObjectCategories("", "Jeux", "doing");
-        ObjectProducts sonotone = new ObjectProducts("1235-1", "Sonotone Arfid", medical, 200, 350.0, "todo");
-        ObjectProducts balle = new ObjectProducts("46454-9", "Balle", jeux, 3500, 22.00, "doing");
-        productsList.add(sonotone);
-        productsList.add(balle);
+        // TODO suppress this FAKE value :
+        productsList = ObjectsLists.getProductList();
+
+        // Set OnClickListener to Button "Add product"
+        Button buttonAddProduct = (Button) findViewById(R.id.buttonAddProduct);
+        buttonAddProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ProductNewOrModify.class);
+                intent.putExtra("position", -1);
+                startActivity(intent);
+            }
+        });
 
         // Fill the ListView
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
@@ -92,14 +100,13 @@ public class MyProducts extends AppCompatActivity {
     }
 
     private class ProductsAdapter extends ArrayAdapter {
-        // Ref toute pourrie: http://stackoverflow.com/questions/11281952/listview-with-customized-row-layout-android
         // TODO suppress public ProductsAdapter() { super(MyProducts.this, R.layout.product_row);}
         public ProductsAdapter(Context context, List<ObjectProducts> productsList) {
             super(context, 0, productsList);
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             final ObjectProducts product = (ObjectProducts) getItem(position);
 
@@ -129,16 +136,10 @@ public class MyProducts extends AppCompatActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ObjectsLists.setProductList((ArrayList) productsList);
                     Intent intent = new Intent(getBaseContext(), Product.class);
                     // TODO in the final version, send only the product Id...
-                    intent.putExtra("productName", product.getName());
-                    intent.putExtra("productSquare", product.getInventoryState());
-                    intent.putExtra("productArtNb", product.getArtNb());
-                    intent.putExtra("productQuantity", Integer.toString(product.getQuantity()));
-                    intent.putExtra("productPrice", Double.toString(product.getPrice()));
-                    intent.putExtra("categoryName", product.getCategory().getName());
-                    intent.putExtra("categoryInventoryState", product.getCategory().getInventoryState());
-                    intent.putExtra("category", product.getCategory().getColor());
+                    intent.putExtra("position", position);
                     startActivity(intent);
                 }
             });

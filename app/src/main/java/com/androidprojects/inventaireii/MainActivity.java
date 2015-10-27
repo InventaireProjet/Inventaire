@@ -12,11 +12,19 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
-    // Données provisoires :
+    // Fake data :
     boolean inventoryIsRunning = true;
     int nbItems = 56;
     int nbInventoredItems = 18;
+
+    ArrayList<ObjectCategories> categoriesList = new ArrayList<>();
+    ArrayList<ObjectProducts> productsList = new ArrayList<>();
+    ArrayList<ObjectStock> stocksList = new ArrayList<>();
+    ArrayList<ObjectWarehouse> warehousesList = new ArrayList<>();
+
 
     // Declarations
     TextView txtInventoryRunning;
@@ -31,6 +39,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // TODO suppress those Fake values
+        ObjectCategories medical = new ObjectCategories("", "Médical", "done");
+        ObjectCategories jeux = new ObjectCategories("", "Jeux", "doing");
+        ObjectProducts sonotone = new ObjectProducts("1235-1", "Sonotone Arfid", medical, 200, 350.0, "todo");
+        ObjectProducts balle = new ObjectProducts("46454-9", "Balle", jeux, 3500, 22.00, "doing");
+        ObjectWarehouse biblio = new ObjectWarehouse("todo", "Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse armoire = new ObjectWarehouse("todo", "Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectStock stockBiblio = new ObjectStock(35000, false, sonotone, biblio);
+        ObjectStock stockArmoire = new ObjectStock(1, true, balle, armoire);
+        sonotone.addStock(stockBiblio);
+        balle.addStock(stockArmoire);
+        balle.setDescription("Balle jaune et rouge à pois verts dotée d'un effet retro");
+        sonotone.setDescription("Très joli sonotone, facile d'emploi, vraiment très facile. Le tout pour un coût très modique");
+
+        productsList.add(sonotone);
+        productsList.add(balle);
+
+        categoriesList.add(medical);
+        categoriesList.add(jeux);
+
+        warehousesList.add(armoire);
+        warehousesList.add(biblio);
+
+        stocksList.add(stockArmoire);
+        stocksList.add(stockBiblio);
+
+        ObjectsLists.setProductList(productsList);
+        ObjectsLists.setCategoryList(categoriesList);
+        ObjectsLists.setStockList(stocksList);
+        ObjectsLists.setWarehouseList(warehousesList);
 
         // Display of Inventory-depending fields
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);

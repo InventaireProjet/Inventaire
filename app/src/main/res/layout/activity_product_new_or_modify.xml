@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="@color/back_color"
+    tools:context="com.androidprojects.inventaireii.ProductNewOrModify">
+
+    <!-- Title -->
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTitle"
+        android:textColor="@color/text_color"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Entrez les informations suivantes :"/>
+
+    <include layout="@layout/blue_line"/>
+
+    <!-- Fiels -->
+    <EditText
+        android:id="@+id/productName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nom du produit"
+        android:inputType="text"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/text_color_hint"
+        android:textSize="12dp"/>
+
+    <EditText
+        android:id="@+id/artNb"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Numéro d'article"
+        android:inputType="text"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/text_color_hint"
+        android:textSize="12dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/list_backcolor"
+        android:prompt="@string/select_category"/>
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Prix"
+        android:inputType="numberDecimal"
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/text_color_hint"
+        android:textSize="12dp"/>
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:inputType="textLongMessage"
+        android:textColorHint="@color/text_color_hint"
+        android:textColor="@color/text_color"
+        android:text="Description"
+        android:textSize="12dp"/>
+
+    <!-- Two buttons for cancelling or saving -->
+    <LinearLayout
+        android:id="@+id/llButtons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/button_background"
+            android:textColor="@color/button_text"
+            android:text="Annuler"/>
+
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:background="@color/button_background"
+            android:textColor="@color/button_text"
+            android:text="Enregistrer"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -51,6 +51,10 @@ public class ObjectProducts {
         return description;
     }
 
+    public ArrayList<ObjectStock> getStocks() {
+        return stocks;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
