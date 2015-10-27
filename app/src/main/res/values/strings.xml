@@ -43,6 +43,15 @@
     <string name="postalCode">Code postal</string>
     <string name="city">Localité</string>
     <string name="country">Pays</string>
+    <string name="inventoried_elements">Eléments inventoriés</string>
+    <string name="view_stock_button">Consulter le stock</string>
+    <string name="free_space">Espace libre</string>
+    <string name="phone_short">Tél. :</string>
+    <string name="warehouse_address_colon">Adresse :</string>
+    <string name="delete_warehouse_option1">Si vous désirez supprimer le magasin, mais pas les éléments qu\'il contient : cliquez sur \"Supprimer seulement le magasin\".</string>
+    <string name="delete_warehouse_option2">Si vous désirez supprimer le magasin et tous ses éléments : cliquez sur \"Tout supprimer\".</string>
+    <string name="btn_delete_only_warehouse">Supprimer seulement le magasin</string>
+    <string name="btn_delete_all">Tout supprimer</string>
     <string name="title_activity_stock_row">stock_row</string>
     <string name="title_activity_product_new_or_modify">Données produit</string>
     <string name="select_category">-- catégorie --</string>

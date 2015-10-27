@@ -43,7 +43,7 @@ public class NewWarehouse extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ObjectWarehouse newWarehouse = new ObjectWarehouse("done",
+                ObjectWarehouse newWarehouse = new ObjectWarehouse(
                         warehouseName.getText().toString(),
                         0, 0,
                         Integer.parseInt(warehouseCapacity.getText().toString()),
