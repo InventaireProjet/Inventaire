@@ -30,8 +30,8 @@ public class Product extends AppCompatActivity {
                 productQuantity, productPrice, productSquare);
 
         // TODO suppress those FAKE VALUES for stocks :
-        ObjectWarehouse biblio = new ObjectWarehouse("todo", "Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
-        ObjectWarehouse armoire = new ObjectWarehouse("todo", "Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse biblio = new ObjectWarehouse( "Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse armoire = new ObjectWarehouse( "Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
         ObjectStock stockBiblio = new ObjectStock(35000, false, product, biblio);
         ObjectStock stockArmoire = new ObjectStock(1, true, product, armoire);
         product.addStock(stockBiblio);

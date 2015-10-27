@@ -43,4 +43,9 @@
     <string name="postalCode">Code postal</string>
     <string name="city">Localité</string>
     <string name="country">Pays</string>
+    <string name="inventoried_elements">Eléments inventoriés</string>
+    <string name="view_stock_button">Consulter le stock</string>
+    <string name="free_space">Espace libre</string>
+    <string name="phone_short">Tél. :</string>
+    <string name="warehouse_address_colon">Adresse :</string>
 </resources>

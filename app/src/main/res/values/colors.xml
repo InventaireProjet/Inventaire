@@ -10,7 +10,7 @@
     <color name="indicator_to_do">#f0371a</color>
     <color name="indicator_done">#00f000</color>
     <color name="indicator_neutral">#fff</color>
-    <color name="dark_Grey">#8f8f8f</color>
+    <color name="dark_Grey">#656565</color>
     <color name="list_backcolor">#fff</color>
     <color name="list_header_backcolor">#f0f0f0</color>
     <color name="list_header_bordercolor">#000</color>

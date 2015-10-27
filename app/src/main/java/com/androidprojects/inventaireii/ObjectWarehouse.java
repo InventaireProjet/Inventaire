@@ -9,25 +9,37 @@ public class ObjectWarehouse {
     private int numberObjects;
     private int stockCapacity;
     private String telNumber;
-    private String strasse;
-    private String strasseNumber;
-    private String npa;
-    private String ort;
-    private String land;
+    private String street;
+    private String streetNumber;
+    private String postalCode;
+    private String location;
+    private String country;
 
 
-    public ObjectWarehouse(String color, String name, int inventoriedObjects, int numberObjects, int stockCapacity, String telNumber, String strasse, String strasseNumber, String npa, String ort, String land) {
-        this.color = color;
+    public ObjectWarehouse(String name, int inventoriedObjects, int numberObjects, int stockCapacity, String telNumber, String street, String streetNumber, String postalCode, String location, String country) {
+
         this.name = name;
         this.inventoriedObjects = inventoriedObjects;
         this.numberObjects = numberObjects;
         this.stockCapacity = stockCapacity;
         this.telNumber = telNumber;
-        this.strasse = strasse;
-        this.strasseNumber = strasseNumber;
-        this.npa = npa;
-        this.ort = ort;
-        this.land = land;
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.postalCode = postalCode;
+        this.location = location;
+        this.country = country;
+
+        if (inventoriedObjects==numberObjects) {
+            this.color = "done";
+        }
+
+        else if (inventoriedObjects==0) {
+                this.color = "todo";
+        }
+        else {
+            this.color = "doing";
+        }
+
     }
     public int getId() {
         return id;
@@ -52,24 +64,24 @@ public class ObjectWarehouse {
         return telNumber;
     }
 
-    public String getStrasse() {
-        return strasse;
+    public String getStreet() {
+        return street;
     }
 
-    public String getStrasseNumber() {
-        return strasseNumber;
+    public String getStreetNumber() {
+        return streetNumber;
     }
 
-    public String getNpa() {
-        return npa;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public String getOrt() {
-        return ort;
+    public String getLocation() {
+        return location;
     }
 
-    public String getLand() {
-        return land;
+    public String getCountry() {
+        return country;
     }
 
 

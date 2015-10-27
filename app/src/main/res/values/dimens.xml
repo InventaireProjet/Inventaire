@@ -11,5 +11,6 @@
 
     <!--Txt !-->
     <dimen name="warehouse_text_entry">12dp</dimen>
+    <dimen name="warehouse_align">65dp</dimen>
 
 </resources>
