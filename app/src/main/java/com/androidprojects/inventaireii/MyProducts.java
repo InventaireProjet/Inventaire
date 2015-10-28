@@ -77,6 +77,24 @@ public class MyProducts extends AppCompatActivity {
         return getResources().getColor(R.color.indicator_doing);
     }
 
+    private String getInventoryState(ObjectProducts product) {
+        int nbControlled = 0;
+        int nbNotControlled = 0;
+        for (ObjectStock s : product.getStocks()) {
+            if(s.isControlled())
+                nbControlled ++;
+            else
+                nbNotControlled ++;
+        }
+        if (nbNotControlled == 0)
+            return "done";
+
+        if(nbControlled == 0)
+            return "todo";
+
+        return "doing";
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -125,7 +143,7 @@ public class MyProducts extends AppCompatActivity {
             TextView txtPrice = (TextView) convertView.findViewById(R.id.price);
 
             // Fill with data
-            square.setBackgroundColor(giveColor(product.getInventoryState()));
+            square.setBackgroundColor(giveColor(getInventoryState(product)));
             txtArtNb.setText(product.getArtNb());
             txtName.setText(product.getName());
             txtCategory.setText(product.getCategory().getName());

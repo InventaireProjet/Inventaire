@@ -59,6 +59,22 @@ public class ObjectProducts {
         this.description = description;
     }
 
+    public void setArtNb(String artNb) {
+        this.artNb = artNb;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setCategory(ObjectCategories category) {
+        this.category = category;
+    }
+
     public void addStock(ObjectStock stock) {
         stocks.add(stock);
     }

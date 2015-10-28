@@ -5,15 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ProductNewOrModify extends AppCompatActivity {
 
     ObjectProducts product = null;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +25,7 @@ public class ProductNewOrModify extends AppCompatActivity {
         setContentView(R.layout.activity_product_new_or_modify);
 
         // Fill the Spinner with all categories
-        Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
+        final Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
 
         ArrayList<String> categoriesNames = new ArrayList<>();
         for (ObjectCategories cat : ObjectsLists.categoryList) {
@@ -31,17 +35,19 @@ public class ProductNewOrModify extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, categoriesNames );
         spinnerCategory.setAdapter(adapter);
 
-        // Get the product from intent. If position = -1, it is a new product
+        // Get the elements of the activity
+        final EditText etProductName = (EditText) findViewById(R.id.productName);
+        final EditText etArtNb = (EditText) findViewById(R.id.artNb);
+        final EditText etPrice = (EditText) findViewById(R.id.price);
+        final EditText etDescription = (EditText) findViewById(R.id.description);
+
+        // Get the product Id from intent. If position = -1, it is a new product
         Intent intent = getIntent();
-        int pos = intent.getIntExtra("position", -1);
+        position = intent.getIntExtra("position", -1);
 
         // If it is an existing product (modification), fill the fields with products data
-        if (pos >= 0) {
-            EditText etProductName = (EditText) findViewById(R.id.productName);
-            EditText etArtNb = (EditText) findViewById(R.id.artNb);
-            EditText etPrice = (EditText) findViewById(R.id.price);
-            EditText etDescription = (EditText) findViewById(R.id.description);
-            product = ObjectsLists.getProductList().get(pos);
+        if (position >= 0) {
+            product = ObjectsLists.getProductList().get(position);
             etProductName.setText(product.getName());
             etArtNb.setText(product.getArtNb());
             etPrice.setText(Double.toString(product.getPrice()));
@@ -49,6 +55,50 @@ public class ProductNewOrModify extends AppCompatActivity {
             int p = ObjectsLists.categoryList.indexOf(product.getCategory());
             spinnerCategory.setSelection(p);
         }
+
+        // Button "Cancel"
+        Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
+
+        // Button "Save"
+        Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = "";
+                if (position == -1) {
+                    // New article
+                    ObjectCategories cat = ObjectsLists.categoryList
+                            .get(spinnerCategory.getSelectedItemPosition());
+                    product = new ObjectProducts(etArtNb.getText().toString(), etProductName.getText().toString(),
+                            cat, 0, Double.valueOf(etPrice.getText().toString()), "" );
+                    product.setDescription(etDescription.getText().toString());
+                    ObjectsLists.getProductList().add(product);
+                    message = "Produit créé";
+                }
+                else {
+                    // Modify article
+                    int categoryPosition = spinnerCategory.getSelectedItemPosition();
+
+                    product.setArtNb(etArtNb.getText().toString());
+                    product.setName(etProductName.getText().toString());
+                    product.setPrice(Double.parseDouble(etPrice.getText().toString()));
+                    product.setDescription(etDescription.getText().toString());
+                    product.setCategory(ObjectsLists.categoryList.get(categoryPosition));
+                    message = "Produit modifié";
+                }
+                // Confirmation for user
+                Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                toast.show();
+                finish();
+            }
+        });
     }
 
     @Override

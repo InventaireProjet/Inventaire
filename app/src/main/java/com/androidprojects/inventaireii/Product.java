@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -52,28 +54,14 @@ public class Product extends AppCompatActivity {
         // Set Values below the ListView
         TextView txtValueTotalStock = (TextView) findViewById(R.id.txtValueTotalStock);
         TextView txtValueTotalValue = (TextView) findViewById(R.id.txtValueStockValue);
-        TextView txtDescription = (TextView) findViewById(R.id.txtDescription);
+        final TextView txtDescription = (TextView) findViewById(R.id.txtDescription);
         txtValueTotalStock.setText(Integer.toString(product.getQuantity()));
         txtValueTotalValue.setText(Double.toString(product.getQuantity() * product.getPrice()));
         txtDescription.setText(product.getDescription());
 
         // Set color of square below the ListView
         View squareTotalStock = (View) findViewById(R.id.squareTotalStock);
-        int nbControlled = 0;
-        int nbNotControlled = 0;
-        for (ObjectStock s : product.getStocks()) {
-            if(s.isControlled())
-                nbControlled ++;
-            else
-                nbNotControlled ++;
-        }
-        if (nbNotControlled == 0)
-            squareTotalStock.setBackgroundColor(giveColor("done"));
-        else
-            if(nbControlled == 0)
-                squareTotalStock.setBackgroundColor(giveColor("todo"));
-            else
-                squareTotalStock.setBackgroundColor(giveColor("doing"));
+        squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
 
         // Set listener to Button "MODIFY"
         Button buttonModify = (Button) findViewById(R.id.buttonModify);
@@ -83,6 +71,54 @@ public class Product extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), ProductNewOrModify.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
+            }
+        });
+
+        // Set listener to Button "SUPPRESS"
+        final Button buttonSuppress = (Button) findViewById(R.id.buttonSuppress);
+        buttonSuppress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Create a pop-up window for confirmation of suppression
+                LayoutInflater layoutInflater =
+                        (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView =
+                        layoutInflater.inflate(R.layout.activity_popup_ok_cancel, null);
+                final PopupWindow popupWindow = new PopupWindow(popupView,
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+
+                // Catch the elements of the pop-up Window
+                TextView txtQuestion = (TextView) popupView.findViewById(R.id.txtQuestion);
+                Button buttonOk = (Button) popupView.findViewById(R.id.buttonOk);
+                Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
+
+                // Set actions to the elements of the pop up window
+                txtQuestion.setText("Êtes-vous sûr de vouloir supprimer cet article ?");
+                buttonOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // suppress all stocks linked with the product
+                        for (ObjectStock s : product.getStocks()) {
+                            ObjectsLists.getStockList().remove(s);
+                        }
+                        ObjectsLists.getProductList().remove(product);
+                        popupWindow.dismiss();
+                        Toast toast = Toast.makeText(getBaseContext(),
+                                "Produit supprimé", Toast.LENGTH_LONG);
+                        finish();
+                    }
+                });
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+                popupWindow.showAsDropDown(txtDescription, 0, -100);
+
             }
         });
     }
@@ -123,6 +159,25 @@ public class Product extends AppCompatActivity {
 
         return giveColor("todo");
     }
+
+    private String getInventoryState(ObjectProducts product) {
+        int nbControlled = 0;
+        int nbNotControlled = 0;
+        for (ObjectStock s : product.getStocks()) {
+            if(s.isControlled())
+                nbControlled ++;
+            else
+                nbNotControlled ++;
+        }
+        if (nbNotControlled == 0)
+            return "done";
+
+        if(nbControlled == 0)
+            return "todo";
+
+        return "doing";
+    }
+
 
     private class StocksAdapter extends ArrayAdapter {
 

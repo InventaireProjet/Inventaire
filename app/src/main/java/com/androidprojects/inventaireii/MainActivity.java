@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     // Fake data :
     boolean inventoryIsRunning = true;
-    int nbItems = 56;
-    int nbInventoredItems = 18;
+    int nbItems = 0;
+    int nbInventoredItems = 0;
 
     ArrayList<ObjectCategories> categoriesList = new ArrayList<>();
     ArrayList<ObjectProducts> productsList = new ArrayList<>();
@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         ObjectCategories jeux = new ObjectCategories("", "Jeux", "doing");
         ObjectProducts sonotone = new ObjectProducts("1235-1", "Sonotone Arfid", medical, 200, 350.0, "todo");
         ObjectProducts balle = new ObjectProducts("46454-9", "Balle", jeux, 3500, 22.00, "doing");
-        ObjectWarehouse biblio = new ObjectWarehouse("todo", "Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
-        ObjectWarehouse armoire = new ObjectWarehouse("todo", "Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse biblio = new ObjectWarehouse("Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
+        ObjectWarehouse armoire = new ObjectWarehouse("Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
         ObjectStock stockBiblio = new ObjectStock(35000, false, sonotone, biblio);
         ObjectStock stockArmoire = new ObjectStock(1, true, balle, armoire);
         sonotone.addStock(stockBiblio);
@@ -72,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         ObjectsLists.setWarehouseList(warehousesList);
 
         // Display of Inventory-depending fields
+        for (ObjectStock stock : ObjectsLists.getStockList()){
+            nbItems ++;
+            if (stock.isControlled())
+                nbInventoredItems ++;
+        }
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
         txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
         if (inventoryIsRunning) {
@@ -186,6 +191,10 @@ public class MainActivity extends AppCompatActivity {
     private void restartInventory() {
         // TODO
         nbInventoredItems = 0;
+        for (ObjectStock stock : ObjectsLists.getStockList()){
+            stock.setControlled(false);
+        }
+
         txtInventoryState.setText("Avancement de votre inventaire : "
                 + nbInventoredItems + "/" + nbItems);
         txtInventoryState.setVisibility(View.VISIBLE);
