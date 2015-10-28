@@ -55,6 +55,9 @@
         <activity android:name=".WarehouseModify">
 
         </activity>
+        <activity android:name=".StockWarehouse">
+
+        </activity>
     </application>
 
 </manifest>

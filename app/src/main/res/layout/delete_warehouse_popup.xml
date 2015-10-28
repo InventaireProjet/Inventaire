@@ -13,11 +13,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/delete_warehouse_option1"
-        android:textColor="@color/text_color"
-        />
+        android:textColor="@color/text_color"/>
 
-
-
+.
     <TextView
         android:id="@+id/deleteQuestionOption2"
         android:layout_width="fill_parent"
