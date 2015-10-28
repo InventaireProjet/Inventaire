@@ -88,7 +88,7 @@ public class Warehouse extends AppCompatActivity {
                     public void onClick(View v) {
 
                         Intent intent = new Intent(getBaseContext(), StockWarehouse.class);
-                        intent.putExtra( "warehouseName",name);
+                        intent.putExtra("warehouseName", name);
                         startActivity(intent);
                     }
                 });
@@ -99,6 +99,8 @@ public class Warehouse extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getBaseContext(), WarehouseModify.class);
+                        String warehouseName = warehouse.getName();
+                        intent.putExtra("warehouseName", warehouseName);
                         startActivity(intent);
                     }
                 });
