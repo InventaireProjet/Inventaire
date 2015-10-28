@@ -31,9 +31,11 @@
         android:textOff="non"
         android:text="Contrôlé"
         android:showText="true"
+        android:switchMinWidth="50dp"
         android:background="@color/back_color"
         android:layout_below="@+id/llTitle"
-        android:textColor="@color/text_color"/>
+        android:textColor="@color/text_color"
+        android:ellipsize="none"/>
 
     <!-- Quantity -->
     <TextView
