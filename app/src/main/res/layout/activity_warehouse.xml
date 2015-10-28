@@ -151,11 +151,22 @@
                 android:id="@+id/editCapacityNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/capacityNumber"
                 android:layout_alignTop="@+id/capacityNumber"
                 android:inputType="number"
                 android:textColor="@color/indicator_doing"
                 android:textSize="@dimen/warehouse_text_entry"
                 android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/txtPlaces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/editCapacityNumber"
+                android:text="@string/places"
+                android:textColor="@color/text_color"
+                android:visibility="invisible"/>
+
         </RelativeLayout>
 
         <TextView

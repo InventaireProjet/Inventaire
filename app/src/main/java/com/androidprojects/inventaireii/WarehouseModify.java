@@ -29,7 +29,7 @@ public class WarehouseModify extends AppCompatActivity {
 
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
-        EditText editWarehouseName = (EditText) findViewById(R.id.editWarehouseName);
+        final EditText editWarehouseName = (EditText) findViewById(R.id.editWarehouseName);
         View squareInventoryState = (View) findViewById(R.id.squareInventoryState);
         TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
         //TODO ?
@@ -37,19 +37,20 @@ public class WarehouseModify extends AppCompatActivity {
         TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
         TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
         TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
+        TextView txtPlaces = (TextView) findViewById(R.id.txtPlaces);
         TextView phoneEntry = (TextView) findViewById(R.id.phoneEntry);
         TextView street = (TextView) findViewById(R.id.street);
         TextView streetNo = (TextView) findViewById(R.id.streetNo);
         TextView postalCode = (TextView) findViewById(R.id.postalCode);
         TextView city = (TextView) findViewById(R.id.city);
         TextView country = (TextView) findViewById(R.id.country);
-        EditText editCapacityNumber = (EditText) findViewById(R.id.editCapacityNumber);
-        EditText editPhoneEntry = (EditText) findViewById(R.id.editPhoneEntry);
-        EditText editStreet = (EditText) findViewById(R.id.editStreet);
-        EditText editStreetNo = (EditText) findViewById(R.id.editStreetNo);
-        EditText editPostalCode = (EditText) findViewById(R.id.editPostalCode);
-        EditText editCity = (EditText) findViewById(R.id.editCity);
-        EditText editCountry = (EditText) findViewById(R.id.editCountry);
+        final EditText editCapacityNumber = (EditText) findViewById(R.id.editCapacityNumber);
+        final EditText editPhoneEntry = (EditText) findViewById(R.id.editPhoneEntry);
+        final EditText editStreet = (EditText) findViewById(R.id.editStreet);
+        final EditText editStreetNo = (EditText) findViewById(R.id.editStreetNo);
+        final EditText editPostalCode = (EditText) findViewById(R.id.editPostalCode);
+        final EditText editCity = (EditText) findViewById(R.id.editCity);
+        final EditText editCountry = (EditText) findViewById(R.id.editCountry);
 
         Button viewStockBtn = (Button) findViewById(R.id.viewStockBtn);
         Button btnModify = (Button) findViewById(R.id.buttonModify);
@@ -98,8 +99,9 @@ public class WarehouseModify extends AppCompatActivity {
                 //Visibility change
                 capacityNumber.setVisibility(View.INVISIBLE);
                 editCapacityNumber.setVisibility(View.VISIBLE);
+                txtPlaces.setVisibility(View.VISIBLE);
 
-                editCapacityNumber.setText(warehouse.getStockCapacity() + " places");
+                editCapacityNumber.setText(String.valueOf(warehouse.getStockCapacity()));
 
                 //Fourth part
                 //Visibility change
@@ -142,8 +144,7 @@ public class WarehouseModify extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                        String warehouseName = warehouse.getName();
-                        intent.putExtra("warehouseName", warehouseName);
+                        intent.putExtra("warehouseName", name);
                         startActivity(intent);
                     }
                 });
@@ -153,6 +154,21 @@ public class WarehouseModify extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
+
+                        //Saving modifications
+                        warehouse.setName(editWarehouseName.getText().toString());
+                        warehouse.setStockCapacity(Integer.parseInt(editCapacityNumber.getText().toString()));
+                        warehouse.setTelNumber(editPhoneEntry.getText().toString());
+                        warehouse.setStreet(editStreet.getText().toString());
+                        warehouse.setStreetNumber(editStreetNo.getText().toString());
+                        warehouse.setPostalCode(editPostalCode.getText().toString());
+                        warehouse.setLocation(editCity.getText().toString());
+                        warehouse.setCountry(editCountry.getText().toString());
+
+
+                        Intent intent = new Intent(getBaseContext(), Warehouse.class);
+                        intent.putExtra("warehouseName", name);
+                        startActivity(intent);
 
                     }
 

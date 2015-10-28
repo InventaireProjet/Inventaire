@@ -56,4 +56,5 @@
     <string name="title_activity_product_new_or_modify">Données produit</string>
     <string name="select_category">-- catégorie --</string>
     <string name="title_activity_stock_new_or_modify">StockNewOrModify</string>
+    <string name="places">places</string>
 </resources>
