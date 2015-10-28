@@ -52,11 +52,13 @@
             android:name=".ProductNewOrModify"
             android:label="@string/title_activity_product_new_or_modify" >
         </activity>
-        <activity android:name=".WarehouseModify">
-
+        <activity android:name=".WarehouseModify" >
         </activity>
-        <activity android:name=".StockWarehouse">
-
+        <activity android:name=".StockWarehouse" >
+        </activity>
+        <activity
+            android:name=".StockNewOrModify"
+            android:label="@string/title_activity_stock_new_or_modify" >
         </activity>
     </application>
 

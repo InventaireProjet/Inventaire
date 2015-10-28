@@ -45,6 +45,18 @@ public class Product extends AppCompatActivity {
         txtCategory.setText("Catégorie : " + product.getCategory().getName());
         txtPrice.setText("Prix : " + product.getPrice() + "CHF");
 
+        // Set onClickListener to button "Add Stock"
+        Button buttonAddStock = (Button) findViewById(R.id.buttonAddStock);
+        buttonAddStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), StockNewOrModify.class);
+                intent.putExtra("stockPosition" , -1);
+                intent.putExtra("productPosition", position);
+                startActivity(intent);
+            }
+        });
+
         // Fill the ListView
         ListView lvStock = (ListView) findViewById(R.id.lvStocks);
         View header = (View) getLayoutInflater().inflate(R.layout.stock_row_header, null);
@@ -186,7 +198,7 @@ public class Product extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             final ObjectStock stock = (ObjectStock) getItem(position);
 
@@ -207,7 +219,15 @@ public class Product extends AppCompatActivity {
             txtQuantity.setText(Integer.toString(stock.getQuantity()));
 
             // Modify the stock
-            //TODO
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), StockNewOrModify.class);
+                    intent.putExtra("stockPosition", ObjectsLists.getStockList().indexOf(stock));
+                    intent.putExtra("productPosition", position);
+                    startActivity(intent);
+                }
+            });
 
             return convertView;
         }

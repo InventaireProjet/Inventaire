@@ -21,7 +21,7 @@
 
     <include layout="@layout/blue_line"/>
 
-    <!-- Fiels -->
+    <!-- Fields -->
     <EditText
         android:id="@+id/productName"
         android:layout_width="fill_parent"
