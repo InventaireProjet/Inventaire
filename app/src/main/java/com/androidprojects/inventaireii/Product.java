@@ -45,6 +45,44 @@ public class Product extends AppCompatActivity {
         txtCategory.setText("Catégorie : " + product.getCategory().getName());
         txtPrice.setText("Prix : " + product.getPrice() + "CHF");
 
+        // Set onClickListener to button "All controlled"
+        Button buttonAllControlled = (Button) findViewById(R.id.buttonAllControlled);
+        buttonAllControlled.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (ObjectStock s : product.getStocks()) {
+                    s.setControlled(true);
+                }
+            }
+        });
+
+        // Set onClickListener to button "Previous"
+        Button buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
+        buttonPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Product.class);
+                int nbItems = ObjectsLists.getProductList().size();
+                intent.putExtra("position", (position+nbItems-1)%nbItems);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
+        // Set onClickListener to button "Next"
+        Button buttonNext = (Button) findViewById(R.id.buttonNext);
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Product.class);
+                int nbItems = ObjectsLists.getProductList().size();
+                intent.putExtra("position", (position+nbItems+1)%nbItems);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         // Set onClickListener to button "Add Stock"
         Button buttonAddStock = (Button) findViewById(R.id.buttonAddStock);
         buttonAddStock.setOnClickListener(new View.OnClickListener() {
@@ -114,11 +152,13 @@ public class Product extends AppCompatActivity {
                         // suppress all stocks linked with the product
                         for (ObjectStock s : product.getStocks()) {
                             ObjectsLists.getStockList().remove(s);
+                            product.removeStock(s);
                         }
                         ObjectsLists.getProductList().remove(product);
                         popupWindow.dismiss();
                         Toast toast = Toast.makeText(getBaseContext(),
                                 "Produit supprimé", Toast.LENGTH_LONG);
+
                         finish();
                     }
                 });

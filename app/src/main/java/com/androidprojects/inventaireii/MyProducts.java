@@ -62,8 +62,10 @@ public class MyProducts extends AppCompatActivity {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
+        View squareTotalStock = (View) findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(giveColor(getInventoryState()));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
         txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
 
@@ -91,6 +93,25 @@ public class MyProducts extends AppCompatActivity {
 
         if(nbControlled == 0)
             return "todo";
+
+        return "doing";
+    }
+
+    private String getInventoryState() {
+        int nbControlled = 0;
+        int nbNotControlled = 0;
+        for (ObjectProducts p : ObjectsLists.getProductList()){
+            switch (getInventoryState(p)) {
+                case "done": nbControlled++ ; break ;
+                case "todo": nbNotControlled++ ; break;
+            }
+        }
+
+        if (nbControlled == 0)
+            return "todo";
+
+        if (nbNotControlled == 0)
+            return "done";
 
         return "doing";
     }

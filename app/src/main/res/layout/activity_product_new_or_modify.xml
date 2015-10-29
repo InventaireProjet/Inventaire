@@ -67,7 +67,7 @@
         android:inputType="textLongMessage"
         android:textColorHint="@color/text_color_hint"
         android:textColor="@color/text_color"
-        android:text="Description"
+        android:hint="Description"
         android:textSize="12dp"/>
 
     <!-- Two buttons for cancelling or saving -->

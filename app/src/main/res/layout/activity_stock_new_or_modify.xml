@@ -11,7 +11,8 @@
     <LinearLayout
         android:id="@+id/llTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtProductName"
@@ -19,65 +20,93 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_color"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
-        <!--include android:layout="@layout/blue_line"/-->
+
+        <include layout="@layout/blue_line" />
 
     </LinearLayout>
     <!-- Controlled - or not -->
-    <Switch
-        android:id="@+id/switchControlled"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llControlled"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textOn="oui"
-        android:textOff="non"
-        android:text="Contrôlé"
-        android:showText="true"
-        android:switchMinWidth="50dp"
-        android:background="@color/back_color"
-        android:layout_below="@+id/llTitle"
-        android:textColor="@color/text_color"
-        android:ellipsize="none"/>
+        android:layout_below="@+id/llTitle">
 
+        <TextView
+            android:id="@+id/txtControlled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:text="@string/controlled_colon"/>
+
+        <ToggleButton
+            android:id="@+id/switchControlled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="oui"
+            android:textOff="non"
+            android:background="@color/button_background"
+            android:textColor="@color/text_color" />
+    </LinearLayout>
     <!-- Quantity -->
-    <TextView
-        android:id="@+id/txtQuantity"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llQuantity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/switchControlled"
-        android:textColor="@color/text_color"
-        android:text="Quantité : "/>
+        android:layout_below="@+id/llControlled">
 
-    <EditText
-        android:id="@+id/etQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/text_color"
-        android:layout_below="@+id/switchControlled"
-        android:layout_toLeftOf="@+id/txtQuantity"/>
+        <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:text="@string/quantity_colon"/>
+
+        <EditText
+            android:id="@+id/etQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:inputType="number"/>
+    </LinearLayout>
 
     <!-- Magasin -->
-    <TextView
-        android:id="@+id/txtWarehouse"
+    <LinearLayout
+        android:id="@+id/llWarehouse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtQuantity"
-        android:textColor="@color/text_color"
-        android:text="Magasin : "/>
+        android:layout_below="@+id/llQuantity">
 
-    <Spinner
-        android:id="@+id/spinnerWarehouse"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/txtWarehouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color"
+            android:text="Magasin : "/>
+
+        <Spinner
+            android:id="@+id/spinnerWarehouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            android:prompt="@string/select_warehouse"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBlueLine"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etQuantity"
-        android:layout_toLeftOf="@+id/txtWarehouse"
-        android:background="@color/button_background"
-        android:foreground="@color/button_text"/>
+        android:layout_below="@+id/llWarehouse"
+        android:layout_marginTop="10dp">
+        <include layout="@layout/blue_line"/>
+    </LinearLayout>
 
     <!-- Buttons -->
     <LinearLayout
         android:id="@+id/llButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerWarehouse"
+        android:layout_below="@+id/llBlueLine"
         android:orientation="horizontal">
 
         <Button
@@ -94,6 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="5dp"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
             android:text="Supprimer"/>
@@ -103,6 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="5dp"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
             android:text="Enregistrer"/>

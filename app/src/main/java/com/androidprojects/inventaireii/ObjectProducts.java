@@ -79,6 +79,8 @@ public class ObjectProducts {
         stocks.add(stock);
     }
 
+    public void removeStock(ObjectStock stock) {stocks.remove(stock); }
+
     public int getQuantity() {
         int quantity = 0;
         for (ObjectStock stock : stocks) {

@@ -34,7 +34,7 @@
                 android:layout_width="@dimen/square_width"
                 android:layout_height="@dimen/square_height"
                 android:background="@color/indicator_done"
-                android:id="@+id/buttonControlled"/>
+                android:id="@+id/buttonAllControlled"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
