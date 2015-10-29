@@ -131,7 +131,7 @@ public class WarehouseModify extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(getBaseContext(), StockWarehouse.class);
+                        Intent intent = new Intent(getBaseContext(), MyProducts.class);
                         intent.putExtra("warehouseName", name);
                         startActivity(intent);
                     }
