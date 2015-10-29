@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txtInventoryRunning"
-            android:text="Inventaire en cours"
+            android:text="@string/inventory_running"
             android:textColor="@color/flashy"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/txtInventoryState"
             android:textColor="@color/flashy"
-            android:text="Avancement de votre inventaire : xx/yy"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginBottom="@dimen/main_activity_bottom_margin" />
 

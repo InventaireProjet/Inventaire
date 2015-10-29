@@ -34,7 +34,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/add"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="@dimen/middle_space"
                 android:layout_toRightOf="@+id/txtTitle"/>
 
         </RelativeLayout>
@@ -68,7 +68,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="9"
             android:id="@+id/txtStock"
-            android:text="Stock 00000"
             android:textColor="@color/text_color"/>
 
         <TextView
@@ -76,7 +75,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:id="@+id/txtStockValue"
-            android:text="Valeur du Stock 840 000 CHF"
             android:textColor="@color/text_color"/>
 
     </LinearLayout>
@@ -96,8 +94,4 @@
             android:textColor="@color/button_text"/>
 
     </RelativeLayout>
-
-
-
-
 </LinearLayout>

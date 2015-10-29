@@ -17,7 +17,7 @@
         android:id="@+id/txtTitle"
         android:textColor="@color/text_color"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Entrez les informations suivantes :"/>
+        android:text="@string/enter_following_informations_colon"/>
 
     <include layout="@layout/blue_line"/>
 
@@ -26,7 +26,7 @@
         android:id="@+id/productName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Nom du produit"
+        android:hint="@string/product_name"
         android:inputType="text"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color_hint"
@@ -36,7 +36,7 @@
         android:id="@+id/artNb"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Numéro d'article"
+        android:hint="@string/article_number"
         android:inputType="text"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color_hint"
@@ -46,14 +46,13 @@
         android:id="@+id/spinnerCategory"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/list_backcolor"
-        android:prompt="@string/select_category"/>
+        android:background="@color/list_backcolor"/>
 
     <EditText
         android:id="@+id/price"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Prix"
+        android:hint="@string/price"
         android:inputType="numberDecimal"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color_hint"
@@ -67,7 +66,7 @@
         android:inputType="textLongMessage"
         android:textColorHint="@color/text_color_hint"
         android:textColor="@color/text_color"
-        android:hint="Description"
+        android:hint="@string/description"
         android:textSize="12dp"/>
 
     <!-- Two buttons for cancelling or saving -->
@@ -85,7 +84,7 @@
             android:layout_weight="1"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
-            android:text="Annuler"/>
+            android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/buttonSave"
@@ -95,7 +94,7 @@
             android:layout_marginLeft="5dp"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
-            android:text="Enregistrer"/>
+            android:text="@string/Save"/>
 
     </LinearLayout>
 
