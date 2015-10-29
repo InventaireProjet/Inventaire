@@ -2,40 +2,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back_color"
     android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.androidprojects.inventaireii.MyProducts"
-    android:background="@color/back_color">
+    tools:context="com.androidprojects.inventaireii.MyProducts">
 
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtTitle"
                 android:text="@string/my_products"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/text_color"/>
+
+            <View
+                android:id="@+id/squareInventoryState"
+                android:layout_width="@dimen/square_width"
+                android:layout_height="@dimen/square_height"
+                android:layout_marginLeft="@dimen/middle_space"
+                android:layout_toRightOf="@+id/txtTitle"
+                android:visibility="invisible"
+                />
 
             <Button
                 android:id="@+id/buttonAddProduct"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/add"
                 android:layout_marginLeft="@dimen/middle_space"
-                android:layout_toRightOf="@+id/txtTitle"/>
+                android:layout_toRightOf="@+id/txtTitle"
+                android:background="@drawable/add"/>
+
+
+            <Button
+                android:id="@+id/buttonNext"
+                android:layout_width="@dimen/navigation_button"
+
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="&gt;"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/dark_Grey"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/buttonPrevious"
+                android:layout_width="@dimen/navigation_button"
+
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/buttonNext"
+                android:text="&lt;"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/dark_Grey"
+                android:visibility="invisible"/>
 
         </RelativeLayout>
         <include layout ="@layout/blue_line" />
@@ -43,55 +75,73 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/lvProducts"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:id="@+id/lvProducts"
         android:background="@color/list_backcolor">
     </ListView>
 
     <LinearLayout
+        android:id="@+id/layoutStock"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:id="@+id/layoutStock">
+        android:orientation="horizontal">
 
         <View
+            android:id="@+id/squareTotalStock"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@color/indicator_doing"
-            android:id="@+id/squareTotalStock" />
+            android:background="@color/indicator_doing" />
 
         <TextView
+            android:id="@+id/txtStock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:id="@+id/txtStock"
             android:textColor="@color/text_color"/>
 
         <TextView
+            android:id="@+id/txtStockValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:id="@+id/txtStockValue"
             android:textColor="@color/text_color"/>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buttonModify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/buttonModify"
-            android:text="@string/modify"
+            android:layout_weight="1"
             android:background="@color/button_background"
-            android:textColor="@color/button_text"/>
+            android:gravity="center"
+            android:text="@string/modify"
+            android:textColor="@color/button_text"
+            android:visibility="invisible"/>
 
-    </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@color/button_background"
+            android:gravity="center"
+            android:text="@string/delete"
+            android:textColor="@color/button_text"
+            android:visibility="invisible"/>
+        />
+
+
+    </LinearLayout>
 </LinearLayout>

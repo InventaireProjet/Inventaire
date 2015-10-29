@@ -38,7 +38,7 @@ public class ObjectsLists {
         ObjectsLists.productList = productList;
     }
 
-    public ArrayList<ObjectCategories> getCategoryList() {
+    public static ArrayList<ObjectCategories> getCategoryList() {
         return categoryList;
     }
 

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Category extends AppCompatActivity {
 
     ObjectsLists objectsLists = new ObjectsLists();
+    Button btnAdd;
     Button btnModify;
     Button btnDelete;
     PopupWindow popupWindow;
@@ -23,8 +24,9 @@ public class Category extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
 
+
+        setContentView(R.layout.activity_my_products);
 
 
         //Category name retrieved from the previous screen
@@ -32,6 +34,7 @@ public class Category extends AppCompatActivity {
         Intent intent = getIntent();
         final String category = intent.getStringExtra("categoryName");
         title.setText(category);
+
 
         btnModify = (Button) findViewById(R.id.buttonModify);
         btnModify.setOnClickListener(new View.OnClickListener() {

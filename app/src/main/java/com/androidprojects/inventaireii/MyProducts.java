@@ -48,6 +48,14 @@ public class MyProducts extends AppCompatActivity {
             }
         });
 
+
+        //Todo replace at the right place
+        View square = (View) findViewById(R.id.squareInventoryState);
+        Button buttonNext =(Button) findViewById(R.id.buttonNext);
+        Button buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
+
+
+
         // Fill the ListView
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         View header = (View) getLayoutInflater().inflate(R.layout.product_row_header, null);

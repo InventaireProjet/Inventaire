@@ -166,7 +166,7 @@ public class MyCategories extends AppCompatActivity {
             tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getBaseContext(), Category.class);
+                    Intent intent = new Intent(getBaseContext(), MyProducts.class);
                     String categoryName = category.getName();
                     intent.putExtra( "categoryName",categoryName);
                     startActivity(intent);
