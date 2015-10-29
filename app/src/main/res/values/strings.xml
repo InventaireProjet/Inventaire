@@ -66,6 +66,12 @@
     <string name="article_number">Numéro d\'article</string>
     <string name="price">Prix</string>
     <string name="description">Description</string>
-    <string name="Save">Enregistrer</string>
+    <string name="save">Enregistrer</string>
     <string name="warehouse_colon">Magasin :</string>
+    <string name="inventory_shorted">Inv.</string>
+    <string name="article_number_short">N° Art</string>
+    <string name="name_short">Nom</string>
+    <string name="category_short">Catégorie</string>
+    <string name="quantity_short">Qté</string>
+    <string name="warehouse">Magasin</string>
 </resources>

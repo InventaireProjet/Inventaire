@@ -94,7 +94,7 @@
             android:layout_marginLeft="5dp"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
-            android:text="@string/Save"/>
+            android:text="@string/save"/>
 
     </LinearLayout>
 

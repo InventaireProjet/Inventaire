@@ -9,28 +9,28 @@
         android:layout_height="@dimen/square_height"
         android:layout_weight="0"
         android:id="@+id/square"
-        android:text="Inv."/>
+        android:text="@string/inventory_shorted"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/no_art"
-        android:text="N° Art"/>
+        android:text="@string/article_number_short"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:id="@+id/name"
-        android:text="Nom"/>
+        android:text="@string/name_short"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:id="@+id/category"
-        android:text="Catégorie"/>
+        android:text="@string/category_short"/>
 
 
     <TextView
@@ -38,13 +38,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/quantity"
-        android:text="Qté"/>
+        android:text="@string/quantity_short"/>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:id="@+id/price"
-        android:text="Prix"/>
+        android:text="@string/price"/>
 
 </LinearLayout>
