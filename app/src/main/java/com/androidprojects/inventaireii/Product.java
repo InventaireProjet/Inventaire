@@ -189,11 +189,27 @@ public class Product extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        Intent intent;
+
+        switch (id) {
+            case R.id.goto_categories:
+                intent = new Intent(getBaseContext(), MyCategories.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.goto_warehouses:
+                intent = new Intent(getBaseContext(), MyWarehouses.class);
+                startActivity(intent);
+                return true;
+
+
+        }
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
+        */
         return super.onOptionsItemSelected(item);
     }
 

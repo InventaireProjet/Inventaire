@@ -191,13 +191,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:weightSum="4">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.5"/>
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="0dp"
@@ -209,19 +203,16 @@
             android:textColor="@color/button_text"
             android:text="@string/modify" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"/>
-
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="5dp"
             android:id="@+id/buttonSuppress"
             android:background="@color/button_background"
             android:textColor="@color/button_text"
             android:text="@string/suppress"/>
+
     </LinearLayout>
 
 </LinearLayout>
