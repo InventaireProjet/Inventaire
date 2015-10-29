@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name=".ActivityPopupOkCancel"
-            android:label="@string/title_activity_activity_popup_ok_cancel" >
+            android:label="@string/title_activity_popup_ok_cancel" >
         </activity>
         <activity
             android:name=".MyProducts"

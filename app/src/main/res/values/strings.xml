@@ -9,7 +9,7 @@
     <string name="warehouse_access">Accès par magasin</string>
     <string name="start_inventory">  Démarrer inventaire  </string>
     <string name="title_activity_popup_start_inventory">Lancement de l\'inventaire</string>
-    <string name="title_activity_activity_popup_ok_cancel">ActivityPopupOkCancel</string>
+    <string name="title_activity_popup_ok_cancel">ActivityPopupOkCancel</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
     <string name="title_activity_my_products">Mes Produits</string>
@@ -26,7 +26,7 @@
     <string name="delete_question">Etes-vous sûr de vouloir supprimer cette catégorie ?</string>
     <string name="new_category">Entrez le nom de la nouvelle catégorie :</string>
     <string name="delete_info">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
-    <string name="title_activity_product">Product</string>
+    <string name="title_activity_product">Détail produit</string>
     <string name="quantity_and_storage">Quantité et lieu de stockage</string>
     <string name="total_stock">Stock total :</string>
     <string name="stock_value">Valeur du stock :</string>
