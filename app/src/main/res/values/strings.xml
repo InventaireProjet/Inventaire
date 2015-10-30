@@ -12,7 +12,6 @@
     <string name="title_activity_popup_ok_cancel">ActivityPopupOkCancel</string>
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
-    <string name="title_activity_my_products">Mes Produits</string>
     <string name="my_products">Mes produits</string>
     <string name="modify">Modifier</string>
     <string name="my_categories">Mes catégories</string>
@@ -20,12 +19,12 @@
     <string name="inventory_state">Etat d\'inventaire</string>
     <string name="title_activity_my_categories">Mes catégories</string>
     <string name="add">+</string>
-    <string name="validate">valider</string>
+    <string name="validate">Valider</string>
     <string name="category_popup_title">Ajout d\'une catégorie</string>
     <string name="delete">Supprimer</string>
-    <string name="delete_question">Etes-vous sûr de vouloir supprimer cette catégorie ?</string>
+    <string name="delete_category_question">Etes-vous sûr de vouloir supprimer cette catégorie ?</string>
     <string name="new_category">Entrez le nom de la nouvelle catégorie :</string>
-    <string name="delete_info">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
+    <string name="delete_category_info">Notez que les éléments contenus dans la catégorie ne seront pas supprimés.</string>
     <string name="title_activity_product">Détail produit</string>
     <string name="quantity_and_storage">Quantité et lieu de stockage</string>
     <string name="total_stock">Stock total :</string>
@@ -75,4 +74,7 @@
     <string name="quantity_short">Qté</string>
     <string name="warehouse">Magasin</string>
     <string name="categories_initial">C</string>
+    <string name="title_activity_my_warehouses">Mes magasins</string>
+    <string name="title_activity_new_warehouse">Nouveau magasin</string>
+    <string name="warehouse_modification">Modification magasin</string>
 </resources>

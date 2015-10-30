@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class MyCategories extends AppCompatActivity {
 
-    ObjectsLists objectsLists = new ObjectsLists();
     PopupWindow popupWindow;
     Button addButton;
 
@@ -29,7 +28,7 @@ public class MyCategories extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
 
-        if (objectsLists.getCategoryList().size() == 0)
+        if (ObjectsLists.getCategoryList().size() == 0)
         {
             //Fake data
             ObjectCategories games = new ObjectCategories("done", "Jeux", "1/1");
@@ -40,14 +39,14 @@ public class MyCategories extends AppCompatActivity {
 
 
             // Adding objects to the list
-            objectsLists.getCategoryList().add(games);
-            objectsLists.getCategoryList().add(fishing);
-            objectsLists.getCategoryList().add(medical);
-            objectsLists.getCategoryList().add(biology);
+            ObjectsLists.getCategoryList().add(games);
+            ObjectsLists.getCategoryList().add(fishing);
+            ObjectsLists.getCategoryList().add(medical);
+            ObjectsLists.getCategoryList().add(biology);
         }
 
         //Using adapter
-        final ArrayAdapter adapter = new CategoriesAdapter(this, objectsLists.getCategoryList());
+        final ArrayAdapter adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
 
 
         // Fill the ListView
@@ -83,7 +82,7 @@ public class MyCategories extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
-                        objectsLists.getCategoryList().add(newCategory);
+                        ObjectsLists.getCategoryList().add(newCategory);
                         popupWindow.dismiss();
 
                     }
@@ -166,7 +165,7 @@ public class MyCategories extends AppCompatActivity {
             tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getBaseContext(), MyProducts.class);
+                    Intent intent = new Intent(getBaseContext(), Category.class);
                     String categoryName = category.getName();
                     intent.putExtra( "categoryName",categoryName);
                     startActivity(intent);

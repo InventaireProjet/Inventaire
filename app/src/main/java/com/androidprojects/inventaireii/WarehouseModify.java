@@ -16,9 +16,6 @@ import java.util.ArrayList;
 
 public class WarehouseModify extends AppCompatActivity {
 
-    //Todo reprendre xml de l'autre, doubler les text en edit, switcher l'affichage, récupérer les noms, ...
-
-    ObjectsLists objectsLists = new ObjectsLists();
     Button btnCancel;
     Button btnValidate;
     PopupWindow popupWindow;
@@ -73,7 +70,7 @@ public class WarehouseModify extends AppCompatActivity {
         warehouseName.setVisibility(View.INVISIBLE);
         editWarehouseName.setVisibility(View.VISIBLE);
 
-        ArrayList<ObjectWarehouse> warehouses = objectsLists.getWarehouseList();
+        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
         for (int i = 0; i <warehouses.size() ; i++) {
 

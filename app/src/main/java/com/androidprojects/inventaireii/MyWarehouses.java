@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class MyWarehouses extends AppCompatActivity {
 
-    ObjectsLists objectsLists = new ObjectsLists();
+   
     PopupWindow popupWindow;
     Button addButton;
 
@@ -33,7 +33,7 @@ public class MyWarehouses extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.txtTitle);
         title.setText("Mes magasins");
 
-        if (objectsLists.getWarehouseList().size()==0) {
+        if (ObjectsLists.getWarehouseList().size()==0) {
 
             //Fake data
             ObjectWarehouse freezer = new ObjectWarehouse( "Frigo", 5, 39, 52, "0900 985 65 32", "Rue Veermeil", "22B", "32AE6", "Wistchick", "Inconnu");
@@ -42,14 +42,14 @@ public class MyWarehouses extends AppCompatActivity {
             ObjectWarehouse cabinet = new ObjectWarehouse( "Armoire", 12, 12, 658, "056 874 98 12", "Strada  Egoisti", "70", "3814", "Stereo", "Italie");
 
             // Adding objects to the list
-            objectsLists.getWarehouseList().add(freezer);
-            objectsLists.getWarehouseList().add(eliteLib);
-            objectsLists.getWarehouseList().add(polarisLib);
-            objectsLists.getWarehouseList().add(cabinet);
+            ObjectsLists.getWarehouseList().add(freezer);
+            ObjectsLists.getWarehouseList().add(eliteLib);
+            ObjectsLists.getWarehouseList().add(polarisLib);
+            ObjectsLists.getWarehouseList().add(cabinet);
         }
 
         //Using adapter
-        final ArrayAdapter adapter = new WarehousesAdapter(this, objectsLists.getWarehouseList());
+        final ArrayAdapter adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
 
 
         // Fill the ListView

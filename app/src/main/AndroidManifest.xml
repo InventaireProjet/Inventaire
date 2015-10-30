@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".MyProducts"
-            android:label="@string/title_activity_my_products"
+            android:label="@string/my_products"
             android:screenOrientation="landscape" >
         </activity>
         <activity
@@ -31,18 +31,18 @@
         </activity>
         <activity
             android:name=".Category"
+            android:label="@string/category_short"
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name=".CategoryModify"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".MyWarehouses"
-            android:label="Mes magasins" >
+            android:label="@string/title_activity_my_warehouses" >
         </activity>
-        <activity android:name=".Warehouse" >
+        <activity android:name=".Warehouse"
+            android:label="@string/warehouse">
         </activity>
-        <activity android:name=".NewWarehouse" >
+        <activity android:name=".NewWarehouse"
+            android:label="@string/title_activity_new_warehouse">
         </activity>
         <activity
             android:name=".Product"
@@ -52,9 +52,8 @@
             android:name=".ProductNewOrModify"
             android:label="@string/title_activity_product_new_or_modify" >
         </activity>
-        <activity android:name=".WarehouseModify" >
-        </activity>
-        <activity android:name=".StockWarehouse" >
+        <activity android:name=".WarehouseModify"
+            android:label="@string/warehouse_modification">
         </activity>
         <activity
             android:name=".StockNewOrModify"

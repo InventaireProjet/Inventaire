@@ -15,10 +15,12 @@ import java.util.ArrayList;
 
 public class Category extends AppCompatActivity {
 
-    ObjectsLists objectsLists = new ObjectsLists();
-    Button btnAdd;
+
     Button btnModify;
     Button btnDelete;
+    Button btnNext;
+    Button btnPrevious;
+    Button btnAdd;
     PopupWindow popupWindow;
 
     @Override
@@ -27,7 +29,18 @@ public class Category extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_my_products);
+        btnAdd = (Button) findViewById(R.id.buttonAddProduct);
+        btnAdd.setVisibility(View.INVISIBLE);
 
+        btnNext = (Button) findViewById(R.id.buttonNext);
+        btnNext.setVisibility(View.VISIBLE);
+
+        btnPrevious = (Button) findViewById(R.id.buttonPrevious);
+        btnPrevious.setVisibility(View.VISIBLE);
+
+        View squareInventoryState = (View) findViewById(R.id.squareInventoryState);
+        squareInventoryState.setVisibility(View.VISIBLE);
+        squareInventoryState.setBackgroundColor(getResources().getColor(R.color.indicator_doing));
 
         //Category name retrieved from the previous screen
         TextView title = (TextView) findViewById(R.id.txtTitle);
@@ -35,17 +48,28 @@ public class Category extends AppCompatActivity {
         final String category = intent.getStringExtra("categoryName");
         title.setText(category);
 
+//TODO POPUP MODIF NOM CATEGORIE
 
         btnModify = (Button) findViewById(R.id.buttonModify);
+        btnModify.setVisibility(View.VISIBLE);
         btnModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), CategoryModify.class);
-                startActivity(intent);
+                LayoutInflater layoutInflater =
+                        (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                View popupView = layoutInflater.inflate(R.layout.delete_category_popup, null);
+                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+
+
+
             }
         });
 
+
         btnDelete = (Button) findViewById(R.id.buttonDelete);
+        btnDelete.setVisibility(View.VISIBLE);
         btnDelete.setOnClickListener(new Button.OnClickListener() {
 
             @Override
@@ -69,13 +93,13 @@ public class Category extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        ArrayList<ObjectCategories> categories = objectsLists.getCategoryList();
+                        ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
 
                         for (int i = 0; i <categories.size() ; i++) {
 
                             if (categories.get(i).getName().equals(category)){
 
-                                objectsLists.getCategoryList().remove(i);
+                                ObjectsLists.getCategoryList().remove(i);
                             }
                         }
 

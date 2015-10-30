@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class Warehouse extends AppCompatActivity {
 
-    ObjectsLists objectsLists = new ObjectsLists();
     Button btnModify;
     Button btnDelete;
     PopupWindow popupWindow;
@@ -49,7 +48,7 @@ public class Warehouse extends AppCompatActivity {
         final String name = intent.getStringExtra("warehouseName");
         warehouseName.setText(name);
 
-        ArrayList<ObjectWarehouse> warehouses = objectsLists.getWarehouseList();
+        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
         for (int i = 0; i <warehouses.size() ; i++) {
 
@@ -129,13 +128,13 @@ public class Warehouse extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                ArrayList<ObjectWarehouse> warehouses = objectsLists.getWarehouseList();
+                                ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
                                 for (int i = 0; i < warehouses.size(); i++) {
 
                                     if (warehouses.get(i).getName().equals(name)) {
 
-                                        objectsLists.getWarehouseList().remove(i);
+                                        ObjectsLists.getWarehouseList().remove(i);
                                     }
                                 }
 
@@ -150,7 +149,7 @@ public class Warehouse extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                ArrayList<ObjectWarehouse> warehouses = objectsLists.getWarehouseList();
+                                ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
                                 //TODO Deleting stock product in this warehouse (data management)
 
@@ -159,7 +158,7 @@ public class Warehouse extends AppCompatActivity {
 
                                     if (warehouses.get(i).getName().equals(name)) {
 
-                                        objectsLists.getWarehouseList().remove(i);
+                                        ObjectsLists.getWarehouseList().remove(i);
                                     }
                                 }
 

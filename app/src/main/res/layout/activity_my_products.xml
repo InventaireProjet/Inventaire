@@ -50,7 +50,6 @@
             <Button
                 android:id="@+id/buttonNext"
                 android:layout_width="@dimen/navigation_button"
-
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="&gt;"
@@ -61,7 +60,6 @@
             <Button
                 android:id="@+id/buttonPrevious"
                 android:layout_width="@dimen/navigation_button"
-
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/buttonNext"
                 android:text="&lt;"

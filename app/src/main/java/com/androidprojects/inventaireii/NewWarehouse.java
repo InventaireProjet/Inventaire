@@ -12,7 +12,6 @@ public class NewWarehouse extends AppCompatActivity {
 
     Button btnCancel;
     Button btnValidate;
-    ObjectsLists objectsLists = new ObjectsLists();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +53,7 @@ public class NewWarehouse extends AppCompatActivity {
                         warehouseLocation.getText().toString(),
                         warehouseCountry.getText().toString());
 
-                objectsLists.getWarehouseList().add(newWarehouse);
+                ObjectsLists.getWarehouseList().add(newWarehouse);
                 Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
                 startActivity(intent);
             }
