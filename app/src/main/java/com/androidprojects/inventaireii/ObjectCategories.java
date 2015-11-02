@@ -29,11 +29,23 @@ public class ObjectCategories {
         return color;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getInventoryState() {
         return inventoryState;
     }
 
+    public void setInventoryState(String inventoryState) {
+        this.inventoryState = inventoryState;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

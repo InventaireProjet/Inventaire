@@ -77,4 +77,6 @@
     <string name="title_activity_my_warehouses">Mes magasins</string>
     <string name="title_activity_new_warehouse">Nouveau magasin</string>
     <string name="warehouse_modification">Modification magasin</string>
+    <string name="modify_Category">Modification du nom de la catégorie</string>
+
 </resources>

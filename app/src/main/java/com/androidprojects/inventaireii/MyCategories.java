@@ -84,6 +84,7 @@ public class MyCategories extends AppCompatActivity {
                         ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
                         ObjectsLists.getCategoryList().add(newCategory);
                         popupWindow.dismiss();
+                        adapter.notifyDataSetChanged();
 
                     }
                 });
@@ -175,8 +176,4 @@ public class MyCategories extends AppCompatActivity {
             return convertView;
         }
     }
-
-
-
-
 }
