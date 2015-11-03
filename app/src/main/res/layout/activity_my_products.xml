@@ -34,6 +34,7 @@
                 android:layout_width="@dimen/square_width"
                 android:layout_height="@dimen/square_height"
                 android:layout_marginLeft="@dimen/middle_space"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/txtTitle"
                 android:visibility="invisible"
                 />
@@ -43,6 +44,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="@dimen/middle_space"
+                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/txtTitle"
                 android:background="@drawable/add"/>
 
@@ -124,7 +126,7 @@
             android:gravity="center"
             android:text="@string/modify"
             android:textColor="@color/button_text"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
 
         <Button

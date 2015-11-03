@@ -24,10 +24,10 @@ public class Warehouse extends AppCompatActivity {
 
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
-        View squareInventoryState = (View) findViewById(R.id.squareInventoryState);
+        View squareInventoryState = findViewById(R.id.squareInventoryState);
         TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
         //TODO ?
-        View squareFreeSpace = (View) findViewById(R.id.squareFreeSpace);
+        View squareFreeSpace = findViewById(R.id.squareFreeSpace);
         TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
         TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
         TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
@@ -55,9 +55,10 @@ public class Warehouse extends AppCompatActivity {
             if (warehouses.get(i).getName().equals(name)){
 
                 final ObjectWarehouse warehouse = warehouses.get(i);
+                ArrayList <ObjectProducts> productsInWarehouse =  Methods.getObjectsListbyWarehouse(name);
 
                 //First part
-                squareInventoryState.setBackgroundColor(giveColor(warehouse.getColor()));
+                squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
                 inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
                 //Second part
@@ -86,7 +87,7 @@ public class Warehouse extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(getBaseContext(), MyProducts.class);
+                        Intent intent = new Intent(getBaseContext(), WarehouseStock.class);
                         intent.putExtra("warehouseName", name);
                         startActivity(intent);
                     }

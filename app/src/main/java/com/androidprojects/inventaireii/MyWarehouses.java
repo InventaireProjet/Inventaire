@@ -23,7 +23,7 @@ public class MyWarehouses extends AppCompatActivity {
    
     PopupWindow popupWindow;
     Button addButton;
-
+     ArrayAdapter adapter;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +33,8 @@ public class MyWarehouses extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.txtTitle);
         title.setText("Mes magasins");
 
-        if (ObjectsLists.getWarehouseList().size()==0) {
-
-            //Fake data
-            ObjectWarehouse freezer = new ObjectWarehouse( "Frigo", 5, 39, 52, "0900 985 65 32", "Rue Veermeil", "22B", "32AE6", "Wistchick", "Inconnu");
-            ObjectWarehouse eliteLib = new ObjectWarehouse("Bibliothèque Elite", 1, 3, 68, "024 656 98 76", "Rue des Tonneliers", "7", "1006", "Lausanne", "Suisse");
-            ObjectWarehouse polarisLib = new ObjectWarehouse( "Bibliothèque Polaris", 0, 2, 36, "041 156 98 76", "Rue des Camps", "4", "1265", "Terre-Pleine", "Suisse");
-            ObjectWarehouse cabinet = new ObjectWarehouse( "Armoire", 12, 12, 658, "056 874 98 12", "Strada  Egoisti", "70", "3814", "Stereo", "Italie");
-
-            // Adding objects to the list
-            ObjectsLists.getWarehouseList().add(freezer);
-            ObjectsLists.getWarehouseList().add(eliteLib);
-            ObjectsLists.getWarehouseList().add(polarisLib);
-            ObjectsLists.getWarehouseList().add(cabinet);
-        }
-
-        //Using adapter
-        final ArrayAdapter adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
+               //Using adapter
+         adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
 
 
         // Fill the ListView
@@ -99,6 +84,12 @@ public class MyWarehouses extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     private class WarehousesAdapter extends ArrayAdapter {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
@@ -122,9 +113,13 @@ public class MyWarehouses extends AppCompatActivity {
             TextView tvName = (TextView) convertView.findViewById(R.id.name);
             TextView tvState = (TextView) convertView.findViewById(R.id.inventoryState);
 
+
+
             //Data to display are retrieved
             tvName.setText(warehouse.getName());
-            tvSquare.setBackgroundColor(giveColor(warehouse.getColor()));
+            //Retrieving the products in the warehouse to know which color to display
+            ArrayList <ObjectProducts> productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+            tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));
             tvState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
             //Sending the warehouse name to the next screen

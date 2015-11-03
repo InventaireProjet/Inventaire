@@ -22,7 +22,7 @@ public class MyCategories extends AppCompatActivity {
 
     PopupWindow popupWindow;
     Button addButton;
-
+    ArrayAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +46,7 @@ public class MyCategories extends AppCompatActivity {
         }
 
         //Using adapter
-        final ArrayAdapter adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
+        adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
 
 
         // Fill the ListView
@@ -133,6 +133,12 @@ public class MyCategories extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     private class CategoriesAdapter extends ArrayAdapter {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
@@ -158,7 +164,9 @@ public class MyCategories extends AppCompatActivity {
 
             //Data to display are retrieved
             tvName.setText(category.getName());
-            tvSquare.setBackgroundColor(giveColor(category.getColor()));
+            //Retrieving the products in the category to know which color to display
+            ArrayList <ObjectProducts> productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
+            tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInCategory)));
             tvState.setText(category.getInventoryState());
 
             //Sending the category name to the next screen

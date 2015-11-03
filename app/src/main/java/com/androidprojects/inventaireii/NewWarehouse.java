@@ -41,7 +41,7 @@ public class NewWarehouse extends AppCompatActivity {
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//TODO Manage the case of no entry
                 ObjectWarehouse newWarehouse = new ObjectWarehouse(
                         warehouseName.getText().toString(),
                         0, 0,

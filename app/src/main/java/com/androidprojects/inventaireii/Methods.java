@@ -54,6 +54,24 @@ public class Methods extends AppCompatActivity {
         return "doing";
     }
 
+    public static String getInventoryState(ArrayList<ObjectProducts> productsToDisplay) {
+        int nbControlled = 0;
+        int nbNotControlled = 0;
+        for (ObjectProducts p : productsToDisplay){
+            switch (getInventoryState(p)) {
+                case "done": nbControlled++ ; break ;
+                case "todo": nbNotControlled++ ; break;
+            }
+        }
+
+        if (nbControlled == 0)
+            return "todo";
+
+        if (nbNotControlled == 0)
+            return "done";
+
+        return "doing";
+    }
 
     public static ArrayList getObjectsListbyCategory(String category) {
 
@@ -63,6 +81,23 @@ public class Methods extends AppCompatActivity {
             if (ObjectsLists.getProductList().get(i).getCategory().getName().equals(category))
             {
                 productsSelected.add(ObjectsLists.getProductList().get(i));
+            }
+        }
+        return  productsSelected;
+    }
+
+    public static ArrayList getObjectsListbyWarehouse(String warehouse) {
+
+        ArrayList <ObjectProducts> productsSelected = new ArrayList<ObjectProducts>();
+
+        for (int i =0; i<ObjectsLists.getProductList().size();i++)
+        {
+            for (int j=0; j<ObjectsLists.getProductList().get(i).getStocks().size(); j++)
+            {
+                if (ObjectsLists.getProductList().get(i).getStocks().get(j).getWarehouse().getName().equals(warehouse))
+                {
+                    productsSelected.add(ObjectsLists.getProductList().get(i));
+                }
             }
         }
         return  productsSelected;

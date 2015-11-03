@@ -14,21 +14,23 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category extends AppCompatActivity {
+public class WarehouseStock extends AppCompatActivity {
+
 
     //TODO get rid of method ?
-   // Methods methods = new Methods();
-    Button btnModify;
+    // Methods methods = new Methods();
+
     Button btnDelete;
     Button btnNext;
     Button btnPrevious;
     Button btnAdd;
     PopupWindow popupWindow;
     ArrayList<ObjectProducts> productsToDisplay = new ArrayList<ObjectProducts>();
-     ArrayAdapter adapter;
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +47,19 @@ public class Category extends AppCompatActivity {
         btnPrevious = (Button) findViewById(R.id.buttonPrevious);
         btnPrevious.setVisibility(View.VISIBLE);
 
-        //Category name retrieved from the previous screen
-        final TextView title = (TextView) findViewById(R.id.txtTitle);
-        Intent intent = getIntent();
-        final String category = intent.getStringExtra("categoryName");
-        title.setText(category);
 
-        //Define the products to display
-        productsToDisplay =  Methods.getObjectsListbyCategory(category);
-
-        //Inventory state
         View squareInventoryState = findViewById(R.id.squareInventoryState);
         squareInventoryState.setVisibility(View.VISIBLE);
+
+
+        //Warehouse name retrieved from the previous screen
+        final TextView title = (TextView) findViewById(R.id.txtTitle);
+        Intent intent = getIntent();
+        final String warehouseName = intent.getStringExtra("warehouseName");
+        title.setText(warehouseName);
+
+        //Define the products to display
+        productsToDisplay =  Methods.getObjectsListbyWarehouse(warehouseName);
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
 
 // Set onClickListener to button "Previous"
@@ -64,8 +67,8 @@ public class Category extends AppCompatActivity {
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Category.class);
-                int nbItems = ObjectsLists.getCategoryList().size();
+                Intent intent = new Intent(getApplicationContext(), WarehouseStock.class);
+                int nbItems = ObjectsLists.getWarehouseList().size();
                 //TODO GéRER AVEC ID AVEC VRAIES DONNEES
                 //intent.putExtra("position", (position+nbItems-1)%nbItems);
                 startActivity(intent);
@@ -79,8 +82,8 @@ public class Category extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Category.class);
-                int nbItems = ObjectsLists.getCategoryList().size();
+                Intent intent = new Intent(getApplicationContext(), WarehouseStock.class);
+                int nbItems = ObjectsLists.getWarehouseList().size();
                 //TODO GéRER AVEC ID AVEC VRAIES DONNEES
                 //intent.putExtra("position", (position + nbItems + 1) % nbItems);
                 startActivity(intent);
@@ -96,83 +99,21 @@ public class Category extends AppCompatActivity {
         adapter = new ProductsAdapter(this, productsToDisplay);
         lvProducts.setAdapter(adapter);
 
-        // Total quantity of products and value of stock
+// Total quantity of products and value of stock
         int totalQuantity = 0;
         double totalValue = 0.0;
         for (ObjectProducts product : productsToDisplay) {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
-        View squareTotalStock = findViewById(R.id.squareTotalStock);
+        View squareTotalStock =  findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
         txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
 
-        //Modify the category name
-        btnModify = (Button) findViewById(R.id.buttonModify);
-        btnModify.setVisibility(View.VISIBLE);
-        btnModify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater layoutInflater =
-                        (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
-                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
-                        500);
-
-                //To view the keyboard
-                popupWindow.setFocusable(true);
-
-                // Catch the elements of the pop-up view
-                final TextView title2 = (TextView) popupView.findViewById(R.id.txtTitle);
-                Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
-                Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
-                final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
-
-                final String categoryName = title.getText().toString();
-
-                //Display the title and the category name in EditText
-                title2.setText(getResources().getText(R.string.modify_Category));
-                userEntry.setText(categoryName);
-
-                //Saving the new category name by validating the text entry
-                buttonValidate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-//TODO CHANGE WITH DATA
-                        for (int i = 0; i < ObjectsLists.getCategoryList().size(); i++) {
-
-                            if (ObjectsLists.getCategoryList().get(i).getName().equals(categoryName)) {
-
-                                ObjectsLists.getCategoryList().get(i).setName(userEntry.getText().toString());
-                            }
-                        }
-                        title.setText(userEntry.getText().toString());
-                        adapter.notifyDataSetChanged();
-                        popupWindow.dismiss();
-
-                    }
-                });
-
-                buttonCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
-
-                popupWindow.showAsDropDown(btnModify, 0, -100);
-
-
-
-            }
-        });
-
-//Delete the category
+//Delete the warehouse
         btnDelete = (Button) findViewById(R.id.buttonDelete);
         btnDelete.setVisibility(View.VISIBLE);
         btnDelete.setOnClickListener(new Button.OnClickListener() {
@@ -182,36 +123,59 @@ public class Category extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                View popupView = layoutInflater.inflate(R.layout.delete_category_popup, null);
+                View popupView = layoutInflater.inflate(R.layout.delete_warehouse_popup, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
 
 
                 // Catch the elements of the pop-up view
-                Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
+                Button buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
+                Button buttonDeleteAll = (Button) popupView.findViewById(R.id.buttonDeleteAll);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
-
-                //Deleting the category by validating the text entry
-                buttonValidate.setOnClickListener(new View.OnClickListener() {
+                //Deleting the warehouse
+                buttonDeleteWarehouse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
+                        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
-                        for (int i = 0; i <categories.size() ; i++) {
+                        for (int i = 0; i < warehouses.size(); i++) {
 
-                            if (categories.get(i).getName().equals(category)){
+                            if (warehouses.get(i).getName().equals(warehouseName)) {
 
-                                ObjectsLists.getCategoryList().remove(i);
+                                ObjectsLists.getWarehouseList().remove(i);
                             }
                         }
 
                         popupWindow.dismiss();
-                        Intent intent = new Intent(getBaseContext(), MyCategories.class);
+                        Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
                         startActivity(intent);
+                    }
+                });
 
+                //Deleting the warehouse and all its stock
+                buttonDeleteAll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
+
+                        //TODO Deleting stock product in this warehouse (data management)
+
+
+                        for (int i = 0; i < warehouses.size(); i++) {
+
+                            if (warehouses.get(i).getName().equals(warehouseName)) {
+
+                                ObjectsLists.getWarehouseList().remove(i);
+                            }
+                        }
+
+                        popupWindow.dismiss();
+                        Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
+                        startActivity(intent);
                     }
                 });
 
@@ -222,13 +186,14 @@ public class Category extends AppCompatActivity {
                     }
                 });
 
-                popupWindow.showAsDropDown(buttonValidate, 0, -100);
+                popupWindow.showAsDropDown(buttonDeleteWarehouse, 0, -100);
 
             }
         });
 
     }
 
+    //Refreshing the adapter so it shows the changes
     @Override
     protected void onResume() {
         super.onResume();
@@ -285,3 +250,4 @@ public class Category extends AppCompatActivity {
         }
     }
 }
+

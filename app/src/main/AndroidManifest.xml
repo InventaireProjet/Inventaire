@@ -59,6 +59,10 @@
             android:name=".StockNewOrModify"
             android:label="@string/title_activity_stock_new_or_modify" >
         </activity>
+        <activity android:name=".WarehouseStock"
+            android:label="@string/warehouse_stock"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

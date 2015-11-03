@@ -27,10 +27,10 @@ public class WarehouseModify extends AppCompatActivity {
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
         final EditText editWarehouseName = (EditText) findViewById(R.id.editWarehouseName);
-        View squareInventoryState = (View) findViewById(R.id.squareInventoryState);
+        View squareInventoryState = findViewById(R.id.squareInventoryState);
         TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
         //TODO ?
-        View squareFreeSpace = (View) findViewById(R.id.squareFreeSpace);
+        View squareFreeSpace = findViewById(R.id.squareFreeSpace);
         TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
         TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
         TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
@@ -79,7 +79,9 @@ public class WarehouseModify extends AppCompatActivity {
                 final ObjectWarehouse warehouse = warehouses.get(i);
 
                 //First part
-                squareInventoryState.setBackgroundColor(giveColor(warehouse.getColor()));
+                //Retrieving the products in the warehouse to know which color to display
+                ArrayList <ObjectProducts> productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+                squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
                 inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
                 //Second part
@@ -128,7 +130,7 @@ public class WarehouseModify extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        Intent intent = new Intent(getBaseContext(), MyProducts.class);
+                        Intent intent = new Intent(getBaseContext(), WarehouseStock.class);
                         intent.putExtra("warehouseName", name);
                         startActivity(intent);
                     }
@@ -164,7 +166,7 @@ public class WarehouseModify extends AppCompatActivity {
 
 
                         Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                        intent.putExtra("warehouseName", name);
+                        intent.putExtra("warehouseName", editWarehouseName.getText().toString());
                         startActivity(intent);
 
                     }
