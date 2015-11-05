@@ -76,7 +76,6 @@ public class MyCategories extends AppCompatActivity {
                 final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
 
 
-
                 //Saving the new category by validating the text entry
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -114,20 +113,46 @@ public class MyCategories extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_categories, menu);
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+        menu.findItem(R.id.goto_categories).setEnabled(false);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        Intent intent;
+
+        switch (id) {
+
+            case R.id.go_home:
+                intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.goto_products:
+                intent = new Intent(getBaseContext(), MyProducts.class);
+                startActivity(intent);
+                return true;
+
+
+            case R.id.goto_warehouses:
+                intent = new Intent(getBaseContext(), MyWarehouses.class);
+                startActivity(intent);
+                return true;
+
+           /* case R.id.action_search:
+                intent = new Intent(getBaseContext(), MyWarehouses.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_settings:
+                intent = new Intent(getBaseContext(), Settings.class);
+                startActivity(intent);
+                return true;*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -184,4 +209,7 @@ public class MyCategories extends AppCompatActivity {
             return convertView;
         }
     }
+
+
+
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.androidprojects.inventaireii.Product">
+
+
+    <item android:id="@+id/go_home"
+        android:icon="@drawable/home_w"
+        android:orderInCategory="0"
+        android:title="home"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/goto_products"
+
+        android:orderInCategory="1"
+        android:title="@string/products_initial"
+        app:showAsAction="always" />
+
+
+    <item android:id="@+id/goto_categories"
+        android:orderInCategory="2"
+        android:title="@string/categories_initial"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/goto_warehouses"
+        android:orderInCategory="3"
+        android:title="@string/warehouses_initial"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="4"
+        android:title="search"/>
+
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/add"
+        android:orderInCategory="5"
+                android:title="@string/action_settings"
+
+        app:showAsAction="ifRoom" />
+
+</menu>
