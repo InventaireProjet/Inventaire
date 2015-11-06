@@ -29,6 +29,7 @@ public class MyProducts extends AppCompatActivity {
         return productsList;
     }
     ArrayAdapter adapter;
+    View squareTotalStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class MyProducts extends AppCompatActivity {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
-        View squareTotalStock = (View) findViewById(R.id.squareTotalStock);
+        squareTotalStock = (View) findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(giveColor(getInventoryState()));
@@ -154,6 +155,7 @@ public class MyProducts extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+        squareTotalStock.setBackgroundColor(giveColor(getInventoryState()));
     }
 
     private class ProductsAdapter extends ArrayAdapter {

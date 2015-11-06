@@ -242,6 +242,7 @@ public class Product extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+        squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
     }
 
     private class StocksAdapter extends ArrayAdapter {
