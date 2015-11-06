@@ -24,6 +24,9 @@ public class StockNewOrModify extends AppCompatActivity {
     ObjectStock stock;
     int productPosition;
     int stockPosition;
+    TextView txtProductName;
+    ToggleButton switchControlled;
+    EditText etQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class StockNewOrModify extends AppCompatActivity {
         });
 
         // Get the elements
-        TextView txtProductName = (TextView) findViewById(R.id.txtProductName);
+        txtProductName = (TextView) findViewById(R.id.txtProductName);
         final ToggleButton switchControlled = (ToggleButton) findViewById(R.id.switchControlled);
         final EditText etQuantity = (EditText) findViewById(R.id.etQuantity);
 
@@ -113,7 +116,7 @@ public class StockNewOrModify extends AppCompatActivity {
                 String message = "";
                 if (stockPosition == -1) {
                     // New stock, to create
-                    stock = new ObjectStock(Integer.getInteger(etQuantity.getText().toString()),
+                    stock = new ObjectStock(Integer.parseInt(etQuantity.getText().toString()),
                             switchControlled.isChecked(),
                             product,
                             ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
