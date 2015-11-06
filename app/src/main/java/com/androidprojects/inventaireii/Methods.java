@@ -1,6 +1,8 @@
 package com.androidprojects.inventaireii;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -101,6 +103,31 @@ public class Methods extends AppCompatActivity {
             }
         }
         return  productsSelected;
+    }
+
+    // Method for management of the ActionBar
+    public static Class onOptionsItemSelected(int id){
+
+        Intent intent;
+
+        switch (id) {
+            case R.id.go_home:
+                return MainActivity.class;
+
+            case R.id.goto_products:
+                return MyProducts.class;
+
+            case R.id.goto_categories:
+                return MyCategories.class;
+
+            case R.id.goto_warehouses:
+                return MyWarehouses.class;
+
+            case R.id.action_search:
+                return MyWarehouses.class;
+
+        }
+        return null;
     }
 
 

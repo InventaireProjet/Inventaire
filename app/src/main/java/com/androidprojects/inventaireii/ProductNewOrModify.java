@@ -104,7 +104,11 @@ public class ProductNewOrModify extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_product_new_or_modify, menu);
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+
+        // Hide the buttons we don't need
+        menu.findItem(R.id.goto_products).setVisible(false);
+
         return true;
     }
 
@@ -115,10 +119,7 @@ public class ProductNewOrModify extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
 
         return super.onOptionsItemSelected(item);
     }

@@ -127,7 +127,11 @@ public class MyProducts extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_products, menu);
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+
+        // Hide the buttons we don't need
+        menu.findItem(R.id.goto_products).setVisible(false);
+
         return true;
     }
 
@@ -138,10 +142,13 @@ public class MyProducts extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
+        startActivity(intent);
+
+        /*noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

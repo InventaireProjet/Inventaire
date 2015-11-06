@@ -146,7 +146,11 @@ public class StockNewOrModify extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_stock_new_or_modify, menu);
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+
+        // Hide the buttons we don't need
+        menu.findItem(R.id.goto_products).setVisible(false);
+
         return true;
     }
 
