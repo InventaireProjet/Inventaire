@@ -28,6 +28,7 @@ public class MyProducts extends AppCompatActivity {
     public List<ObjectProducts> getProductsList(){
         return productsList;
     }
+    ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class MyProducts extends AppCompatActivity {
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         View header = (View) getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
-        lvProducts.setAdapter(new ProductsAdapter(this, productsList));
+        adapter = new ProductsAdapter(this, productsList);
+        lvProducts.setAdapter(adapter);
 
 
         // Total quantity of products and value of stock
@@ -145,12 +147,13 @@ public class MyProducts extends AppCompatActivity {
         Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
         startActivity(intent);
 
-        /*noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
     private class ProductsAdapter extends ArrayAdapter {

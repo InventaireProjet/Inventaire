@@ -22,6 +22,8 @@ public class Product extends AppCompatActivity {
     ObjectCategories category;
     ObjectProducts product;
     int position;
+    ArrayAdapter adapter;
+    View squareTotalStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,12 @@ public class Product extends AppCompatActivity {
         buttonAllControlled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Set all stocks to controlled
                 for (ObjectStock s : product.getStocks()) {
                     s.setControlled(true);
                 }
+                adapter.notifyDataSetChanged();
+                squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
             }
         });
 
@@ -99,7 +104,8 @@ public class Product extends AppCompatActivity {
         ListView lvStock = (ListView) findViewById(R.id.lvStocks);
         View header = (View) getLayoutInflater().inflate(R.layout.stock_row_header, null);
         lvStock.addHeaderView(header);
-        lvStock.setAdapter(new StocksAdapter(this, product.getStocks()));
+        adapter = new StocksAdapter(this, product.getStocks());
+        lvStock.setAdapter(adapter);
 
         // Set Values below the ListView
         TextView txtValueTotalStock = (TextView) findViewById(R.id.txtValueTotalStock);
@@ -110,7 +116,7 @@ public class Product extends AppCompatActivity {
         txtDescription.setText(product.getDescription());
 
         // Set color of square below the ListView
-        View squareTotalStock = (View) findViewById(R.id.squareTotalStock);
+        squareTotalStock = (View) findViewById(R.id.squareTotalStock);
         squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
 
         // Set listener to Button "MODIFY"
@@ -232,6 +238,11 @@ public class Product extends AppCompatActivity {
         return "doing";
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
     private class StocksAdapter extends ArrayAdapter {
 
