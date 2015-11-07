@@ -66,7 +66,7 @@ public class MyWarehouses extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_action_bar, menu);
-        menu.findItem(R.id.goto_warehouses).setEnabled(false);
+        menu.findItem(R.id.goto_warehouses).setVisible(false);
         return true;
     }
 

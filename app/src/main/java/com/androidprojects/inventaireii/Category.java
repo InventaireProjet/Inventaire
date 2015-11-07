@@ -22,7 +22,7 @@ import java.util.List;
 public class Category extends AppCompatActivity {
 
     //TODO get rid of method ?
-   // Methods methods = new Methods();
+    // Methods methods = new Methods();
     Button btnModify;
     Button btnDelete;
     Button btnNext;
@@ -30,7 +30,10 @@ public class Category extends AppCompatActivity {
     Button btnAdd;
     PopupWindow popupWindow;
     ArrayList<ObjectProducts> productsToDisplay = new ArrayList<ObjectProducts>();
-     ArrayAdapter adapter;
+    ArrayAdapter adapter;
+    View square;
+    View squareInventoryState;
+    View squareTotalStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class Category extends AppCompatActivity {
         productsToDisplay =  Methods.getObjectsListbyCategory(category);
 
         //Inventory state
-        View squareInventoryState = findViewById(R.id.squareInventoryState);
+        squareInventoryState = findViewById(R.id.squareInventoryState);
         squareInventoryState.setVisibility(View.VISIBLE);
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
 
@@ -105,7 +108,7 @@ public class Category extends AppCompatActivity {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
-        View squareTotalStock = findViewById(R.id.squareTotalStock);
+        squareTotalStock = findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
@@ -235,6 +238,8 @@ public class Category extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+        squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
     }
 
     @Override
@@ -299,7 +304,7 @@ public class Category extends AppCompatActivity {
             }
 
             // Effective linking with the product_row layout
-            View square = convertView.findViewById(R.id.square);
+            square = convertView.findViewById(R.id.square);
             TextView txtArtNb = (TextView) convertView.findViewById(R.id.no_art);
             TextView txtName = (TextView) convertView.findViewById(R.id.name);
             TextView txtCategory = (TextView) convertView.findViewById(R.id.category);

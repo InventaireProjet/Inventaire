@@ -1,5 +1,6 @@
 package com.androidprojects.inventaireii;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,27 +25,13 @@ public class MyCategories extends AppCompatActivity {
     PopupWindow popupWindow;
     Button addButton;
     ArrayAdapter adapter;
+    View tvSquare;
+    ArrayList <ObjectProducts> productsInCategory;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
 
-        if (ObjectsLists.getCategoryList().size() == 0)
-        {
-            //Fake data
-            ObjectCategories games = new ObjectCategories("done", "Jeux", "1/1");
-            ObjectCategories fishing = new ObjectCategories("doing", "Pêche", "6/8");
-            ObjectCategories medical = new ObjectCategories("todo", "Médical", "0/36");
-            ObjectCategories biology = new ObjectCategories("done", "Biologie", "11/11");
-
-
-
-            // Adding objects to the list
-            ObjectsLists.getCategoryList().add(games);
-            ObjectsLists.getCategoryList().add(fishing);
-            ObjectsLists.getCategoryList().add(medical);
-            ObjectsLists.getCategoryList().add(biology);
-        }
 
         //Using adapter
         adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
@@ -114,7 +102,16 @@ public class MyCategories extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_action_bar, menu);
-        menu.findItem(R.id.goto_categories).setEnabled(false);
+        menu.findItem(R.id.goto_categories).setVisible(false);
+
+
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
@@ -144,12 +141,12 @@ public class MyCategories extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-           /* case R.id.action_search:
-                intent = new Intent(getBaseContext(), MyWarehouses.class);
+           case R.id.action_search:
+                intent = new Intent(getBaseContext(), SearchActivity.class);
                 startActivity(intent);
                 return true;
 
-            case R.id.action_settings:
+            /*case R.id.action_settings:
                 intent = new Intent(getBaseContext(), Settings.class);
                 startActivity(intent);
                 return true;*/
@@ -158,10 +155,13 @@ public class MyCategories extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+
     }
 
     private class CategoriesAdapter extends ArrayAdapter {
@@ -183,14 +183,14 @@ public class MyCategories extends AppCompatActivity {
             }
 
             //Effective linking with the categories_row layout
-            View tvSquare = convertView.findViewById(R.id.square);
+             tvSquare = convertView.findViewById(R.id.square);
             TextView tvName = (TextView) convertView.findViewById(R.id.name);
             TextView tvState = (TextView) convertView.findViewById(R.id.inventoryState);
 
             //Data to display are retrieved
             tvName.setText(category.getName());
             //Retrieving the products in the category to know which color to display
-            ArrayList <ObjectProducts> productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
+         productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInCategory)));
             tvState.setText(category.getInventoryState());
 

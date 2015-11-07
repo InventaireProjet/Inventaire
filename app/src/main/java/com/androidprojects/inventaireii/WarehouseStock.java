@@ -33,6 +33,8 @@ public class WarehouseStock extends AppCompatActivity {
     PopupWindow popupWindow;
     ArrayList<ObjectProducts> productsToDisplay = new ArrayList<ObjectProducts>();
     ArrayAdapter adapter;
+    View squareInventoryState;
+    View squareTotalStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,7 @@ public class WarehouseStock extends AppCompatActivity {
         btnPrevious = (Button) findViewById(R.id.buttonPrevious);
         btnPrevious.setVisibility(View.VISIBLE);
 
-
-        View squareInventoryState = findViewById(R.id.squareInventoryState);
+         squareInventoryState = findViewById(R.id.squareInventoryState);
         squareInventoryState.setVisibility(View.VISIBLE);
 
 
@@ -108,7 +109,7 @@ public class WarehouseStock extends AppCompatActivity {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
-        View squareTotalStock =  findViewById(R.id.squareTotalStock);
+         squareTotalStock =  findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
@@ -200,6 +201,8 @@ public class WarehouseStock extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+        squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
     }
 
     @Override
