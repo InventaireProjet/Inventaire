@@ -77,7 +77,7 @@ public class MyProducts extends AppCompatActivity {
         squareTotalStock = (View) findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(giveColor(getInventoryState()));
+        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState()));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
         txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
 
@@ -89,25 +89,6 @@ public class MyProducts extends AppCompatActivity {
         if(s.equals("done"))
             return getResources().getColor(R.color.indicator_done);
         return getResources().getColor(R.color.indicator_doing);
-    }
-
-    private String getInventoryState() {
-        int nbControlled = 0;
-        int nbNotControlled = 0;
-        for (ObjectProducts p : ObjectsLists.getProductList()){
-            switch (Methods.getInventoryState(p)) {
-                case "done": nbControlled++ ; break ;
-                case "todo": nbNotControlled++ ; break;
-            }
-        }
-
-        if (nbControlled == 0)
-            return "todo";
-
-        if (nbNotControlled == 0)
-            return "done";
-
-        return "doing";
     }
 
     @Override
@@ -141,7 +122,7 @@ public class MyProducts extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
-        squareTotalStock.setBackgroundColor(giveColor(getInventoryState()));
+        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState()));
     }
 
     private class ProductsAdapter extends ArrayAdapter {

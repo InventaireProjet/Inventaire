@@ -57,7 +57,7 @@ public class Product extends AppCompatActivity {
                     s.setControlled(true);
                 }
                 adapter.notifyDataSetChanged();
-                squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
+                squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
             }
         });
 
@@ -117,7 +117,7 @@ public class Product extends AppCompatActivity {
 
         // Set color of square below the ListView
         squareTotalStock = (View) findViewById(R.id.squareTotalStock);
-        squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
+        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
 
         // Set listener to Button "MODIFY"
         Button buttonModify = (Button) findViewById(R.id.buttonModify);
@@ -222,29 +222,11 @@ public class Product extends AppCompatActivity {
         return giveColor("todo");
     }
 
-    private String getInventoryState(ObjectProducts product) {
-        int nbControlled = 0;
-        int nbNotControlled = 0;
-        for (ObjectStock s : product.getStocks()) {
-            if(s.isControlled())
-                nbControlled ++;
-            else
-                nbNotControlled ++;
-        }
-        if (nbNotControlled == 0)
-            return "done";
-
-        if(nbControlled == 0)
-            return "todo";
-
-        return "doing";
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
-        squareTotalStock.setBackgroundColor(giveColor(getInventoryState(product)));
+        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
     }
 
     private class StocksAdapter extends ArrayAdapter {
