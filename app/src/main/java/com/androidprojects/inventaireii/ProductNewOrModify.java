@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class ProductNewOrModify extends AppCompatActivity {
@@ -119,7 +120,11 @@ public class ProductNewOrModify extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
+        Class c = Methods.onOptionsItemSelected(id);
+        if (c != null) {
+            Intent intent = new Intent(getBaseContext(), c);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -108,8 +108,6 @@ public class Methods extends AppCompatActivity {
     // Method for management of the ActionBar
     public static Class onOptionsItemSelected(int id){
 
-        Intent intent;
-
         switch (id) {
             case R.id.go_home:
                 return MainActivity.class;

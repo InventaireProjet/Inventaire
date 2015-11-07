@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,29 +91,11 @@ public class MyProducts extends AppCompatActivity {
         return getResources().getColor(R.color.indicator_doing);
     }
 
-    private String getInventoryState(ObjectProducts product) {
-        int nbControlled = 0;
-        int nbNotControlled = 0;
-        for (ObjectStock s : product.getStocks()) {
-            if(s.isControlled())
-                nbControlled ++;
-            else
-                nbNotControlled ++;
-        }
-        if (nbNotControlled == 0)
-            return "done";
-
-        if(nbControlled == 0)
-            return "todo";
-
-        return "doing";
-    }
-
     private String getInventoryState() {
         int nbControlled = 0;
         int nbNotControlled = 0;
         for (ObjectProducts p : ObjectsLists.getProductList()){
-            switch (getInventoryState(p)) {
+            switch (Methods.getInventoryState(p)) {
                 case "done": nbControlled++ ; break ;
                 case "todo": nbNotControlled++ ; break;
             }
@@ -145,8 +128,11 @@ public class MyProducts extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
-        startActivity(intent);
+        Class c = Methods.onOptionsItemSelected(id);
+        if (c != null) {
+            Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -184,7 +170,7 @@ public class MyProducts extends AppCompatActivity {
             TextView txtPrice = (TextView) convertView.findViewById(R.id.price);
 
             // Fill with data
-            square.setBackgroundColor(giveColor(getInventoryState(product)));
+            square.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
             txtArtNb.setText(product.getArtNb());
             txtName.setText(product.getName());
             txtCategory.setText(product.getCategory().getName());

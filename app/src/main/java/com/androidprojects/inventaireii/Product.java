@@ -199,9 +199,11 @@ public class Product extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent intent = new Intent(getBaseContext(), Methods.onOptionsItemSelected(id));
-        startActivity(intent);
-
+        Class c = Methods.onOptionsItemSelected(id);
+        if (c != null) {
+            Intent intent = new Intent(getBaseContext(), c);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -23,15 +23,18 @@
         <activity
             android:name=".MyProducts"
             android:label="@string/my_products"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".Product"
-            android:label="@string/title_activity_product" >
+            android:label="@string/title_activity_product"
+            android:parentActivityName=".MyProducts">
         </activity>
         <activity
             android:name=".ProductNewOrModify"
-            android:label="@string/title_activity_product_new_or_modify" >
+            android:label="@string/title_activity_product_new_or_modify"
+            android:parentActivityName=".Product">
         </activity>
 
         <activity
@@ -75,7 +78,8 @@
 
         <activity
             android:name=".StockNewOrModify"
-            android:label="@string/title_activity_stock_new_or_modify" >
+            android:label="@string/title_activity_stock_new_or_modify"
+            android:parentActivityName=".Product">
         </activity>
 
     </application>
