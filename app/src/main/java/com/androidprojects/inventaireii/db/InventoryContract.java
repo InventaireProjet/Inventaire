@@ -3,7 +3,6 @@ package com.androidprojects.inventaireii.db;
 import android.provider.BaseColumns;
 
 import com.androidprojects.inventaireii.Product;
-import com.androidprojects.inventaireii.Warehouse;
 
 /**
  * Created by David on 07.11.2015.
@@ -34,7 +33,9 @@ public final class InventoryContract {
                 + ProductEntry.KEY_NAME + " TEXT, "
                 + ProductEntry.KEY_DESCRIPTION + " TEXT, "
                 + ProductEntry.KEY_PRICE + " DOUBLE, "
-                + ProductEntry.KEY_CATEGORY_ID + " INTEGER "
+                + "FOREIGN KEY (" + ProductEntry.KEY_CATEGORY_ID
+                    + ") REFERENCES " + CategorieEntry.TABLE_CATEGORIES
+                    + " (" + KEY_ID + ") "
                 + ");";
     }
 
@@ -74,7 +75,7 @@ public final class InventoryContract {
         public static final String KEY_PHONE_NUMBER = "phoneNumber";
 
         // Table Warehouses Create statement
-        public static final String CREATE_TABLE_STOCKS = "CREATE TABLE "
+        public static final String CREATE_TABLE_WAREHOUSES = "CREATE TABLE "
                 + TABLE_WAREHOUSES + "("
                 + WarehouseEntry.KEY_ID + " INTEGER PRIMARY KEY, "
                 + WarehouseEntry.KEY_NAME + " TEXT, "
@@ -96,7 +97,7 @@ public final class InventoryContract {
 
         // Stocks Column names
         public static final String KEY_ID = "id";
-        public static final String KEY_ARTICLE_ID = "articleId";
+        public static final String KEY_PRODUCT_ID = "productId";
         public static final String KEY_WAREHOUSE_ID = "warehouseId";
         public static final String KEY_QUANTITY = "quantity";
         public static final String KEY_CONTROLLED = "controlled";
@@ -105,10 +106,14 @@ public final class InventoryContract {
         public static final String CREATE_TABLE_STOCKS = "CREATE TABLE "
                 + TABLE_STOCKS + "("
                 + StockEntry.KEY_ID + " INTEGER PRIMARY KEY, "
-                + StockEntry.KEY_ARTICLE_ID + " INTEGER, "
-                + StockEntry.KEY_WAREHOUSE_ID + " INTEGER, "
                 + StockEntry.KEY_QUANTITY + " INTEGER, "
-                + StockEntry.KEY_CONTROLLED + " INTEGER "
+                + StockEntry.KEY_CONTROLLED + " INTEGER, "
+                + "FOREIGN KEY (" + StockEntry.KEY_PRODUCT_ID
+                    + ") REFERENCES " + ProductEntry.TABLE_PRODUCTS
+                    + " (" + ProductEntry.KEY_ID + "), "
+                + "FOREIGN KEY (" + StockEntry.KEY_WAREHOUSE_ID
+                    + ") REFERENCES " + WarehouseEntry.TABLE_WAREHOUSES
+                    + " (" + WarehouseEntry.KEY_ID + ") "
                 + ");";
     }
 }
