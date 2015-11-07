@@ -23,8 +23,8 @@
         <activity
             android:name=".MyProducts"
             android:label="@string/my_products"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".Product"
@@ -41,11 +41,7 @@
             android:name=".MyCategories"
             android:label="@string/title_activity_my_categories"
             android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"
 
-                />
         </activity>
         <activity
             android:name=".Category"
@@ -80,6 +76,19 @@
             android:name=".StockNewOrModify"
             android:label="@string/title_activity_stock_new_or_modify"
             android:parentActivityName=".Product">
+        </activity>
+
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
     </application>
