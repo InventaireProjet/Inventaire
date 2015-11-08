@@ -2,12 +2,16 @@ package com.androidprojects.inventaireii;
 
 public class ObjectCategories {
 
-
     private  int id;
     private String color;
     private String name;
     private String inventoryState;
 
+
+    public ObjectCategories() {
+    }
+
+    //TODO remove
     public ObjectCategories (String color, String name, String inventoryState) {
 
         this.color = color;

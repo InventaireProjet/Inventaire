@@ -72,7 +72,6 @@ public class MyCategories extends AppCompatActivity {
                         ObjectsLists.getCategoryList().add(newCategory);
                         popupWindow.dismiss();
                         adapter.notifyDataSetChanged();
-
                     }
                 });
 
@@ -170,7 +169,6 @@ public class MyCategories extends AppCompatActivity {
 
         public CategoriesAdapter(Context context,ArrayList <ObjectCategories>  categories) {
             super(context, 0, categories);
-
         }
 
         @Override
@@ -201,7 +199,7 @@ public class MyCategories extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(getBaseContext(), Category.class);
                     String categoryName = category.getName();
-                    intent.putExtra( "categoryName",categoryName);
+                    intent.putExtra("categoryName",categoryName);
                     startActivity(intent);
                 }
             });
@@ -209,7 +207,4 @@ public class MyCategories extends AppCompatActivity {
             return convertView;
         }
     }
-
-
-
 }
