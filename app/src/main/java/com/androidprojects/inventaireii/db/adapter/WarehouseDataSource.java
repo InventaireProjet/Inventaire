@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.androidprojects.inventaireii.ObjectCategories;
+import com.androidprojects.inventaireii.ObjectProducts;
 import com.androidprojects.inventaireii.ObjectWarehouse;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
@@ -102,6 +102,8 @@ public class WarehouseDataSource {
         return warehouses;
     }
 
+
+
 //Update a warehouse
 
     public int updateWarehouse(ObjectWarehouse warehouse) {
@@ -135,7 +137,9 @@ public class WarehouseDataSource {
 
 
 
-
+        //Warehouse deletion
+        this.db.delete(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES, InventoryContract.WarehouseEntry.KEY_ID + " = ?",
+                new String[]{String.valueOf(id)});
     }
 
 }

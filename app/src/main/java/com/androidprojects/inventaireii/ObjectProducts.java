@@ -16,6 +16,8 @@ public class ObjectProducts {
     private ObjectCategories category;
     private ArrayList<ObjectStock> stocks = new ArrayList<ObjectStock>();
 
+    public ObjectProducts() {
+    }
 
     public ObjectProducts(String artNb, String name, ObjectCategories category,
                           int quantity, double price, String inventoryState) {
@@ -30,17 +32,32 @@ public class ObjectProducts {
         return artNb;
     }
 
+    public void setArtNb(String artNb) {
+        this.artNb = artNb;
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public double getPrice() {
         return price;
     }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public ObjectCategories getCategory() {
         return category;
+    }
+
+    public void setCategory(ObjectCategories category) {
+        this.category = category;
     }
 
     public String getInventoryState() {
@@ -51,28 +68,12 @@ public class ObjectProducts {
         return description;
     }
 
-    public ArrayList<ObjectStock> getStocks() {
-        return stocks;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setArtNb(String artNb) {
-        this.artNb = artNb;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setCategory(ObjectCategories category) {
-        this.category = category;
+    public ArrayList<ObjectStock> getStocks() {
+        return stocks;
     }
 
     public void addStock(ObjectStock stock) {
