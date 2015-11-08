@@ -15,6 +15,8 @@ public class ObjectWarehouse {
     private String location;
     private String country;
 
+    public ObjectWarehouse() {
+    }
 
     public ObjectWarehouse(String name, int inventoriedObjects, int numberObjects, int stockCapacity, String telNumber, String street, String streetNumber, String postalCode, String location, String country) {
 

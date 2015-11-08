@@ -164,7 +164,6 @@ public class WarehouseModify extends AppCompatActivity {
                         warehouse.setLocation(editCity.getText().toString());
                         warehouse.setCountry(editCountry.getText().toString());
 
-
                         Intent intent = new Intent(getBaseContext(), Warehouse.class);
                         intent.putExtra("warehouseName", editWarehouseName.getText().toString());
                         startActivity(intent);
@@ -173,8 +172,6 @@ public class WarehouseModify extends AppCompatActivity {
 
                 });
             }
-
-
         }
     }
 
