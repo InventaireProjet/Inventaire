@@ -8,6 +8,8 @@ import java.util.Random;
  */
 public class ObjectProducts {
 
+
+    private int id;
     private String artNb;
     private String name;
     private String description;
@@ -26,6 +28,14 @@ public class ObjectProducts {
         this.category = category;
         this.price = price;
         this.inventoryState = inventoryState;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getArtNb() {

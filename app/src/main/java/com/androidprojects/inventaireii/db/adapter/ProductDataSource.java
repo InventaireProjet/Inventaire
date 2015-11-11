@@ -92,7 +92,7 @@ public class ProductDataSource {
 
     //Update a product
 
-   /* public int updateProduct(ObjectProducts product) {
+   public int updateProduct(ObjectProducts product) {
         ContentValues values = new ContentValues();
         values.put(InventoryContract.ProductEntry.KEY_ART_NB, product.getArtNb());
         values.put(InventoryContract.ProductEntry.KEY_NAME, product.getName());
@@ -100,10 +100,9 @@ public class ProductDataSource {
         values.put(InventoryContract.ProductEntry.KEY_PRICE, product.getPrice());
         values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, product.getCategory().getId());
 
-//TODO id to add in ObjectsProduct ?????
         return this.db.update(InventoryContract.ProductEntry.TABLE_PRODUCTS, values, InventoryContract.ProductEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(product.getId()) });
-    }*/
+    }
 
 
 // Delete a product
