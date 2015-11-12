@@ -30,7 +30,7 @@
         android:inputType="text"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color_hint"
-        android:textSize="12dp"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/artNb"
@@ -40,7 +40,7 @@
         android:inputType="text"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color_hint"
-        android:textSize="12dp"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Spinner
         android:id="@+id/spinnerCategory"
@@ -56,7 +56,7 @@
         android:inputType="numberDecimal"
         android:textColor="@color/text_color"
         android:textColorHint="@color/text_color_hint"
-        android:textSize="12dp"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <EditText
         android:id="@+id/description"
@@ -67,7 +67,7 @@
         android:textColorHint="@color/text_color_hint"
         android:textColor="@color/text_color"
         android:hint="@string/description"
-        android:textSize="12dp"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <!-- Two buttons for cancelling or saving -->
     <LinearLayout

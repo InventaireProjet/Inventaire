@@ -47,14 +47,12 @@ public final class InventoryContract {
         // Categories Column names
         public static final String KEY_ID = "id";
         public static final String KEY_NAME = "name";
-        public static final String KEY_DESCRIPTION = "description";
 
         // Table Categories Create statement
         public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE "
                 + TABLE_CATEGORIES + "("
                 + CategorieEntry.KEY_ID + " INTEGER PRIMARY KEY, "
                 + CategorieEntry.KEY_NAME + " TEXT, "
-                + CategorieEntry.KEY_DESCRIPTION + " TEXT "
                 + ");";
     }
 
