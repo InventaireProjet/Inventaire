@@ -45,7 +45,7 @@ public class Product extends AppCompatActivity {
         txtTitle.setText(product.getName());
         txtArtNb.setText("N° Article : " + product.getArtNb());
         txtCategory.setText("Catégorie : " + product.getCategory().getName());
-        txtPrice.setText("Prix : " + product.getPrice() + "CHF");
+        txtPrice.setText("Prix : " + String.format("%,.2f", product.getPrice()) + " CHF");
 
         // Set onClickListener to button "All controlled"
         Button buttonAllControlled = (Button) findViewById(R.id.buttonAllControlled);
@@ -112,7 +112,8 @@ public class Product extends AppCompatActivity {
         TextView txtValueTotalValue = (TextView) findViewById(R.id.txtValueStockValue);
         final TextView txtDescription = (TextView) findViewById(R.id.txtDescription);
         txtValueTotalStock.setText(Integer.toString(product.getQuantity()));
-        txtValueTotalValue.setText(Double.toString(product.getQuantity() * product.getPrice()));
+        double stockValue = product.getQuantity() * product.getPrice();
+        txtValueTotalValue.setText(String.format("%,.2f", stockValue));
         txtDescription.setText(product.getDescription());
 
         // Set color of square below the ListView

@@ -79,7 +79,7 @@ public class MyProducts extends AppCompatActivity {
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState()));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
-        txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
+        txtStockValue.setText("Valeur : CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
 
     }
 
@@ -156,7 +156,7 @@ public class MyProducts extends AppCompatActivity {
             txtName.setText(product.getName());
             txtCategory.setText(product.getCategory().getName());
             txtQuantity.setText(Integer.toString(product.getQuantity()));
-            txtPrice.setText("CHF " + Double.toString(product.getPrice()));
+            txtPrice.setText("CHF " + String.format("%,.2f", product.getPrice()));
 
             // Sending the product to the next field
             convertView.setOnClickListener(new View.OnClickListener() {

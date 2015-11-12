@@ -51,7 +51,7 @@ public class ProductNewOrModify extends AppCompatActivity {
             product = ObjectsLists.getProductList().get(position);
             etProductName.setText(product.getName());
             etArtNb.setText(product.getArtNb());
-            etPrice.setText(Double.toString(product.getPrice()));
+            etPrice.setText(String.format("%,.2f", product.getPrice()));
             etDescription.setText(product.getDescription());
             int p = ObjectsLists.categoryList.indexOf(product.getCategory());
             spinnerCategory.setSelection(p);
