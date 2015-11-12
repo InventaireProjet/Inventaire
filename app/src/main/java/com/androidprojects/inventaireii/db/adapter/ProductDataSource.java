@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.androidprojects.inventaireii.ObjectProducts;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
@@ -16,7 +15,8 @@ public class ProductDataSource {
 
 
     private SQLiteDatabase db;
-    private Context context;
+    private Context context = null;
+    private CategoryDataSource categoryDataSource = new CategoryDataSource(context);
 
     public  ProductDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
@@ -80,6 +80,66 @@ public class ProductDataSource {
                 product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
                 //TODO To adapt
                 // product.setCategory(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID)));
+
+
+                products.add(product);
+            } while (cursor.moveToNext());
+
+        }
+        return products;
+    }
+
+
+    // Get all products by category
+
+    public List<ObjectProducts> getAllProductsByCategory (long category_id) {
+        List<ObjectProducts> products = new ArrayList<>();
+        String sql = "SELECT * FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS
+                +" WHERE " +InventoryContract.ProductEntry.KEY_CATEGORY_ID +" = " +category_id
+                + " ORDER BY " + InventoryContract.ProductEntry.KEY_NAME;
+
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ObjectProducts product = new ObjectProducts();
+                product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
+                product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
+                product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
+                 product.setCategory(categoryDataSource.getCategoryById(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID))));
+
+                CategoryDataSource cd;
+
+                products.add(product);
+            } while (cursor.moveToNext());
+
+        }
+        return products;
+    }
+
+    // Get all products by warehouse
+
+    public List<ObjectProducts> getAllProductsByWarehouse (long warehouse_id) {
+        List<ObjectProducts> products = new ArrayList<>();
+        String sql = "SELECT * FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS + " p, "
+                + InventoryContract.StockEntry.TABLE_STOCKS + " s "
+                + " WHERE s." + InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = " +warehouse_id
+                + " AND s." + InventoryContract.StockEntry.KEY_PRODUCT_ID + " = " + "p." + InventoryContract.ProductEntry.KEY_ID
+                + " ORDER BY " + InventoryContract.ProductEntry.KEY_NAME;
+
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ObjectProducts product = new ObjectProducts();
+                product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
+                product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
+                product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
+                product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
+                product.setCategory(categoryDataSource.getCategoryById(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID))));
 
 
                 products.add(product);

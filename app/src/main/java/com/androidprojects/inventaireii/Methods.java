@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Methods extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class Methods extends AppCompatActivity {
         return "doing";
     }
 
-    public static String getInventoryState(ArrayList<ObjectProducts> productsToDisplay) {
+    public static String getInventoryState(List<ObjectProducts> productsToDisplay) {
         int nbControlled = 0;
         int nbNotControlled = 0;
         for (ObjectProducts p : productsToDisplay){

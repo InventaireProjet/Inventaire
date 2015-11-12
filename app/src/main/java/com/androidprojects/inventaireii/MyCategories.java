@@ -18,7 +18,11 @@ import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyCategories extends AppCompatActivity {
 
@@ -26,15 +30,22 @@ public class MyCategories extends AppCompatActivity {
     Button addButton;
     ArrayAdapter adapter;
     View tvSquare;
-    ArrayList <ObjectProducts> productsInCategory;
+    List <ObjectProducts> productsInCategory;
+    //CategoryDataSource categoryDataSource;
+    //ProductDataSource productDataSource;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
 
+       // categoryDataSource = new CategoryDataSource(this);
+         //productDataSource = new ProductDataSource(this);
 
         //Using adapter
         adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
+        //TODO ENABLE THIS
+        // adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
 
 
         // Fill the ListView
@@ -70,6 +81,8 @@ public class MyCategories extends AppCompatActivity {
                     public void onClick(View v) {
                         ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
                         ObjectsLists.getCategoryList().add(newCategory);
+                        //TODO Enable this, disable that
+                        //categoryDataSource.createCategory(newCategory);
                         popupWindow.dismiss();
                         adapter.notifyDataSetChanged();
                     }
@@ -89,13 +102,6 @@ public class MyCategories extends AppCompatActivity {
 
     }
 
-    private int giveColor(String s) {
-        if(s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do);
-        if(s.equals("done"))
-            return getResources().getColor(R.color.indicator_done);
-        return getResources().getColor(R.color.indicator_doing);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,7 +146,7 @@ public class MyCategories extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-           case R.id.action_search:
+            case R.id.action_search:
                 intent = new Intent(getBaseContext(), SearchActivity.class);
                 startActivity(intent);
                 return true;
@@ -167,7 +173,7 @@ public class MyCategories extends AppCompatActivity {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
 
-        public CategoriesAdapter(Context context,ArrayList <ObjectCategories>  categories) {
+        public CategoriesAdapter(Context context, List<ObjectCategories> categories) {
             super(context, 0, categories);
         }
 
@@ -181,14 +187,17 @@ public class MyCategories extends AppCompatActivity {
             }
 
             //Effective linking with the categories_row layout
-             tvSquare = convertView.findViewById(R.id.square);
+            tvSquare = convertView.findViewById(R.id.square);
             TextView tvName = (TextView) convertView.findViewById(R.id.name);
             TextView tvState = (TextView) convertView.findViewById(R.id.inventoryState);
 
             //Data to display are retrieved
             tvName.setText(category.getName());
+
             //Retrieving the products in the category to know which color to display
-         productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
+            productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
+            //TODO Disable up,enable down
+           // productsInCategory = productDataSource.getAllProductsByCategory(category.getId());
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInCategory)));
             tvState.setText(category.getInventoryState());
 

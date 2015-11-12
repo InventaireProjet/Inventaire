@@ -5,8 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.androidprojects.inventaireii.Category;
 import com.androidprojects.inventaireii.ObjectCategories;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
