@@ -16,7 +16,11 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyWarehouses extends AppCompatActivity {
 
@@ -24,18 +28,26 @@ public class MyWarehouses extends AppCompatActivity {
     PopupWindow popupWindow;
     Button addButton;
     ArrayAdapter adapter;
+    WarehouseDataSource warehouseDataSource;
+    ProductDataSource productDataSource;
+    List <ObjectProducts> productsInWarehouse;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //warehouseDataSource = new WarehouseDataSource(this);
+        //productDataSource = new ProductDataSource(this);
+
         //activity_my_categories reused because of same structure
         setContentView(R.layout.activity_my_categories);
         TextView title = (TextView) findViewById(R.id.txtTitle);
-        title.setText("Mes magasins");
+        title.setText(R.string.my_warehouses);
 
         //Using adapter
         adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
-
+        //TODO ERASE UP, ENABLE DOWN
+        //adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
 
         // Fill the ListView
         ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);
@@ -109,7 +121,7 @@ public class MyWarehouses extends AppCompatActivity {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
 
-        public WarehousesAdapter(Context context, ArrayList<ObjectWarehouse> warehouses) {
+        public WarehousesAdapter(Context context, List<ObjectWarehouse> warehouses) {
             super(context, 0, warehouses);
 
         }
@@ -133,7 +145,11 @@ public class MyWarehouses extends AppCompatActivity {
             //Data to display are retrieved
             tvName.setText(warehouse.getName());
             //Retrieving the products in the warehouse to know which color to display
-            ArrayList <ObjectProducts> productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+            productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+            //TODO UNDO UP, DO DOWN
+            // productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouse.getId());
+
+
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));
             tvState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
@@ -143,8 +159,8 @@ public class MyWarehouses extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                    String warehouseName = warehouse.getName();
-                    intent.putExtra("warehouseName", warehouseName);
+                    int warehouseId = warehouse.getId();
+                    intent.putExtra("warehouseId", warehouseId);
                     startActivity(intent);
                 }
             });

@@ -12,17 +12,29 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class WarehouseModify extends AppCompatActivity {
 
     Button btnCancel;
     Button btnValidate;
     PopupWindow popupWindow;
+    ObjectWarehouse warehouse;
+    WarehouseDataSource warehouseDataSource;
+    ProductDataSource productDataSource;
+    ArrayList<ObjectWarehouse> warehouses;
+    List<ObjectProducts> productsInWarehouse;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warehouse);
+
+        // productDataSource = new ProductDataSource(this);
+        // warehouseDataSource = new WarehouseDataSource(this);
 
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
@@ -63,116 +75,128 @@ public class WarehouseModify extends AppCompatActivity {
 
         //Intent retrieving
         Intent intent = getIntent();
-        final String name = intent.getStringExtra("warehouseName");
-        editWarehouseName.setText(name);
+        final int warehouseId = intent.getIntExtra("warehouseId", 0);
+
+        warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
+        //TODO UP DOWN, DOWN UP
+        //warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+
+        editWarehouseName.setText(warehouse.getName());
 
         //Changing element visibility, EditText replaces TextView
         warehouseName.setVisibility(View.INVISIBLE);
         editWarehouseName.setVisibility(View.VISIBLE);
 
-        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
+        warehouses = ObjectsLists.getWarehouseList();
 
-        for (int i = 0; i <warehouses.size() ; i++) {
+        /*for (int i = 0; i <warehouses.size() ; i++) {
 
             if (warehouses.get(i).getName().equals(name)) {
 
-                final ObjectWarehouse warehouse = warehouses.get(i);
+                final ObjectWarehouse warehouse = warehouses.get(i);*/
 
-                //First part
-                //Retrieving the products in the warehouse to know which color to display
-                ArrayList <ObjectProducts> productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
-                squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
-                inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
-
-                //Second part
-                int freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
-                freeSpaceNumber.setText(freeSpace + " places");
-
-                if (warehouse.getStockCapacity() != 0) {
-                    int freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
-                    freeSpacePercentage.setText(freeSpaceInPercent + "%");
-                }
+        //First part
+        //Retrieving the products in the warehouse to know which color to display
+        productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+        //TODO UP OUT, DOWN IN
+        //productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
 
-                //Third part
-                //Visibility change
-                capacityNumber.setVisibility(View.INVISIBLE);
-                editCapacityNumber.setVisibility(View.VISIBLE);
-                txtPlaces.setVisibility(View.VISIBLE);
+        squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
+        inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
-                editCapacityNumber.setText(String.valueOf(warehouse.getStockCapacity()));
+        //Second part
+        int freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
+        freeSpaceNumber.setText(freeSpace + " places");
 
-                //Fourth part
-                //Visibility change
-                phoneEntry.setVisibility(View.INVISIBLE);
-                editPhoneEntry.setVisibility(View.VISIBLE);
-                street.setVisibility(View.INVISIBLE);
-                editStreet.setVisibility(View.VISIBLE);
-                streetNo.setVisibility(View.INVISIBLE);
-                editStreetNo.setVisibility(View.VISIBLE);
-                postalCode.setVisibility(View.INVISIBLE);
-                editPostalCode.setVisibility(View.VISIBLE);
-                city.setVisibility(View.INVISIBLE);
-                editCity.setVisibility(View.VISIBLE);
-                country.setVisibility(View.INVISIBLE);
-                editCountry.setVisibility(View.VISIBLE);
-
-
-                editPhoneEntry.setText(warehouse.getTelNumber());
-                editStreet.setText((warehouse.getStreet()));
-                editStreetNo.setText(warehouse.getStreetNumber());
-                editPostalCode.setText(warehouse.getPostalCode());
-                editCity.setText(warehouse.getLocation());
-                editCountry.setText((warehouse.getCountry()));
-
-                viewStockBtn.setText("Modifier le stock");
-                viewStockBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent intent = new Intent(getBaseContext(), WarehouseStock.class);
-                        intent.putExtra("warehouseName", name);
-                        startActivity(intent);
-                    }
-                });
-
-
-                btnCancel = (Button) findViewById(R.id.buttonCancel);
-                btnCancel.isActivated();
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                        intent.putExtra("warehouseName", name);
-                        startActivity(intent);
-                    }
-                });
-
-                btnValidate = (Button) findViewById(R.id.buttonValidate);
-                btnValidate.setOnClickListener(new Button.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-
-                        //Saving modifications
-                        warehouse.setName(editWarehouseName.getText().toString());
-                        warehouse.setStockCapacity(Integer.parseInt(editCapacityNumber.getText().toString()));
-                        warehouse.setTelNumber(editPhoneEntry.getText().toString());
-                        warehouse.setStreet(editStreet.getText().toString());
-                        warehouse.setStreetNumber(editStreetNo.getText().toString());
-                        warehouse.setPostalCode(editPostalCode.getText().toString());
-                        warehouse.setLocation(editCity.getText().toString());
-                        warehouse.setCountry(editCountry.getText().toString());
-
-                        Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                        intent.putExtra("warehouseName", editWarehouseName.getText().toString());
-                        startActivity(intent);
-
-                    }
-
-                });
-            }
+        if (warehouse.getStockCapacity() != 0) {
+            int freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
+            freeSpacePercentage.setText(freeSpaceInPercent + "%");
         }
+
+
+        //Third part
+        //Visibility change
+        capacityNumber.setVisibility(View.INVISIBLE);
+        editCapacityNumber.setVisibility(View.VISIBLE);
+        txtPlaces.setVisibility(View.VISIBLE);
+
+        editCapacityNumber.setText(String.valueOf(warehouse.getStockCapacity()));
+
+        //Fourth part
+        //Visibility change
+        phoneEntry.setVisibility(View.INVISIBLE);
+        editPhoneEntry.setVisibility(View.VISIBLE);
+        street.setVisibility(View.INVISIBLE);
+        editStreet.setVisibility(View.VISIBLE);
+        streetNo.setVisibility(View.INVISIBLE);
+        editStreetNo.setVisibility(View.VISIBLE);
+        postalCode.setVisibility(View.INVISIBLE);
+        editPostalCode.setVisibility(View.VISIBLE);
+        city.setVisibility(View.INVISIBLE);
+        editCity.setVisibility(View.VISIBLE);
+        country.setVisibility(View.INVISIBLE);
+        editCountry.setVisibility(View.VISIBLE);
+
+
+        editPhoneEntry.setText(warehouse.getTelNumber());
+        editStreet.setText((warehouse.getStreet()));
+        editStreetNo.setText(warehouse.getStreetNumber());
+        editPostalCode.setText(warehouse.getPostalCode());
+        editCity.setText(warehouse.getLocation());
+        editCountry.setText((warehouse.getCountry()));
+
+        viewStockBtn.setText(R.string.stock_modify);
+        viewStockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getBaseContext(), WarehouseStock.class);
+                intent.putExtra("warehouseId", warehouseId);
+                startActivity(intent);
+            }
+        });
+
+
+        btnCancel = (Button) findViewById(R.id.buttonCancel);
+        btnCancel.isActivated();
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), Warehouse.class);
+                intent.putExtra("warehouseId", warehouseId);
+                startActivity(intent);
+            }
+        });
+
+        btnValidate = (Button) findViewById(R.id.buttonValidate);
+        btnValidate.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                //Saving modifications
+                warehouse.setName(editWarehouseName.getText().toString());
+                warehouse.setStockCapacity(Integer.parseInt(editCapacityNumber.getText().toString()));
+                warehouse.setTelNumber(editPhoneEntry.getText().toString());
+                warehouse.setStreet(editStreet.getText().toString());
+                warehouse.setStreetNumber(editStreetNo.getText().toString());
+                warehouse.setPostalCode(editPostalCode.getText().toString());
+                warehouse.setLocation(editCity.getText().toString());
+                warehouse.setCountry(editCountry.getText().toString());
+
+                //TODO ENABLE DOWN
+                //warehouseDataSource.updateWarehouse(warehouse);
+
+                Intent intent = new Intent(getBaseContext(), Warehouse.class);
+                intent.putExtra("warehouseId", editWarehouseName.getText().toString());
+                startActivity(intent);
+
+            }
+
+        });
+        /*    }
+        }*/
     }
 
     private int giveColor(String s) {

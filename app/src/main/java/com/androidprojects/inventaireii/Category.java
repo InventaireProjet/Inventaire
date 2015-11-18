@@ -16,6 +16,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +33,21 @@ public class Category extends AppCompatActivity {
     Button btnPrevious;
     Button btnAdd;
     PopupWindow popupWindow;
-    ArrayList<ObjectProducts> productsToDisplay = new ArrayList<ObjectProducts>();
+    List<ObjectProducts> productsToDisplay = new ArrayList<ObjectProducts>();
     ArrayAdapter adapter;
     View square;
     View squareInventoryState;
     View squareTotalStock;
+    CategoryDataSource categoryDataSource;
+    ProductDataSource productDataSource;
+    ObjectCategories category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+       // categoryDataSource = new CategoryDataSource(this);
+        // productDataSource = new ProductDataSource(this);
 
 //Using the same layout as my products with some changes
         setContentView(R.layout.activity_my_products);
@@ -53,11 +63,17 @@ public class Category extends AppCompatActivity {
         //Category name retrieved from the previous screen
         final TextView title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
-        final String category = intent.getStringExtra("categoryName");
-        title.setText(category);
+        final int categoryId = intent.getIntExtra("categoryId", 0);
+
+        category = ObjectsLists.getCategoryList().get(categoryId);
+        //TODO disable up, enable down
+        // category = categoryDataSource.getCategoryById(categoryId);
+        title.setText(category.getName());
 
         //Define the products to display
-        productsToDisplay =  Methods.getObjectsListbyCategory(category);
+        productsToDisplay =  Methods.getObjectsListbyCategory(category.getName());
+        //TODO Disable that, enable this
+        //productsToDisplay = productDataSource.getAllProductsByCategory(categoryId);
 
         //Inventory state
         squareInventoryState = findViewById(R.id.squareInventoryState);
@@ -148,14 +164,18 @@ public class Category extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-//TODO CHANGE WITH DATA
+//TODO CHANGE WITH DATA in comment, bye bye for
                         for (int i = 0; i < ObjectsLists.getCategoryList().size(); i++) {
+
 
                             if (ObjectsLists.getCategoryList().get(i).getName().equals(categoryName)) {
 
                                 ObjectsLists.getCategoryList().get(i).setName(userEntry.getText().toString());
                             }
                         }
+
+                        //categoryDataSource.updateCategory(category);
+
                         title.setText(userEntry.getText().toString());
                         adapter.notifyDataSetChanged();
                         popupWindow.dismiss();
@@ -203,7 +223,7 @@ public class Category extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
+                      /*  ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
 
                         for (int i = 0; i <categories.size() ; i++) {
 
@@ -211,7 +231,15 @@ public class Category extends AppCompatActivity {
 
                                 ObjectsLists.getCategoryList().remove(i);
                             }
-                        }
+                        }*/
+
+                        final ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
+
+                        categories.remove(categoryId);
+                        //TODO DELETE UP, ENABLE DOWN
+
+                        //categoryDataSource.deleteCategory(categoryId);
+
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyCategories.class);
@@ -323,6 +351,7 @@ public class Category extends AppCompatActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //TODO ASK WHAT IS THE USE OF THE LINE BELOW ???????????????????????????????
                     ObjectsLists.setProductList((ArrayList) productsToDisplay);
                     Intent intent = new Intent(getBaseContext(), Product.class);
                     // TODO in the final version, send only the product Id...

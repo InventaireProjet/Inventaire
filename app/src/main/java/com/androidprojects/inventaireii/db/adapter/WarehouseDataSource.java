@@ -92,8 +92,8 @@ public class WarehouseDataSource {
                 warehouse.setPostalCode(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ZIPCODE)));
                 warehouse.setCountry(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_COUNTRY)));
 
-
                 warehouses.add(warehouse);
+
             } while (cursor.moveToNext());
 
         }

@@ -17,6 +17,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +34,22 @@ public class WarehouseStock extends AppCompatActivity {
     Button btnPrevious;
     Button btnAdd;
     PopupWindow popupWindow;
-    ArrayList<ObjectProducts> productsToDisplay = new ArrayList<ObjectProducts>();
+    List<ObjectProducts> productsToDisplay;
     ArrayAdapter adapter;
     View squareInventoryState;
     View squareTotalStock;
+    WarehouseDataSource warehouseDataSource;
+    ProductDataSource productDataSource;
+    ObjectWarehouse  warehouse;
+    ArrayList<ObjectWarehouse> warehouses;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // productDataSource = new ProductDataSource(this);
+        // warehouseDataSource = new WarehouseDataSource(this);
 
 //Using the same layout as my products with some changes
         setContentView(R.layout.activity_my_products);
@@ -51,18 +62,27 @@ public class WarehouseStock extends AppCompatActivity {
         btnPrevious = (Button) findViewById(R.id.buttonPrevious);
         btnPrevious.setVisibility(View.VISIBLE);
 
-         squareInventoryState = findViewById(R.id.squareInventoryState);
+        squareInventoryState = findViewById(R.id.squareInventoryState);
         squareInventoryState.setVisibility(View.VISIBLE);
 
 
         //Warehouse name retrieved from the previous screen
         final TextView title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
-        final String warehouseName = intent.getStringExtra("warehouseName");
-        title.setText(warehouseName);
+        final int warehouseId = intent.getIntExtra("warehouseId", 0);
+
+        warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
+        //TODO UP DOWN, DOWN UP
+        //warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+
+        title.setText(warehouse.getName());
 
         //Define the products to display
-        productsToDisplay =  Methods.getObjectsListbyWarehouse(warehouseName);
+        productsToDisplay =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+        //TODO UP OUT, DOWN IN
+        // productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
+
+
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
 
 // Set onClickListener to button "Previous"
@@ -109,7 +129,7 @@ public class WarehouseStock extends AppCompatActivity {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
-         squareTotalStock =  findViewById(R.id.squareTotalStock);
+        squareTotalStock =  findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
@@ -137,20 +157,24 @@ public class WarehouseStock extends AppCompatActivity {
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
-                //Deleting the warehouse
+                //Deleting only the warehouse
                 buttonDeleteWarehouse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
+                       warehouses = ObjectsLists.getWarehouseList();
 
-                        for (int i = 0; i < warehouses.size(); i++) {
+                       /* for (int i = 0; i < warehouses.size(); i++) {
 
-                            if (warehouses.get(i).getName().equals(warehouseName)) {
+                            if (warehouses.get(i).getName().equals(name)) {
 
                                 ObjectsLists.getWarehouseList().remove(i);
                             }
-                        }
+                        }*/
+
+                        warehouses.remove(warehouseId);
+                        //TODO UP OUT, DOWN IN
+                        //warehouseDataSource.deleteWarehouse(warehouseId);
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
@@ -163,18 +187,12 @@ public class WarehouseStock extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
+
 
                         //TODO Deleting stock product in this warehouse (data management)
 
 
-                        for (int i = 0; i < warehouses.size(); i++) {
-
-                            if (warehouses.get(i).getName().equals(warehouseName)) {
-
-                                ObjectsLists.getWarehouseList().remove(i);
-                            }
-                        }
+                        //warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
@@ -241,7 +259,6 @@ public class WarehouseStock extends AppCompatActivity {
                 intent = new Intent(getBaseContext(), MyWarehouses.class);
                 startActivity(intent);
                 return true;
-
 
         }
 

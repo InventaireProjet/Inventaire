@@ -8,13 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
+
 public class NewWarehouse extends AppCompatActivity {
 
     Button btnCancel;
     Button btnValidate;
+    WarehouseDataSource warehouseDataSource;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        warehouseDataSource = new WarehouseDataSource(this);
+
         setContentView(R.layout.activity_new_warehouse);
 
         btnCancel = (Button) findViewById(R.id.buttonCancel);
@@ -54,6 +59,9 @@ public class NewWarehouse extends AppCompatActivity {
                         warehouseCountry.getText().toString());
 
                 ObjectsLists.getWarehouseList().add(newWarehouse);
+                //TODO NO UP, YES DOWN
+                //warehouseDataSource.createWarehouse(newWarehouse);
+
                 Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
                 startActivity(intent);
             }

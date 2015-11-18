@@ -81,5 +81,8 @@
     <string name="warehouse_stock">Stock magasin</string>
     <string name="products_initial">P</string>
     <string name="warehouses_initial">M</string>
+    <string name="my_warehouses">Mes magasins</string>
+    <string name="stock_modify">Modifier le stock</string>
+
 
 </resources>

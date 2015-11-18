@@ -207,8 +207,8 @@ public class MyCategories extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getBaseContext(), Category.class);
-                    String categoryName = category.getName();
-                    intent.putExtra("categoryName",categoryName);
+                    int categoryId = category.getId();
+                    intent.putExtra("categoryId",categoryId);
                     startActivity(intent);
                 }
             });
