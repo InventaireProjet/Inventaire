@@ -12,18 +12,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class ProductNewOrModify extends AppCompatActivity {
 
     ObjectProducts product = null;
-    int position;
+    ProductDataSource productDataSource;
+    int productId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_new_or_modify);
+        productDataSource = new ProductDataSource(this);
 
         // Fill the Spinner with all categories
         final Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
@@ -44,11 +48,12 @@ public class ProductNewOrModify extends AppCompatActivity {
 
         // Get the product Id from intent. If position = -1, it is a new product
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", -1);
+        productId = intent.getIntExtra("position", -1);
 
         // If it is an existing product (modification), fill the fields with products data
-        if (position >= 0) {
-            product = ObjectsLists.getProductList().get(position);
+        if (productId >= 0) {
+            // TODO product = ObjectsLists.getProductList().get(productId);
+            product = productDataSource.getProductById(productId);
             etProductName.setText(product.getName());
             etArtNb.setText(product.getArtNb());
             etPrice.setText(String.format("%,.2f", product.getPrice()));
@@ -73,15 +78,17 @@ public class ProductNewOrModify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message = "";
-                if (position == -1) {
+                if (productId == -1) {
                     // New article
                     ObjectCategories cat = ObjectsLists.categoryList
                             .get(spinnerCategory.getSelectedItemPosition());
                     product = new ObjectProducts(etArtNb.getText().toString(), etProductName.getText().toString(),
                             cat, 0, Double.valueOf(etPrice.getText().toString()), "" );
                     product.setDescription(etDescription.getText().toString());
-                    ObjectsLists.getProductList().add(product);
-                    message = "Produit créé";
+                    // TODO ObjectsLists.getProductList().add(product);
+                    long id = productDataSource.createProduct(product);
+                    product.setId(((int) id));
+                    message = "Produit " + id + " créé";
                 }
                 else {
                     // Modify article

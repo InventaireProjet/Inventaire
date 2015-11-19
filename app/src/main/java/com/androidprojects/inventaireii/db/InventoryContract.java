@@ -33,6 +33,7 @@ public final class InventoryContract {
                 + ProductEntry.KEY_NAME + " TEXT, "
                 + ProductEntry.KEY_DESCRIPTION + " TEXT, "
                 + ProductEntry.KEY_PRICE + " DOUBLE, "
+                + ProductEntry.KEY_CATEGORY_ID + " INTEGER, "
                 + "FOREIGN KEY (" + ProductEntry.KEY_CATEGORY_ID
                     + ") REFERENCES " + CategorieEntry.TABLE_CATEGORIES
                     + " (" + KEY_ID + ") "
@@ -52,7 +53,7 @@ public final class InventoryContract {
         public static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE "
                 + TABLE_CATEGORIES + "("
                 + CategorieEntry.KEY_ID + " INTEGER PRIMARY KEY, "
-                + CategorieEntry.KEY_NAME + " TEXT, "
+                + CategorieEntry.KEY_NAME + " TEXT "
                 + ");";
     }
 
@@ -106,6 +107,8 @@ public final class InventoryContract {
                 + StockEntry.KEY_ID + " INTEGER PRIMARY KEY, "
                 + StockEntry.KEY_QUANTITY + " INTEGER, "
                 + StockEntry.KEY_CONTROLLED + " INTEGER, "
+                + StockEntry.KEY_PRODUCT_ID + " INTEGER, "
+                + StockEntry.KEY_WAREHOUSE_ID + " INTEGER, "
                 + "FOREIGN KEY (" + StockEntry.KEY_PRODUCT_ID
                     + ") REFERENCES " + ProductEntry.TABLE_PRODUCTS
                     + " (" + ProductEntry.KEY_ID + "), "

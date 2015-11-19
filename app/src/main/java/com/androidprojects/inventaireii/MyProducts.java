@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Method;
@@ -23,22 +25,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyProducts extends AppCompatActivity {
-    // TODO Fake values
+    private ProductDataSource productDataSource;
     private List<ObjectProducts> productsList = new ArrayList<ObjectProducts>();
-    private List<ObjectCategories> categoriesList = new ArrayList<>();
-    public List<ObjectProducts> getProductsList(){
-        return productsList;
-    }
     ArrayAdapter adapter;
     View squareTotalStock;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_products);
 
+        productDataSource = new ProductDataSource(this);
+
         // TODO suppress this FAKE value :
-        productsList = ObjectsLists.getProductList();
+        // productsList = ObjectsLists.getProductList();
+        productsList = productDataSource.getAllProducts();
 
         // Set OnClickListener to Button "Add product"
         Button buttonAddProduct = (Button) findViewById(R.id.buttonAddProduct);
@@ -152,20 +154,22 @@ public class MyProducts extends AppCompatActivity {
 
             // Fill with data
             square.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
-            txtArtNb.setText(product.getArtNb());
+            txtArtNb.setText(product.getArtNb()+product.getId());
             txtName.setText(product.getName());
-            txtCategory.setText(product.getCategory().getName());
+            if (product.getCategory() != null)
+                txtCategory.setText(product.getCategory().getName());
+            else
+                txtCategory.setText(R.string.no_category);
             txtQuantity.setText(Integer.toString(product.getQuantity()));
             txtPrice.setText("CHF " + String.format("%,.2f", product.getPrice()));
 
-            // Sending the product to the next field
+            // Sending the product to the next activity
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ObjectsLists.setProductList((ArrayList) productsList);
+                    // todo ObjectsLists.setProductList((ArrayList) productsList);
                     Intent intent = new Intent(getBaseContext(), Product.class);
-                    // TODO in the final version, send only the product Id...
-                    intent.putExtra("position", position);
+                    intent.putExtra("position", product.getId());
                     startActivity(intent);
                 }
             });

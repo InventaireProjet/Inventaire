@@ -98,11 +98,6 @@ public class ObjectProducts {
             quantity += stock.getQuantity();
         }
 
-        // TODO suppress those lines...
-        if (quantity == 0) {
-            quantity = 12;
-        }
-
         return quantity;
     }
 

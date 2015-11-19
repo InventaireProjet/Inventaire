@@ -16,26 +16,31 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+
 import java.util.List;
 
 public class Product extends AppCompatActivity {
     ObjectCategories category;
     ObjectProducts product;
-    int position;
+    int productId;
     ArrayAdapter adapter;
     View squareTotalStock;
+    ProductDataSource productDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        productDataSource = new ProductDataSource(this);
 
         // Get the product from the Intent
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", 0);
+        productId = intent.getIntExtra("position", 1);
 
         // TODO suppress fake values
-        product = ObjectsLists.getProductList().get(position);
+        //product = ObjectsLists.getProductList().get(productId);
+        product = productDataSource.getProductById(productId);
 
         // Set values in top of screen
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
@@ -44,7 +49,10 @@ public class Product extends AppCompatActivity {
         TextView txtPrice = (TextView) findViewById(R.id.txtPrice);
         txtTitle.setText(product.getName());
         txtArtNb.setText("N° Article : " + product.getArtNb());
-        txtCategory.setText("Catégorie : " + product.getCategory().getName());
+        if (product.getCategory() != null)
+            txtCategory.setText("Catégorie : " + product.getCategory().getName());
+        else
+            txtCategory.setText(R.string.no_category);
         txtPrice.setText("Prix : " + String.format("%,.2f", product.getPrice()) + " CHF");
 
         // Set onClickListener to button "All controlled"
@@ -67,8 +75,11 @@ public class Product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Product.class);
-                int nbItems = ObjectsLists.getProductList().size();
-                intent.putExtra("position", (position+nbItems-1)%nbItems);
+                //TODO int nbItems = ObjectsLists.getProductList().size();
+                // TODO créer la requête SQL
+                int nbItems = productDataSource.getAllProducts().size();
+                nbItems = productDataSource.getCountProduct();
+                intent.putExtra("position", (productId+nbItems-1)%nbItems);
                 startActivity(intent);
                 finish();
 
@@ -82,7 +93,7 @@ public class Product extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Product.class);
                 int nbItems = ObjectsLists.getProductList().size();
-                intent.putExtra("position", (position+nbItems+1)%nbItems);
+                intent.putExtra("position", (productId+nbItems+1)%nbItems);
                 startActivity(intent);
                 finish();
             }
@@ -95,7 +106,7 @@ public class Product extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), StockNewOrModify.class);
                 intent.putExtra("stockPosition" , -1);
-                intent.putExtra("productPosition", position);
+                intent.putExtra("productPosition", productId);
                 startActivity(intent);
             }
         });
@@ -126,7 +137,7 @@ public class Product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), ProductNewOrModify.class);
-                intent.putExtra("position", position);
+                intent.putExtra("position", productId);
                 startActivity(intent);
             }
         });

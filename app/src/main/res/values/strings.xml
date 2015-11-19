@@ -83,6 +83,7 @@
     <string name="warehouses_initial">M</string>
     <string name="my_warehouses">Mes magasins</string>
     <string name="stock_modify">Modifier le stock</string>
+    <string name="no_category">Sans catégorie</string>
 
 
 </resources>

@@ -15,10 +15,11 @@ public class ProductDataSource {
 
 
     private SQLiteDatabase db;
-    private Context context = null;
-    private CategoryDataSource categoryDataSource = new CategoryDataSource(context);
+    private Context context;
+    private CategoryDataSource categoryDataSource ;
 
     public  ProductDataSource (Context context) {
+        categoryDataSource = new CategoryDataSource(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
@@ -40,6 +41,20 @@ public class ProductDataSource {
         return  id;
     }
 
+    // Get the number of products
+    public int getCountProduct() {
+        int number = 0;
+        String sql = "SELECT COUNT(*) FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS;
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor != null){
+            cursor.moveToFirst();
+        }
+
+        number = cursor.getInt(1);
+        return number;
+    }
+
     //Find a product by Id
 
     public ObjectProducts getProductById (long id) {
@@ -53,6 +68,7 @@ public class ProductDataSource {
         }
 
         ObjectProducts product = new ObjectProducts();
+        product.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ID)));
         product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
         product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
         product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
@@ -74,6 +90,7 @@ public class ProductDataSource {
         if (cursor.moveToFirst()) {
             do {
                 ObjectProducts product = new ObjectProducts();
+                product.setId(cursor.getInt(cursor.getColumnIndex((InventoryContract.ProductEntry.KEY_ID))));
                 product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
                 product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
                 product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
