@@ -20,6 +20,10 @@ public class ObjectStock {
         this.warehouse = warehouse;
     }
 
+    public ObjectStock() {
+
+    }
+
     public int getId() {
         return id;
     }
