@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
@@ -79,12 +80,19 @@ public class MyCategories extends AppCompatActivity {
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
-                        ObjectsLists.getCategoryList().add(newCategory);
-                        //TODO Enable this, disable that
-                        //categoryDataSource.createCategory(newCategory);
-                        popupWindow.dismiss();
-                        adapter.notifyDataSetChanged();
+                        if(userEntry.getText().toString().equals("")) {
+                            Toast toast = Toast.makeText(getBaseContext(), R.string.no_categoryName, Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                        else {
+                            ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
+                            ObjectsLists.getCategoryList().add(newCategory);
+                            //TODO Enable this, disable that
+                            //categoryDataSource.createCategory(newCategory);
+
+                            popupWindow.dismiss();
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 });
 
@@ -150,16 +158,10 @@ public class MyCategories extends AppCompatActivity {
                 intent = new Intent(getBaseContext(), SearchActivity.class);
                 startActivity(intent);
                 return true;
-
-            /*case R.id.action_settings:
-                intent = new Intent(getBaseContext(), Settings.class);
-                startActivity(intent);
-                return true;*/
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override

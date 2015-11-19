@@ -25,10 +25,6 @@ import java.util.List;
 
 public class WarehouseStock extends AppCompatActivity {
 
-
-    //TODO get rid of method ?
-    // Methods methods = new Methods();
-
     Button btnDelete;
     Button btnNext;
     Button btnPrevious;
@@ -122,19 +118,8 @@ public class WarehouseStock extends AppCompatActivity {
         adapter = new ProductsAdapter(this, productsToDisplay);
         lvProducts.setAdapter(adapter);
 
-// Total quantity of products and value of stock
-        int totalQuantity = 0;
-        double totalValue = 0.0;
-        for (ObjectProducts product : productsToDisplay) {
-            totalQuantity += product.getQuantity();
-            totalValue += product.getPrice()*product.getQuantity();
-        }
-        squareTotalStock =  findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText("Stock : " + Integer.toString(totalQuantity));
-        txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
+        showTotalInStock();
+
 
 //Delete the warehouse
         btnDelete = (Button) findViewById(R.id.buttonDelete);
@@ -162,15 +147,7 @@ public class WarehouseStock extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                       warehouses = ObjectsLists.getWarehouseList();
-
-                       /* for (int i = 0; i < warehouses.size(); i++) {
-
-                            if (warehouses.get(i).getName().equals(name)) {
-
-                                ObjectsLists.getWarehouseList().remove(i);
-                            }
-                        }*/
+                        warehouses = ObjectsLists.getWarehouseList();
 
                         warehouses.remove(warehouseId);
                         //TODO UP OUT, DOWN IN
@@ -214,6 +191,23 @@ public class WarehouseStock extends AppCompatActivity {
 
     }
 
+    // Total quantity of products and value of stock
+    private void showTotalInStock() {
+        int totalQuantity = 0;
+        double totalValue = 0.0;
+        for (ObjectProducts product : productsToDisplay) {
+            totalQuantity += product.getQuantity();
+            totalValue += product.getPrice()*product.getQuantity();
+        }
+        squareTotalStock =  findViewById(R.id.squareTotalStock);
+        TextView txtStock = (TextView) findViewById(R.id.txtStock);
+        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        txtStock.setText("Stock : " + Integer.toString(totalQuantity));
+        txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
+    }
+
+
     //Refreshing the adapter so it shows the changes
     @Override
     protected void onResume() {
@@ -221,6 +215,7 @@ public class WarehouseStock extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        showTotalInStock();
     }
 
     @Override

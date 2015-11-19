@@ -25,8 +25,6 @@ import java.util.List;
 
 public class Category extends AppCompatActivity {
 
-    //TODO get rid of method ?
-    // Methods methods = new Methods();
     Button btnModify;
     Button btnDelete;
     Button btnNext;
@@ -46,7 +44,7 @@ public class Category extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       // categoryDataSource = new CategoryDataSource(this);
+        // categoryDataSource = new CategoryDataSource(this);
         // productDataSource = new ProductDataSource(this);
 
 //Using the same layout as my products with some changes
@@ -111,25 +109,18 @@ public class Category extends AppCompatActivity {
 
 
 // Fill the ListView with products
+
+
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         View header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
-        adapter = new ProductsAdapter(this, productsToDisplay);
-        lvProducts.setAdapter(adapter);
 
-        // Total quantity of products and value of stock
-        int totalQuantity = 0;
-        double totalValue = 0.0;
-        for (ObjectProducts product : productsToDisplay) {
-            totalQuantity += product.getQuantity();
-            totalValue += product.getPrice()*product.getQuantity();
-        }
-        squareTotalStock = findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText("Stock : " + Integer.toString(totalQuantity));
-        txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
+
+
+            adapter = new ProductsAdapter(this, productsToDisplay);
+            lvProducts.setAdapter(adapter);
+            // Total quantity of products and value of stock
+        showTotalInStock();
 
         //Modify the category name
         btnModify = (Button) findViewById(R.id.buttonModify);
@@ -164,20 +155,16 @@ public class Category extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-//TODO CHANGE WITH DATA in comment, bye bye for
-                        for (int i = 0; i < ObjectsLists.getCategoryList().size(); i++) {
-
-
-                            if (ObjectsLists.getCategoryList().get(i).getName().equals(categoryName)) {
-
-                                ObjectsLists.getCategoryList().get(i).setName(userEntry.getText().toString());
-                            }
-                        }
+//TODO CHANGE WITH DATA in comment
+                        category.setName(userEntry.getText().toString());
 
                         //categoryDataSource.updateCategory(category);
 
                         title.setText(userEntry.getText().toString());
+
+                        if (productsToDisplay!=null){
                         adapter.notifyDataSetChanged();
+                        }
                         popupWindow.dismiss();
 
                     }
@@ -191,9 +178,6 @@ public class Category extends AppCompatActivity {
                 });
 
                 popupWindow.showAsDropDown(btnModify, 0, -100);
-
-
-
             }
         });
 
@@ -222,16 +206,6 @@ public class Category extends AppCompatActivity {
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                      /*  ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
-
-                        for (int i = 0; i <categories.size() ; i++) {
-
-                            if (categories.get(i).getName().equals(category)){
-
-                                ObjectsLists.getCategoryList().remove(i);
-                            }
-                        }*/
 
                         final ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
 
@@ -262,12 +236,32 @@ public class Category extends AppCompatActivity {
 
     }
 
+    private void showTotalInStock() {
+        int totalQuantity = 0;
+        double totalValue = 0.0;
+        for (ObjectProducts product : productsToDisplay) {
+            totalQuantity += product.getQuantity();
+            totalValue += product.getPrice() * product.getQuantity();
+        }
+        squareTotalStock = findViewById(R.id.squareTotalStock);
+        TextView txtStock = (TextView) findViewById(R.id.txtStock);
+        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        txtStock.setText("Stock : " + Integer.toString(totalQuantity));
+        txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+
         adapter.notifyDataSetChanged();
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        showTotalInStock();
+
+
+
     }
 
     @Override

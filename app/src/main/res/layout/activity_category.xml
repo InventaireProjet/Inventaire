@@ -7,6 +7,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Category">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -96,4 +99,6 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>

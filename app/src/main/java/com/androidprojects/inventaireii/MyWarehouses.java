@@ -66,13 +66,6 @@ public class MyWarehouses extends AppCompatActivity {
         });
     }
 
-    private int giveColor(String s) {
-        if (s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do);
-        if (s.equals("done"))
-            return getResources().getColor(R.color.indicator_done);
-        return getResources().getColor(R.color.indicator_doing);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

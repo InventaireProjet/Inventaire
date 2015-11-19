@@ -40,7 +40,7 @@ public class Product extends AppCompatActivity {
 
         // TODO suppress fake values
         //product = ObjectsLists.getProductList().get(productId);
-        product = productDataSource.getProductById(productId);
+       product = productDataSource.getProductById(productId);
 
         // Set values in top of screen
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
@@ -171,6 +171,7 @@ public class Product extends AppCompatActivity {
                         for (ObjectStock s : product.getStocks()) {
                             ObjectsLists.getStockList().remove(s);
                             product.removeStock(s);
+                            break;
                         }
                         ObjectsLists.getProductList().remove(product);
                         popupWindow.dismiss();

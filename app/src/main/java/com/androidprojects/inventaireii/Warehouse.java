@@ -69,14 +69,9 @@ public class Warehouse extends AppCompatActivity {
 
         final ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
-     /*   for (int i = 0; i <warehouses.size() ; i++) {
-
-            if (warehouses.get(i).getName().equals(name)){
-
-                final ObjectWarehouse warehouse = warehouses.get(i);*/
         productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
         //TODO UP OUT, DOWN IN
-       // productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
+        // productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
         //First part
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
@@ -149,16 +144,6 @@ public class Warehouse extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                       /* ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
-
-                        for (int i = 0; i < warehouses.size(); i++) {
-
-                            if (warehouses.get(i).getName().equals(name)) {
-
-                                ObjectsLists.getWarehouseList().remove(i);
-                            }
-                        }*/
-
                         warehouses.remove(warehouseId);
                         //TODO UP OUT, DOWN IN
                         //warehouseDataSource.deleteWarehouse(warehouseId);
@@ -173,7 +158,6 @@ public class Warehouse extends AppCompatActivity {
                 buttonDeleteAll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
 
 
                         //TODO Deleting stock product in this warehouse (data management)
@@ -198,11 +182,6 @@ public class Warehouse extends AppCompatActivity {
 
             }
         });
-
-
-        //  }
-        //}
-
     }
 
 
@@ -248,13 +227,5 @@ public class Warehouse extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private int giveColor(String s) {
-        if(s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do);
-        if(s.equals("done"))
-            return getResources().getColor(R.color.indicator_done);
-        return getResources().getColor(R.color.indicator_doing);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
@@ -175,36 +176,41 @@ public class WarehouseModify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Saving modifications
-                warehouse.setName(editWarehouseName.getText().toString());
-                warehouse.setStockCapacity(Integer.parseInt(editCapacityNumber.getText().toString()));
-                warehouse.setTelNumber(editPhoneEntry.getText().toString());
-                warehouse.setStreet(editStreet.getText().toString());
-                warehouse.setStreetNumber(editStreetNo.getText().toString());
-                warehouse.setPostalCode(editPostalCode.getText().toString());
-                warehouse.setLocation(editCity.getText().toString());
-                warehouse.setCountry(editCountry.getText().toString());
+                if (editWarehouseName.getText().toString().equals("")){
+                    Toast toast = android.widget.Toast.makeText(getBaseContext(), R.string.no_warehousename, android.widget.Toast.LENGTH_LONG);
+                    toast.show();
+                }
 
-                //TODO ENABLE DOWN
-                //warehouseDataSource.updateWarehouse(warehouse);
+                else {
+                    //Saving modifications
+                    int warehouseCapacity;
 
-                Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                intent.putExtra("warehouseId", editWarehouseName.getText().toString());
-                startActivity(intent);
+                    if (editCapacityNumber.getText().toString().equals("")){
+                        warehouseCapacity = 0;
+                    }
+                    else
+                    {
+                        warehouseCapacity=Integer.parseInt(editCapacityNumber.getText().toString());
+                    }
 
+                    warehouse.setName(editWarehouseName.getText().toString());
+                    warehouse.setStockCapacity(warehouseCapacity);
+                    warehouse.setTelNumber(editPhoneEntry.getText().toString());
+                    warehouse.setStreet(editStreet.getText().toString());
+                    warehouse.setStreetNumber(editStreetNo.getText().toString());
+                    warehouse.setPostalCode(editPostalCode.getText().toString());
+                    warehouse.setLocation(editCity.getText().toString());
+                    warehouse.setCountry(editCountry.getText().toString());
+
+                    //TODO ENABLE DOWN
+                    //warehouseDataSource.updateWarehouse(warehouse);
+
+                    Intent intent = new Intent(getBaseContext(), Warehouse.class);
+                    intent.putExtra("warehouseId", editWarehouseName.getText().toString());
+                    startActivity(intent);
+                }
             }
 
         });
-        /*    }
-        }*/
     }
-
-    private int giveColor(String s) {
-        if(s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do);
-        if(s.equals("done"))
-            return getResources().getColor(R.color.indicator_done);
-        return getResources().getColor(R.color.indicator_doing);
-    }
-
 }

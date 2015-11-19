@@ -7,142 +7,144 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.androidprojects.inventaireii.NewWarehouse">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/categoryName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/instruction"
-            android:textColor="@color/text_color"
-            android:textSize="18dp"/>
-
-        <include layout="@layout/blue_line" />
-
-
-
-        <EditText
-            android:id="@+id/warehouseName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/new_warehouse_name"
-            android:inputType="text"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-        <EditText
-            android:id="@+id/warehouseCapacity"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/warehouse_capacity"
-            android:inputType="number"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-        <EditText
-            android:id="@+id/warehousePhone"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/warehouse_phone"
-            android:inputType="phone"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-        <EditText
-            android:id="@+id/warehouseStreet"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/street"
-            android:inputType="text"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-        <EditText
-            android:id="@+id/warehouseStreetNo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/streetNo"
-            android:inputType="text"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-        <EditText
-            android:id="@+id/warehousePostalCode"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/postalCode"
-            android:inputType="textPostalAddress"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-        <EditText
-            android:id="@+id/warehouseLocation"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/city"
-            android:inputType="text"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-        <EditText
-            android:id="@+id/warehouseCountry"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/country"
-            android:inputType="text"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/warehouse_text_entry" />
-
-
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/userEntry"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/buttonCancel"
+            <TextView
+                android:id="@+id/categoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instruction"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"/>
+
+            <include layout="@layout/blue_line" />
+
+
+
+            <EditText
+                android:id="@+id/warehouseName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/new_warehouse_name"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+            <EditText
+                android:id="@+id/warehouseCapacity"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/warehouse_capacity"
+                android:inputType="number"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+            <EditText
+                android:id="@+id/warehousePhone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/warehouse_phone"
+                android:inputType="phone"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+            <EditText
+                android:id="@+id/warehouseStreet"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/street"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+            <EditText
+                android:id="@+id/warehouseStreetNo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/streetNo"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+            <EditText
+                android:id="@+id/warehousePostalCode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/postalCode"
+                android:inputType="textPostalAddress"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+            <EditText
+                android:id="@+id/warehouseLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/city"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+            <EditText
+                android:id="@+id/warehouseCountry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/country"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/warehouse_text_entry" />
+
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/button_background"
-                android:text="@string/cancel"
-                android:textColor="@color/text_color"/>
+                android:layout_below="@+id/userEntry"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/buttonValidate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@color/button_background"
-                android:text="@string/validate"
-                android:textColor="@color/text_color"/>
+                <Button
+                    android:id="@+id/buttonCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/button_background"
+                    android:text="@string/cancel"
+                    android:textColor="@color/text_color"/>
+
+                <Button
+                    android:id="@+id/buttonValidate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/button_background"
+                    android:text="@string/validate"
+                    android:textColor="@color/text_color"/>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>
 
 

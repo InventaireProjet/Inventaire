@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 
@@ -18,7 +19,7 @@ public class NewWarehouse extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        warehouseDataSource = new WarehouseDataSource(this);
+//        warehouseDataSource = new WarehouseDataSource(this);
 
         setContentView(R.layout.activity_new_warehouse);
 
@@ -34,36 +35,55 @@ public class NewWarehouse extends AppCompatActivity {
         });
 
 
-        final EditText warehouseName = (EditText) findViewById(R.id.warehouseName);
-        final EditText warehouseCapacity = (EditText) findViewById(R.id.warehouseCapacity);
-        final EditText warehousePhone = (EditText) findViewById(R.id.warehousePhone);
-        final EditText warehouseStreet = (EditText) findViewById(R.id.warehouseStreet);
-        final EditText warehouseStreetNo = (EditText) findViewById(R.id.warehouseStreetNo);
-        final EditText warehousePostalCode = (EditText) findViewById(R.id.warehousePostalCode);
-        final EditText warehouseLocation = (EditText) findViewById(R.id.warehouseLocation);
-        final EditText warehouseCountry = (EditText) findViewById(R.id.warehouseCountry);
+        final EditText etWarehouseName = (EditText) findViewById(R.id.warehouseName);
+        final EditText etWarehouseCapacity = (EditText) findViewById(R.id.warehouseCapacity);
+        final EditText etWarehousePhone = (EditText) findViewById(R.id.warehousePhone);
+        final EditText etWarehouseStreet = (EditText) findViewById(R.id.warehouseStreet);
+        final EditText etWarehouseStreetNo = (EditText) findViewById(R.id.warehouseStreetNo);
+        final EditText etWarehousePostalCode = (EditText) findViewById(R.id.warehousePostalCode);
+        final EditText etWarehouseLocation = (EditText) findViewById(R.id.warehouseLocation);
+        final EditText etWarehouseCountry = (EditText) findViewById(R.id.warehouseCountry);
 
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//TODO Manage the case of no entry
-                ObjectWarehouse newWarehouse = new ObjectWarehouse(
-                        warehouseName.getText().toString(),
-                        0, 0,
-                        Integer.parseInt(warehouseCapacity.getText().toString()),
-                        warehousePhone.getText().toString(),
-                        warehouseStreet.getText().toString(),
-                        warehouseStreetNo.getText().toString(),
-                        warehousePostalCode.getText().toString(),
-                        warehouseLocation.getText().toString(),
-                        warehouseCountry.getText().toString());
 
-                ObjectsLists.getWarehouseList().add(newWarehouse);
-                //TODO NO UP, YES DOWN
-                //warehouseDataSource.createWarehouse(newWarehouse);
 
-                Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
-                startActivity(intent);
+                if (etWarehouseName.getText().toString().equals("")) {
+
+                    Toast toast = Toast.makeText(getBaseContext(), R.string.no_warehousename, Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+                else {
+                    int warehouseCapacity;
+
+                    if (etWarehouseCapacity.getText().toString().equals("")){
+                        warehouseCapacity = 0;
+                    }
+                    else
+                    {
+                        warehouseCapacity=Integer.parseInt(etWarehouseCapacity.getText().toString());
+                    }
+
+                    ObjectWarehouse newWarehouse = new ObjectWarehouse(
+                            etWarehouseName.getText().toString(),
+                            0, 0,
+                            warehouseCapacity,
+                            etWarehousePhone.getText().toString(),
+                            etWarehouseStreet.getText().toString(),
+                            etWarehouseStreetNo.getText().toString(),
+                            etWarehousePostalCode.getText().toString(),
+                            etWarehouseLocation.getText().toString(),
+                            etWarehouseCountry.getText().toString());
+
+                    ObjectsLists.getWarehouseList().add(newWarehouse);
+                    //TODO NO UP, YES DOWN
+                    //warehouseDataSource.createWarehouse(newWarehouse);
+
+                    Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
+                    startActivity(intent);
+                }
             }
         });
 

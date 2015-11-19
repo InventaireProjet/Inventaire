@@ -23,6 +23,11 @@ public class Methods extends AppCompatActivity {
     public static String getInventoryState(ObjectProducts product) {
         int nbControlled = 0;
         int nbNotControlled = 0;
+
+        if(product.getStocks().isEmpty()) {
+            return "done";
+        }
+
         for (ObjectStock s : product.getStocks()) {
             if(s.isControlled())
                 nbControlled ++;
@@ -41,6 +46,11 @@ public class Methods extends AppCompatActivity {
     public static String getInventoryState() {
         int nbControlled = 0;
         int nbNotControlled = 0;
+
+        if (ObjectsLists.getProductList().isEmpty()){
+            return "done";
+        }
+
         for (ObjectProducts p : ObjectsLists.getProductList()){
             switch (getInventoryState(p)) {
                 case "done": nbControlled++ ; break ;
@@ -60,6 +70,11 @@ public class Methods extends AppCompatActivity {
     public static String getInventoryState(List<ObjectProducts> productsToDisplay) {
         int nbControlled = 0;
         int nbNotControlled = 0;
+
+        if (productsToDisplay.isEmpty()) {
+            return "done";
+        }
+
         for (ObjectProducts p : productsToDisplay){
             switch (getInventoryState(p)) {
                 case "done": nbControlled++ ; break ;
