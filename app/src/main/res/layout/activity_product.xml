@@ -8,211 +8,224 @@
     android:background="@color/back_color"
     tools:context="com.androidprojects.inventaireii.Product">
 
-    <!-- Title, art. nb, category, price -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <!-- Title and 3 buttons : controlled, previous, next -->
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/llTitle">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <!-- Title, art. nb, category, price -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="3"
-                android:id="@+id/txtTitle"
-                android:textColor="@color/text_color"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
-            <Button
-                android:layout_width="@dimen/square_width"
-                android:layout_height="@dimen/square_height"
-                android:background="@color/indicator_done"
-                android:id="@+id/buttonAllControlled"/>
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Title and 3 buttons : controlled, previous, next -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/llTitle">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:id="@+id/txtTitle"
+                        android:textColor="@color/text_color"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    <Button
+                        android:layout_width="@dimen/square_width"
+                        android:layout_height="@dimen/square_height"
+                        android:background="@color/indicator_done"
+                        android:id="@+id/buttonAllControlled"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/dark_Grey"
+                        android:text="&lt;"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/buttonPrevious"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/dark_Grey"
+                        android:text="&gt;"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/buttonNext"/>
+                </LinearLayout>
+
+                <include layout="@layout/blue_line"/>
+
+                <!-- Some informations -->
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtArtNb"
+                    android:textColor="@color/text_color"
+                    />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtCategory"
+                    android:textColor="@color/text_color"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtPrice"
+                    android:textColor="@color/text_color"/>
+            </LinearLayout>
+
+            <!-- Quantity and storage location -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4.5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_blue"
+                        android:text="@string/quantity_and_storage"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                    <Button
+                        android:id="@+id/buttonAddStock"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/add"
+                        android:layout_marginLeft="30dp"/>
+
+                </LinearLayout>
+
+                <include layout="@layout/blue_line"/>
+
+                <ListView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:background="@color/list_backcolor"
+                    android:id="@+id/lvStocks">
+                </ListView>
+
+                <!-- Totals under the list of Warehouses stocks -->
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2">
+
+                    <View
+                        android:layout_width="@dimen/square_width"
+                        android:layout_height="@dimen/square_height"
+                        android:id="@+id/squareTotalStock"
+                        android:background="@color/dark_Grey"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/squareTotalStock"
+                        android:id="@+id/txtLabelTotalStock"
+                        android:textColor="@color/text_color"
+                        android:text="@string/total_stock"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/txtLabelTotalStock"
+                        android:layout_marginLeft="@dimen/middle_space"
+                        android:id="@+id/txtValueTotalStock"
+                        android:textColor="@color/text_color" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtLabelTotalStock"
+                        android:layout_alignLeft="@+id/txtLabelTotalStock"
+                        android:id="@+id/txtLabelStockValue"
+                        android:textColor="@color/text_color"
+                        android:text="@string/stock_value"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtValueTotalStock"
+                        android:layout_alignLeft="@+id/txtValueTotalStock"
+                        android:id="@+id/txtValueStockValue"
+                        android:textColor="@color/text_color"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- Product description -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/light_blue"
+                    android:text="@string/product_description"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <include layout="@layout/blue_line"/>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="3"
+                    android:background="@color/list_backcolor"
+                    android:id="@+id/txtDescription"/>
+
+            </LinearLayout>
+
+            <!-- Two button at bottom : modify and suppress -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textColor="@color/dark_Grey"
-                android:text="&lt;"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/buttonPrevious"/>
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/dark_Grey"
-                android:text="&gt;"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/buttonNext"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:id="@+id/buttonModify"
+                    android:background="@color/button_background"
+                    android:textColor="@color/button_text"
+                    android:text="@string/modify" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/buttonSuppress"
+                    android:background="@color/button_background"
+                    android:textColor="@color/button_text"
+                    android:text="@string/suppress"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <include layout="@layout/blue_line"/>
-
-        <!-- Some informations -->
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtArtNb"
-            android:textColor="@color/text_color"
-            />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtCategory"
-            android:textColor="@color/text_color"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtPrice"
-            android:textColor="@color/text_color"/>
-    </LinearLayout>
-
-    <!-- Quantity and storage location -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4.5"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/light_blue"
-                android:text="@string/quantity_and_storage"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-            <Button
-                android:id="@+id/buttonAddStock"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/add"
-                android:layout_marginLeft="30dp"/>
-
-        </LinearLayout>
-
-        <include layout="@layout/blue_line"/>
-
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:background="@color/list_backcolor"
-            android:id="@+id/lvStocks">
-        </ListView>
-
-        <!-- Totals under the list of Warehouses stocks -->
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2">
-
-            <View
-                android:layout_width="@dimen/square_width"
-                android:layout_height="@dimen/square_height"
-                android:id="@+id/squareTotalStock"
-                android:background="@color/dark_Grey"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/squareTotalStock"
-                android:id="@+id/txtLabelTotalStock"
-                android:textColor="@color/text_color"
-                android:text="@string/total_stock"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/txtLabelTotalStock"
-                android:layout_marginLeft="@dimen/middle_space"
-                android:id="@+id/txtValueTotalStock"
-                android:textColor="@color/text_color" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtLabelTotalStock"
-                android:layout_alignLeft="@+id/txtLabelTotalStock"
-                android:id="@+id/txtLabelStockValue"
-                android:textColor="@color/text_color"
-                android:text="@string/stock_value"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtValueTotalStock"
-                android:layout_alignLeft="@+id/txtValueTotalStock"
-                android:id="@+id/txtValueStockValue"
-                android:textColor="@color/text_color"/>
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <!-- Product description -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/light_blue"
-            android:text="@string/product_description"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-        <include layout="@layout/blue_line"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:lines="3"
-            android:background="@color/list_backcolor"
-            android:id="@+id/txtDescription"/>
-
-    </LinearLayout>
-
-    <!-- Two button at bottom : modify and suppress -->
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:id="@+id/buttonModify"
-            android:background="@color/button_background"
-            android:textColor="@color/button_text"
-            android:text="@string/modify" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:id="@+id/buttonSuppress"
-            android:background="@color/button_background"
-            android:textColor="@color/button_text"
-            android:text="@string/suppress"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

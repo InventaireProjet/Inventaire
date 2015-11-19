@@ -53,6 +53,7 @@ public class StockDataSource {
         Cursor cursor = this.db.rawQuery(sql, null);
 
         ObjectStock stock = new ObjectStock();
+        stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
         stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
         stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED))>0);
 
@@ -81,6 +82,7 @@ public class StockDataSource {
         if (cursor.moveToFirst()) {
             do {
                 ObjectStock stock = new ObjectStock();
+                stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
                 stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
                 stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED))>0);
 
@@ -100,6 +102,40 @@ public class StockDataSource {
 
         return stocks;
     }
+
+    /* Get all stocks */
+    public List<ObjectStock> getAllStocks() {
+        List<ObjectStock> stocks = new ArrayList<>();
+        String sql = "SELECT * FROM " + InventoryContract.StockEntry.TABLE_STOCKS;
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ObjectStock stock = new ObjectStock();
+                stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
+                stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
+                stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED))>0);
+
+                // get the Warehouse
+                int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
+                ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+                stock.setWarehouse(warehouse);
+
+                // the Product is well known
+                int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
+                ObjectProducts product = productDataSource.getProductById(productId);
+                stock.setProduct(product);
+
+                // Add this stock to the list
+                stocks.add(stock);
+
+            } while (cursor.moveToNext());
+        }
+
+        return stocks;
+    }
+
 
     /* Update a stock */
     public int updateStock(ObjectStock stock) {
