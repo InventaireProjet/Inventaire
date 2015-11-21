@@ -50,16 +50,16 @@ public class MainActivity extends AppCompatActivity {
         // TODO suppress those Fake values
         ObjectCategories medical = new ObjectCategories("done", "Médical", "3/5");
         ObjectCategories jeux = new ObjectCategories("doing", "Jeux", "2/7");
-        ObjectProducts sonotone = new ObjectProducts("1235-1", "Sonotone Arfid", medical, 200, 350.0, "todo");
-        ObjectProducts balle = new ObjectProducts("46454-9", "Balle", jeux, 3500, 22.00, "doing");
+        ObjectProducts sonotone = new ObjectProducts("1234-1", "Sonotone Arfid", null, 350.0,
+                "Très joli sonotone, facile d'emploi, vraiment très facile. Le tout pour un coût très modique");
+        ObjectProducts balle = new ObjectProducts("46454-9", "Balle", jeux, 22.00,
+                "Balle jaune et rouge à pois verts dotée d'un effet retro");
         ObjectWarehouse biblio = new ObjectWarehouse("Bibliothèque Elite", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
         ObjectWarehouse armoire = new ObjectWarehouse("Armoire", 0, 0, 0, "021 903 02 60", "Route des pives", "4c", "9876", "Ici", "Suisse");
         ObjectStock stockBiblio = new ObjectStock(35000, false, sonotone, biblio);
         ObjectStock stockArmoire = new ObjectStock(1, true, balle, armoire);
         sonotone.addStock(stockBiblio);
         balle.addStock(stockArmoire);
-        balle.setDescription("Balle jaune et rouge à pois verts dotée d'un effet retro");
-        sonotone.setDescription("Très joli sonotone, facile d'emploi, vraiment très facile. Le tout pour un coût très modique");
 
         productsList.add(sonotone);
         productsList.add(balle);

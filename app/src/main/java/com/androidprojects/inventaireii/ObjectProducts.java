@@ -14,7 +14,6 @@ public class ObjectProducts {
     private String name;
     private String description;
     private double price;
-    private String inventoryState; // TODO ...
     private ObjectCategories category;
     private ArrayList<ObjectStock> stocks = new ArrayList<ObjectStock>();
 
@@ -22,12 +21,12 @@ public class ObjectProducts {
     }
 
     public ObjectProducts(String artNb, String name, ObjectCategories category,
-                          int quantity, double price, String inventoryState) {
+                          double price, String description) {
         this.artNb = artNb;
         this.name = name;
         this.category = category;
         this.price = price;
-        this.inventoryState = inventoryState;
+        this.description = description;
     }
 
     public int getId() {
@@ -68,10 +67,6 @@ public class ObjectProducts {
 
     public void setCategory(ObjectCategories category) {
         this.category = category;
-    }
-
-    public String getInventoryState() {
-        return inventoryState;
     }
 
     public String getDescription() {

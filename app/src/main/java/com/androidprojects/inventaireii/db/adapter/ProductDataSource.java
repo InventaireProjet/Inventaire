@@ -45,7 +45,10 @@ public class ProductDataSource {
         values.put(InventoryContract.ProductEntry.KEY_NAME, product.getName());
         values.put(InventoryContract.ProductEntry.KEY_DESCRIPTION, product.getDescription());
         values.put(InventoryContract.ProductEntry.KEY_PRICE, product.getPrice());
-        values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, product.getCategory().getId());
+        int categoryId = 0;
+        if (product.getCategory() != null)
+            categoryId = product.getCategory().getId();
+        values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, categoryId);
 
         id = this.db.insert(InventoryContract.ProductEntry.TABLE_PRODUCTS, null, values);
 
@@ -189,7 +192,11 @@ public class ProductDataSource {
         values.put(InventoryContract.ProductEntry.KEY_NAME, product.getName());
         values.put(InventoryContract.ProductEntry.KEY_DESCRIPTION, product.getDescription());
         values.put(InventoryContract.ProductEntry.KEY_PRICE, product.getPrice());
-        values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, product.getCategory().getId());
+
+        int categoryId = 0;
+        if (product.getCategory() != null)
+            categoryId = product.getCategory().getId();
+        values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, categoryId);
 
         return this.db.update(InventoryContract.ProductEntry.TABLE_PRODUCTS, values, InventoryContract.ProductEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(product.getId()) });

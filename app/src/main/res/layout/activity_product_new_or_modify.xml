@@ -10,92 +10,106 @@
     android:background="@color/back_color"
     tools:context="com.androidprojects.inventaireii.ProductNewOrModify">
 
-    <!-- Title -->
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtTitle"
-        android:textColor="@color/text_color"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/enter_following_informations_colon"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include layout="@layout/blue_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <!-- Fields -->
-    <EditText
-        android:id="@+id/productName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/product_name"
-        android:inputType="text"
-        android:textColor="@color/text_color"
-        android:textColorHint="@color/text_color_hint"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <!-- Title -->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTitle"
+                android:textColor="@color/text_color"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/enter_following_informations_colon"/>
 
-    <EditText
-        android:id="@+id/artNb"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/article_number"
-        android:inputType="text"
-        android:textColor="@color/text_color"
-        android:textColorHint="@color/text_color_hint"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <include layout="@layout/blue_line"/>
 
-    <Spinner
-        android:id="@+id/spinnerCategory"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/list_backcolor"/>
+            <!-- Fields -->
+            <EditText
+                android:id="@+id/productName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/product_name"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color_hint"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/price"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/price"
-        android:inputType="numberDecimal"
-        android:textColor="@color/text_color"
-        android:textColorHint="@color/text_color_hint"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <EditText
+                android:id="@+id/artNb"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/article_number"
+                android:inputType="text"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color_hint"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:lines="5"
-        android:inputType="textLongMessage"
-        android:textColorHint="@color/text_color_hint"
-        android:textColor="@color/text_color"
-        android:hint="@string/description"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <Spinner
+                android:id="@+id/spinnerCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/list_backcolor"/>
 
-    <!-- Two buttons for cancelling or saving -->
-    <LinearLayout
-        android:id="@+id/llButtons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/price"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/price"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color_hint"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <Button
-            android:id="@+id/buttonCancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/button_background"
-            android:textColor="@color/button_text"
-            android:text="@string/cancel"/>
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lines="5"
+                android:inputType="textLongMessage"
+                android:textColorHint="@color/text_color_hint"
+                android:textColor="@color/text_color"
+                android:hint="@string/description"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:background="@color/button_background"
-            android:textColor="@color/button_text"
-            android:text="@string/save"/>
+            <!-- Two buttons for cancelling or saving -->
+            <LinearLayout
+                android:id="@+id/llButtons"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/buttonCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/button_background"
+                    android:textColor="@color/button_text"
+                    android:text="@string/cancel"/>
+
+                <Button
+                    android:id="@+id/buttonSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/button_background"
+                    android:textColor="@color/button_text"
+                    android:text="@string/save"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

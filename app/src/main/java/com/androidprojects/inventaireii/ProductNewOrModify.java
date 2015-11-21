@@ -12,30 +12,38 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class ProductNewOrModify extends AppCompatActivity {
 
-    ObjectProducts product = null;
-    ProductDataSource productDataSource;
     int productId;
+    ObjectProducts product = null;
+    int categoryId;
+
+    ProductDataSource productDataSource;
+    CategoryDataSource categoryDataSource;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_new_or_modify);
+
         productDataSource = ProductDataSource.getInstance(this);
+        categoryDataSource = CategoryDataSource.getInstance(this);
 
         // Fill the Spinner with all categories
         final Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
-
         ArrayList<String> categoriesNames = new ArrayList<>();
-        for (ObjectCategories cat : ObjectsLists.categoryList) {
+        for (ObjectCategories cat : categoryDataSource.getAllCategories()) {
             categoriesNames.add(cat.getName());
         }
+        // If no category exists
+        categoriesNames.add("no category");
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, categoriesNames );
         spinnerCategory.setAdapter(adapter);
@@ -58,7 +66,8 @@ public class ProductNewOrModify extends AppCompatActivity {
             etArtNb.setText(product.getArtNb());
             etPrice.setText(String.format("%,.2f", product.getPrice()));
             etDescription.setText(product.getDescription());
-            int p = ObjectsLists.categoryList.indexOf(product.getCategory());
+            // TODO: 21.11.2015  int p = ObjectsLists.categoryList.indexOf(product.getCategory());
+            int p = categoryDataSource.getAllCategories().indexOf(product.getCategory());
             spinnerCategory.setSelection(p);
         }
 
@@ -77,15 +86,18 @@ public class ProductNewOrModify extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = "";
+                String message;
                 if (productId == -1) {
                     // New article
-                    ObjectCategories cat = ObjectsLists.categoryList
-                            .get(spinnerCategory.getSelectedItemPosition());
+                    int categoryPosition = spinnerCategory.getSelectedItemPosition();
+                    ObjectCategories cat = null;
+                    if (categoryDataSource.getAllCategories().size()>0) {
+                        cat = categoryDataSource.getAllCategories().get(categoryPosition);
+                    }
+
                     product = new ObjectProducts(etArtNb.getText().toString(), etProductName.getText().toString(),
-                            cat, 0, Double.valueOf(etPrice.getText().toString()), "" );
-                    product.setDescription(etDescription.getText().toString());
-                    // TODO ObjectsLists.getProductList().add(product);
+                            cat, Double.valueOf(etPrice.getText().toString()), etDescription.getText().toString());
+
                     long id = productDataSource.createProduct(product);
                     product.setId(((int) id));
                     message = "Produit " + id + " créé";
@@ -93,12 +105,18 @@ public class ProductNewOrModify extends AppCompatActivity {
                 else {
                     // Modify article
                     int categoryPosition = spinnerCategory.getSelectedItemPosition();
+                    ObjectCategories cat = null;
+                    if(categoryDataSource.getAllCategories().size()>0) {
+                        cat = categoryDataSource.getAllCategories().get(categoryPosition);
+                    }
 
                     product.setArtNb(etArtNb.getText().toString());
                     product.setName(etProductName.getText().toString());
                     product.setPrice(Double.parseDouble(etPrice.getText().toString()));
                     product.setDescription(etDescription.getText().toString());
-                    product.setCategory(ObjectsLists.categoryList.get(categoryPosition));
+                    product.setCategory(cat);
+                    productDataSource.updateProduct(product);
+
                     message = "Produit modifié";
                 }
                 // Confirmation for user
