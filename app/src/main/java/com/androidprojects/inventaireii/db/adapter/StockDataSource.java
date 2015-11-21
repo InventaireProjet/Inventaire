@@ -23,13 +23,21 @@ public class StockDataSource {
     private Context context = null;
     private ProductDataSource productDataSource ;
     private WarehouseDataSource warehouseDataSource;
+    private static StockDataSource instance;
 
-    public  StockDataSource (Context context) {
-        productDataSource = new ProductDataSource(context);
-        warehouseDataSource = new WarehouseDataSource(context);
+    private  StockDataSource (Context context) {
+        productDataSource = ProductDataSource.getInstance(context);
+        warehouseDataSource = WarehouseDataSource.getInstance(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
+    }
+
+    public static StockDataSource getInstance(Context context) {
+        if (instance == null)
+            instance = new StockDataSource(context);
+
+        return instance;
     }
 
     /* New Stock creation */

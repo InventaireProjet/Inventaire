@@ -76,33 +76,10 @@ public class MainActivity extends AppCompatActivity {
         ObjectsLists.setCategoryList(categoriesList);
         ObjectsLists.setStockList(stocksList);
         ObjectsLists.setWarehouseList(warehousesList);
+        // TODO: 21.11.2015 End of fake values
 
-        // TODO: 20.11.2015 \/
-        //stockDataSource = new StockDataSource(this);
-        //productDataSource = new ProductDataSource(this);
-
-        // Display of Inventory-depending fields
-        /*for (ObjectProducts p : productDataSource.getAllProducts()){
-            if (Methods.getInventoryState(p).equals("done"))
-                nbInventoredItems ++;
-        }
-        nbItems = productDataSource.getCountProduct(); */
-        nbInventoredItems = 2;
-        nbItems = 4;
-        // TODO: 20.11.2015  /\
-
-        txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
-        txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
-        if (inventoryIsRunning) {
-            txtInventoryRunning.setVisibility(View.VISIBLE);
-            txtInventoryState.setText("Avancement de votre inventaire : "
-                    + nbInventoredItems + "/" + nbItems);
-            txtInventoryState.setVisibility(View.VISIBLE);
-        }
-        else {
-            txtInventoryRunning.setVisibility(View.INVISIBLE);
-            txtInventoryState.setVisibility(View.INVISIBLE);
-        }
+        stockDataSource = StockDataSource.getInstance(this);
+        productDataSource = ProductDataSource.getInstance(this);
 
         // Access by product
         txtProductAccess = (TextView) findViewById(R.id.txtProductAccess);
@@ -178,6 +155,40 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /* Display of Inventory-depending fields */
+        nbInventoredItems = 0;
+        for (ObjectProducts p : productDataSource.getAllProducts()){
+            if (Methods.getInventoryState(p).equals("done"))
+                nbInventoredItems ++;
+        }
+        nbItems = productDataSource.getNumberOfProducts();
+
+        txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
+        txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
+
+        txtInventoryState.setText("Avancement de votre inventaire : "
+                + nbInventoredItems + "/" + nbItems);
+
+        if (nbItems > nbInventoredItems) {
+            // Inventory is not finished
+            txtInventoryRunning.setText(R.string.inventory_running);
+            txtInventoryState.setTextColor(getResources().getColor(R.color.flashy));
+            txtInventoryRunning.setTextColor(getResources().getColor(R.color.flashy));
+        }
+        else {
+            // Inventory IS finished
+            txtInventoryRunning.setText(R.string.inventory_finished_exclamation);
+            txtInventoryRunning.setTextColor(getResources().getColor(R.color.indicator_done));
+            txtInventoryState.setTextColor(getResources().getColor(R.color.indicator_done));
+        }
+
+
     }
 
     @Override

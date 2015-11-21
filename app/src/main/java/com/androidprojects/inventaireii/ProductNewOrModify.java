@@ -27,7 +27,7 @@ public class ProductNewOrModify extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_new_or_modify);
-        productDataSource = new ProductDataSource(this);
+        productDataSource = ProductDataSource.getInstance(this);
 
         // Fill the Spinner with all categories
         final Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);

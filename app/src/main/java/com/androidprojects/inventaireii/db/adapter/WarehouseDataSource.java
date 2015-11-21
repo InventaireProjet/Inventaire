@@ -16,11 +16,19 @@ public class WarehouseDataSource {
 
     private SQLiteDatabase db;
     private Context context;
+    private static WarehouseDataSource instance;
 
-    public  WarehouseDataSource (Context context) {
+    private   WarehouseDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
+    }
+
+    public static WarehouseDataSource getInstance(Context context) {
+        if(instance == null)
+            instance = new WarehouseDataSource(context);
+
+        return instance;
     }
 
     //New Warehouse creation

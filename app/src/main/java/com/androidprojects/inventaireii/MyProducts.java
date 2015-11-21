@@ -36,7 +36,7 @@ public class MyProducts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_products);
 
-        productDataSource = new ProductDataSource(this);
+        productDataSource = ProductDataSource.getInstance(this);
 
         // TODO suppress this FAKE value :
         // productsList = ObjectsLists.getProductList();

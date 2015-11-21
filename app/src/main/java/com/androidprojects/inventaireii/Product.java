@@ -32,7 +32,7 @@ public class Product extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
-        productDataSource = new ProductDataSource(this);
+        productDataSource = ProductDataSource.getInstance(this);
 
         // Get the product from the Intent
         Intent intent = getIntent();
@@ -78,7 +78,7 @@ public class Product extends AppCompatActivity {
                 //TODO int nbItems = ObjectsLists.getProductList().size();
                 // TODO créer la requête SQL
                 int nbItems = productDataSource.getAllProducts().size();
-                nbItems = productDataSource.getCountProduct();
+                nbItems = productDataSource.getNumberOfProducts();
                 intent.putExtra("position", (productId+nbItems-1)%nbItems);
                 startActivity(intent);
                 finish();

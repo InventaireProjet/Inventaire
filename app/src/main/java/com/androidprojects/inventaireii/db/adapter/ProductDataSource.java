@@ -19,13 +19,21 @@ public class ProductDataSource {
     private Context context;
     private CategoryDataSource categoryDataSource ;
     private StockDataSource stockDataSource;
+    private static ProductDataSource instance;
 
-    public  ProductDataSource (Context context) {
-        categoryDataSource = new CategoryDataSource(context);
-        stockDataSource = new StockDataSource(context);
+    private  ProductDataSource (Context context) {
+        //categoryDataSource = CategoryDataSource.getInstance(context);
+        //stockDataSource = StockDataSource.getInstance(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
+    }
+
+    public static ProductDataSource getInstance(Context context) {
+        if(instance == null)
+            instance = new ProductDataSource(context);
+
+        return instance;
     }
 
     //New Product creation
@@ -45,16 +53,18 @@ public class ProductDataSource {
     }
 
     // Get the number of products
-    public int getCountProduct() {
+    public int getNumberOfProducts() {
         int number = 0;
         String sql = "SELECT COUNT(*) as Number FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS;
         Cursor cursor = this.db.rawQuery(sql, null);
 
         if (cursor != null){
             cursor.moveToFirst();
+            number = cursor.getInt(cursor.getColumnIndex("Number"));
         }
 
-        number = cursor.getInt(cursor.getColumnIndex("Number"));
+
+        cursor.close();
         return number;
     }
 
@@ -79,6 +89,7 @@ public class ProductDataSource {
         //TODO To adapt
         // product.setCategory(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID)));
 
+        cursor.close();
         return product;
     }
 

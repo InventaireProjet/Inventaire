@@ -16,11 +16,19 @@ public class CategoryDataSource {
 
     private SQLiteDatabase db;
     private Context context;
+    private static CategoryDataSource instance;
 
-    public  CategoryDataSource (Context context) {
+    private   CategoryDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db= sqLiteHelper.getWritableDatabase();
         this.context = context;
+    }
+
+    public static CategoryDataSource getInstance(Context context) {
+        if(instance == null)
+            instance = new CategoryDataSource(context);
+
+        return instance;
     }
 
     //New Category creation
