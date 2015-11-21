@@ -19,20 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    // Fake data :
-    boolean inventoryIsRunning = true;
+
+    // Declarations of variables
     int nbItems = 0;
-    int nbInventoredItems = 0;
+    int nbInventoriedItems = 0;
     StockDataSource stockDataSource;
     ProductDataSource productDataSource;
 
+    // TODO Suppress the instantiations of this fake data's
     ArrayList<ObjectCategories> categoriesList = new ArrayList<>();
     ArrayList<ObjectProducts> productsList = new ArrayList<>();
     ArrayList<ObjectStock> stocksList = new ArrayList<>();
     ArrayList<ObjectWarehouse> warehousesList = new ArrayList<>();
 
 
-    // Declarations
+    // Declarations of views
     TextView txtInventoryRunning;
     TextView txtInventoryState;
     TextView txtProductAccess;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // TODO replace this pop-up window with a dialog ???
         // Pop-up Window on click on 'New Inventory'
         buttonStartInventory = (Button) findViewById(R.id.buttonStartInventory);
         buttonStartInventory.setOnClickListener(new Button.OnClickListener() {
@@ -162,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         /* Display of Inventory-depending fields */
-        nbInventoredItems = 0;
+        nbInventoriedItems = 0;
         for (ObjectProducts p : productDataSource.getAllProducts()){
             if (Methods.getInventoryState(p).equals("done"))
-                nbInventoredItems ++;
+                nbInventoriedItems++;
         }
         nbItems = productDataSource.getNumberOfProducts();
 
@@ -173,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
         txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
 
         txtInventoryState.setText("Avancement de votre inventaire : "
-                + nbInventoredItems + "/" + nbItems);
+                + nbInventoriedItems + "/" + nbItems);
 
-        if (nbItems > nbInventoredItems) {
+        if (nbItems > nbInventoriedItems) {
             // Inventory is not finished
             txtInventoryRunning.setText(R.string.inventory_running);
             txtInventoryState.setTextColor(getResources().getColor(R.color.flashy));
@@ -215,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void restartInventory() {
         List<ObjectStock> allStocks = stockDataSource.getAllStocks();
-        nbInventoredItems = 0;
+        nbInventoriedItems = 0;
         for (ObjectStock stock : allStocks){
             stock.setControlled(false);
             stockDataSource.updateStock(stock);
@@ -224,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         nbItems = allStocks.size();
 
         txtInventoryState.setText("Avancement de votre inventaire : "
-                + nbInventoredItems + "/" + nbItems);
+                + nbInventoriedItems + "/" + nbItems);
         txtInventoryState.setVisibility(View.VISIBLE);
 
     }

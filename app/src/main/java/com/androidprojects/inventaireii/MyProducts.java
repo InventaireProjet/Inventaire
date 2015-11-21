@@ -26,9 +26,14 @@ import java.util.List;
 
 public class MyProducts extends AppCompatActivity {
     private ProductDataSource productDataSource;
-    private List<ObjectProducts> productsList = new ArrayList<ObjectProducts>();
+    private List<ObjectProducts> productsList;
     ArrayAdapter adapter;
+
+    // Declaration of views
     View squareTotalStock;
+    View square;
+    Button buttonAddProduct;
+    ListView lvProducts;
 
 
     @Override
@@ -36,14 +41,15 @@ public class MyProducts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_products);
 
-        productDataSource = ProductDataSource.getInstance(this);
+        // Catch views of the activity
+        square = (View) findViewById(R.id.squareInventoryState);
+        lvProducts = (ListView) findViewById(R.id.lvProducts);
 
-        // TODO suppress this FAKE value :
-        // productsList = ObjectsLists.getProductList();
+        productDataSource = ProductDataSource.getInstance(this);
         productsList = productDataSource.getAllProducts();
 
         // Set OnClickListener to Button "Add product"
-        Button buttonAddProduct = (Button) findViewById(R.id.buttonAddProduct);
+        buttonAddProduct = (Button) findViewById(R.id.buttonAddProduct);
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,37 +59,34 @@ public class MyProducts extends AppCompatActivity {
             }
         });
 
-
-        //Todo replace at the right place
-        View square = (View) findViewById(R.id.squareInventoryState);
-        Button buttonNext =(Button) findViewById(R.id.buttonNext);
-        Button buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
-
-
-
         // Fill the ListView
-        ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         View header = (View) getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
         adapter = new ProductsAdapter(this, productsList);
         lvProducts.setAdapter(adapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+        //todo squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
 
-        // Total quantity of products and value of stock
+        // Three elements below the ListView : total quantity of products and value of stock
         int totalQuantity = 0;
         double totalValue = 0.0;
         for (ObjectProducts product : productsList) {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
-        squareTotalStock = (View) findViewById(R.id.squareTotalStock);
+        squareTotalStock = findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
         txtStockValue.setText("Valeur : CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,15 +115,9 @@ public class MyProducts extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
-    }
-
     private class ProductsAdapter extends ArrayAdapter {
         // TODO suppress public ProductsAdapter() { super(MyProducts.this, R.layout.product_row);}
+
         public ProductsAdapter(Context context, List<ObjectProducts> productsList) {
             super(context, 0, productsList);
         }
