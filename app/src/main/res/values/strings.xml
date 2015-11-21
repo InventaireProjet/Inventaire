@@ -89,6 +89,8 @@
     <string name="inventory_finished_exclamation">Inventaire terminé !</string>
     <string name="no_warehouse">Aucun magasin</string>
     <string name="you_have_to_create_warehouse">Vous devez créer au moins un magasin</string>
+    <string name="stock_added">Stock ajouté</string>
+    <string name="stock_updated">Stock mis à jour</string>
 
 
 </resources>

@@ -36,7 +36,7 @@ public class MyWarehouses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //warehouseDataSource = new WarehouseDataSource(this);
+        warehouseDataSource = WarehouseDataSource.getInstance(this);
         //productDataSource = new ProductDataSource(this);
 
         //activity_my_categories reused because of same structure
@@ -45,9 +45,9 @@ public class MyWarehouses extends AppCompatActivity {
         title.setText(R.string.my_warehouses);
 
         //Using adapter
-        adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
+        //adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
         //TODO ERASE UP, ENABLE DOWN
-        //adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
+        adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
 
         // Fill the ListView
         ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);

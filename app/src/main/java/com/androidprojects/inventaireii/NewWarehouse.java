@@ -19,7 +19,7 @@ public class NewWarehouse extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        warehouseDataSource = new WarehouseDataSource(this);
+        warehouseDataSource = WarehouseDataSource.getInstance(this);
 
         setContentView(R.layout.activity_new_warehouse);
 
@@ -77,9 +77,9 @@ public class NewWarehouse extends AppCompatActivity {
                             etWarehouseLocation.getText().toString(),
                             etWarehouseCountry.getText().toString());
 
-                    ObjectsLists.getWarehouseList().add(newWarehouse);
+                    //ObjectsLists.getWarehouseList().add(newWarehouse);
                     //TODO NO UP, YES DOWN
-                    //warehouseDataSource.createWarehouse(newWarehouse);
+                    warehouseDataSource.createWarehouse(newWarehouse);
 
                     Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
                     startActivity(intent);

@@ -147,13 +147,13 @@ public class StockNewOrModify extends AppCompatActivity {
                             ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
                     ObjectsLists.getStockList().add(stock);
                     product.addStock(stock);
-                    message = "Stock ajouté";
+                    message = getResources().getString(R.string.stock_added);
                 } else {
                     // Modification of an existing stock
                     stock.setControlled(switchControlled.isChecked());
                     stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
                     stock.setWarehouse(ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
-                    message = "Stock modifié";
+                    message = getResources().getString(R.string.stock_updated);
                 }
 
                 Toast toast = Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG);
