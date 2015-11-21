@@ -16,28 +16,50 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.StockDataSource;
+import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
+
 import java.util.ArrayList;
 
 public class StockNewOrModify extends AppCompatActivity {
 
-    ObjectProducts product;
-    ObjectStock stock;
-    int productPosition;
-    int stockPosition;
+    private ObjectProducts product;
+    private ObjectStock stock;
+    private int productPosition;
+    private int stockPosition;
+
+    private StockDataSource stockDataSource;
+    private ProductDataSource productDataSource;
+    private WarehouseDataSource warehouseDataSource;
+
+    // Declaration of views
     TextView txtProductName;
+    TextView txtControlled;
+    TextView txtQuantity;
+    TextView txtWarehouse;
     ToggleButton switchControlled;
     EditText etQuantity;
+    Button buttonCancel;
+    Button buttonSuppress;
+    Button buttonSave;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_new_or_modify);
 
+        stockDataSource = StockDataSource.getInstance(this);
+        productDataSource = ProductDataSource.getInstance(this);
+        warehouseDataSource = WarehouseDataSource.getInstance(this);
+
         // Fill the spinner with the warehouses
         final Spinner spinnerWarehouse = (Spinner) findViewById(R.id.spinnerWarehouse);
 
         ArrayList<String> warehousesNames = new ArrayList<>();
-        for (ObjectWarehouse w : ObjectsLists.getWarehouseList()){
+        for (ObjectWarehouse w : warehouseDataSource.getAllWarehouses()){
             warehousesNames.add(w.getName());
         }
 
@@ -59,6 +81,9 @@ public class StockNewOrModify extends AppCompatActivity {
 
         // Get the elements
         txtProductName = (TextView) findViewById(R.id.txtProductName);
+        txtControlled = (TextView)findViewById(R.id.txtControlled);
+        txtQuantity = (TextView)findViewById(R.id.txtQuantity);
+        txtWarehouse = (TextView) findViewById(R.id.txtWarehouse);
         final ToggleButton switchControlled = (ToggleButton) findViewById(R.id.switchControlled);
         final EditText etQuantity = (EditText) findViewById(R.id.etQuantity);
 
@@ -82,9 +107,9 @@ public class StockNewOrModify extends AppCompatActivity {
 
         /* BUTTONS */
         // Get the buttons
-        Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
-        Button buttonSuppress = (Button) findViewById(R.id.buttonSuppress);
-        Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        buttonCancel = (Button) findViewById(R.id.buttonCancel);
+        buttonSuppress = (Button) findViewById(R.id.buttonSuppress);
+        buttonSave = (Button) findViewById(R.id.buttonSave);
 
         // If it's a new stock, suppress the button suppress
         if (stockPosition == -1)
@@ -123,8 +148,7 @@ public class StockNewOrModify extends AppCompatActivity {
                     ObjectsLists.getStockList().add(stock);
                     product.addStock(stock);
                     message = "Stock ajouté";
-                }
-                else {
+                } else {
                     // Modification of an existing stock
                     stock.setControlled(switchControlled.isChecked());
                     stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
@@ -140,6 +164,16 @@ public class StockNewOrModify extends AppCompatActivity {
             }
         });
 
+        // If there is no Warehouse in DB, we cannot create any stock: hide elements
+        if(warehouseDataSource.getAllWarehouses().size() == 0) {
+            txtProductName.setText(R.string.no_warehouse);
+            txtControlled.setText(R.string.you_have_to_create_warehouse);
+            switchControlled.setVisibility(View.INVISIBLE);
+            txtQuantity.setVisibility(View.INVISIBLE);
+            etQuantity.setVisibility(View.INVISIBLE);
+            txtWarehouse.setVisibility(View.INVISIBLE);
+            buttonSave.setVisibility(View.INVISIBLE);
+        }
 
     }
 

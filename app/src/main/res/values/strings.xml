@@ -87,6 +87,8 @@
     <string name="no_category">Sans catégorie</string>
     <string name="no_categoryName">Entrer un nom de catégorie pour créer une nouvelle catégorie</string>
     <string name="inventory_finished_exclamation">Inventaire terminé !</string>
+    <string name="no_warehouse">Aucun magasin</string>
+    <string name="you_have_to_create_warehouse">Vous devez créer au moins un magasin</string>
 
 
 </resources>
