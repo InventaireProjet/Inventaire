@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 
 import java.util.List;
 
@@ -24,38 +25,35 @@ public class Product extends AppCompatActivity {
     ObjectCategories category;
     ObjectProducts product;
     int productId;
-    ArrayAdapter adapter;
-    View squareTotalStock;
-    ProductDataSource productDataSource;
+    int nbProducts;
 
+    ArrayAdapter adapter;
+    ProductDataSource productDataSource;
+    StockDataSource stockDataSource;
+
+    // Declaration of the views
+    View squareTotalStock;
+    TextView txtTitle;
+    TextView txtArtNb;
+    TextView txtCategory;
+    TextView txtPrice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+
         productDataSource = ProductDataSource.getInstance(this);
+        stockDataSource = StockDataSource.getInstance(this);
 
         // Get the product from the Intent
         Intent intent = getIntent();
         productId = intent.getIntExtra("position", 1);
 
-        // TODO suppress fake values
-        //product = ObjectsLists.getProductList().get(productId);
-       product = productDataSource.getProductById(productId);
-
-        // Set values in top of screen
-        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
-        TextView txtArtNb = (TextView) findViewById(R.id.txtArtNb);
-        TextView txtCategory = (TextView) findViewById(R.id.txtCategory);
-        TextView txtPrice = (TextView) findViewById(R.id.txtPrice);
-        txtTitle.setText(product.getName());
-        txtArtNb.setText("N° Article : " + product.getArtNb());
-        if (product.getCategory() != null)
-            txtCategory.setText("Catégorie : " + product.getCategory().getName());
-        else
-            txtCategory.setText(R.string.no_category);
-        txtPrice.setText("Prix : " + String.format("%,.2f", product.getPrice()) + " CHF");
+        // Get the product. Note that we don't have to manage a productId=0, while the user have to click on a product to come here...
+        product = productDataSource.getProductById(productId);
 
         // Set onClickListener to button "All controlled"
+        // TODO: 21.11.2015
         Button buttonAllControlled = (Button) findViewById(R.id.buttonAllControlled);
         buttonAllControlled.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,21 +63,22 @@ public class Product extends AppCompatActivity {
                     s.setControlled(true);
                 }
                 adapter.notifyDataSetChanged();
-                squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
+                squareTotalStock.setBackgroundColor(
+                        Methods.giveColor(squareTotalStock,
+                                Methods.getInventoryState(product)));
             }
         });
 
         // Set onClickListener to button "Previous"
+        // TODO: 21.11.2015
         Button buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Product.class);
-                //TODO int nbItems = ObjectsLists.getProductList().size();
-                // TODO créer la requête SQL
-                int nbItems = productDataSource.getAllProducts().size();
-                nbItems = productDataSource.getNumberOfProducts();
-                intent.putExtra("position", (productId+nbItems-1)%nbItems);
+                //TODO: 21.11.2015 find the algo for that...
+                nbProducts = productDataSource.getNumberOfProducts();
+                intent.putExtra("position", (productId+nbProducts-1)%nbProducts);
                 startActivity(intent);
                 finish();
 
@@ -87,13 +86,15 @@ public class Product extends AppCompatActivity {
         });
 
         // Set onClickListener to button "Next"
+        // TODO: 21.11.2015
         Button buttonNext = (Button) findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Product.class);
-                int nbItems = ObjectsLists.getProductList().size();
-                intent.putExtra("position", (productId+nbItems+1)%nbItems);
+                // TODO: 21.11.2015 find the algo for that
+                nbProducts = productDataSource.getNumberOfProducts();
+                intent.putExtra("position", (productId+nbProducts+1)%nbProducts);
                 startActivity(intent);
                 finish();
             }
@@ -129,7 +130,9 @@ public class Product extends AppCompatActivity {
 
         // Set color of square below the ListView
         squareTotalStock = (View) findViewById(R.id.squareTotalStock);
-        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
+        squareTotalStock.setBackgroundColor(
+                Methods.giveColor(squareTotalStock,
+                        Methods.getInventoryState(product)));
 
         // Set listener to Button "MODIFY"
         Button buttonModify = (Button) findViewById(R.id.buttonModify);
@@ -169,11 +172,13 @@ public class Product extends AppCompatActivity {
                     public void onClick(View v) {
                         // suppress all stocks linked with the product
                         for (ObjectStock s : product.getStocks()) {
-                            ObjectsLists.getStockList().remove(s);
+                            // TODO: 21.11.2015  ObjectsLists.getStockList().remove(s);
                             product.removeStock(s);
-                            break;
+                            stockDataSource.deleteStock(s);
                         }
-                        ObjectsLists.getProductList().remove(product);
+
+                        // TODO: 21.11.2015  ObjectsLists.getProductList().remove(product);
+                        productDataSource.deleteProduct(product);
                         popupWindow.dismiss();
                         Toast toast = Toast.makeText(getBaseContext(),
                                 "Produit supprimé", Toast.LENGTH_LONG);
@@ -193,6 +198,32 @@ public class Product extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Set values in top of screen
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+        txtArtNb = (TextView) findViewById(R.id.txtArtNb);
+        txtCategory = (TextView) findViewById(R.id.txtCategory);
+        txtPrice = (TextView) findViewById(R.id.txtPrice);
+
+        txtTitle.setText(product.getName());
+        txtArtNb.setText("N° Article : " + product.getArtNb());
+        if (product.getCategory() != null)
+            txtCategory.setText("Catégorie : " + product.getCategory().getName());
+        else
+            txtCategory.setText(R.string.no_category);
+        txtPrice.setText("Prix : " + String.format("%,.2f", product.getPrice()) + " CHF");
+
+
+        adapter.notifyDataSetChanged();
+        squareTotalStock.setBackgroundColor(
+                Methods.giveColor(squareTotalStock,
+                        Methods.getInventoryState(product)));
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -220,26 +251,11 @@ public class Product extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private int giveColor(String s) {
-        if(s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do);
-        if(s.equals("done"))
-            return getResources().getColor(R.color.indicator_done);
-        return getResources().getColor(R.color.indicator_doing);
-    }
-
     private int giveColor(Boolean controlled) {
         if(controlled)
-            return giveColor("done");
+            return Methods.giveColor(squareTotalStock, "done");
 
-        return giveColor("todo");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
+        return Methods.giveColor(squareTotalStock, "todo");
     }
 
     private class StocksAdapter extends ArrayAdapter {
