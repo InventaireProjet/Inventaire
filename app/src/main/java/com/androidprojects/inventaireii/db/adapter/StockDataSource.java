@@ -21,10 +21,12 @@ public class StockDataSource {
 
     private SQLiteDatabase db;
     private Context context = null;
-    private ProductDataSource productDataSource = new ProductDataSource(context);
-    private WarehouseDataSource warehouseDataSource = new WarehouseDataSource(context);
+    private ProductDataSource productDataSource ;
+    private WarehouseDataSource warehouseDataSource;
 
     public  StockDataSource (Context context) {
+        productDataSource = new ProductDataSource(context);
+        warehouseDataSource = new WarehouseDataSource(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;

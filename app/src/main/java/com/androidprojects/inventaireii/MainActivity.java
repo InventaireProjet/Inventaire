@@ -12,13 +12,19 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.StockDataSource;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     // Fake data :
     boolean inventoryIsRunning = true;
     int nbItems = 0;
     int nbInventoredItems = 0;
+    StockDataSource stockDataSource;
+    ProductDataSource productDataSource;
 
     ArrayList<ObjectCategories> categoriesList = new ArrayList<>();
     ArrayList<ObjectProducts> productsList = new ArrayList<>();
@@ -71,12 +77,20 @@ public class MainActivity extends AppCompatActivity {
         ObjectsLists.setStockList(stocksList);
         ObjectsLists.setWarehouseList(warehousesList);
 
+        // TODO: 20.11.2015 \/
+        //stockDataSource = new StockDataSource(this);
+        //productDataSource = new ProductDataSource(this);
+
         // Display of Inventory-depending fields
-        for (ObjectStock stock : ObjectsLists.getStockList()){
-            nbItems ++;
-            if (stock.isControlled())
+        /*for (ObjectProducts p : productDataSource.getAllProducts()){
+            if (Methods.getInventoryState(p).equals("done"))
                 nbInventoredItems ++;
         }
+        nbItems = productDataSource.getCountProduct(); */
+        nbInventoredItems = 2;
+        nbItems = 4;
+        // TODO: 20.11.2015  /\
+
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
         txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
         if (inventoryIsRunning) {
@@ -189,11 +203,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restartInventory() {
-        // TODO
+        List<ObjectStock> allStocks = stockDataSource.getAllStocks();
         nbInventoredItems = 0;
-        for (ObjectStock stock : ObjectsLists.getStockList()){
+        for (ObjectStock stock : allStocks){
             stock.setControlled(false);
+            stockDataSource.updateStock(stock);
         }
+
+        nbItems = allStocks.size();
 
         txtInventoryState.setText("Avancement de votre inventaire : "
                 + nbInventoredItems + "/" + nbItems);

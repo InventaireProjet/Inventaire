@@ -79,18 +79,10 @@ public class MyProducts extends AppCompatActivity {
         squareTotalStock = (View) findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState()));
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
         txtStockValue.setText("Valeur : CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
 
-    }
-
-    private int giveColor(String s) {
-        if(s.equals("todo"))
-            return getResources().getColor(R.color.indicator_to_do);
-        if(s.equals("done"))
-            return getResources().getColor(R.color.indicator_done);
-        return getResources().getColor(R.color.indicator_doing);
     }
 
     @Override
@@ -124,7 +116,7 @@ public class MyProducts extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
-        squareTotalStock.setBackgroundColor(giveColor(Methods.getInventoryState()));
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
     }
 
     private class ProductsAdapter extends ArrayAdapter {
@@ -153,7 +145,7 @@ public class MyProducts extends AppCompatActivity {
             TextView txtPrice = (TextView) convertView.findViewById(R.id.price);
 
             // Fill with data
-            square.setBackgroundColor(giveColor(Methods.getInventoryState(product)));
+            square.setBackgroundColor(Methods.giveColor(square, Methods.getInventoryState(product)));
             txtArtNb.setText(product.getArtNb()+product.getId());
             txtName.setText(product.getName());
             if (product.getCategory() != null)

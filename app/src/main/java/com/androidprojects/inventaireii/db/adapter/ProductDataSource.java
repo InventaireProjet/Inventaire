@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.androidprojects.inventaireii.ObjectProducts;
+import com.androidprojects.inventaireii.ObjectStock;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
 
@@ -17,9 +18,11 @@ public class ProductDataSource {
     private SQLiteDatabase db;
     private Context context;
     private CategoryDataSource categoryDataSource ;
+    private StockDataSource stockDataSource;
 
     public  ProductDataSource (Context context) {
         categoryDataSource = new CategoryDataSource(context);
+        stockDataSource = new StockDataSource(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
@@ -44,14 +47,14 @@ public class ProductDataSource {
     // Get the number of products
     public int getCountProduct() {
         int number = 0;
-        String sql = "SELECT COUNT(*) FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS;
+        String sql = "SELECT COUNT(*) as Number FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS;
         Cursor cursor = this.db.rawQuery(sql, null);
 
         if (cursor != null){
             cursor.moveToFirst();
         }
 
-        number = cursor.getInt(1);
+        number = cursor.getInt(cursor.getColumnIndex("Number"));
         return number;
     }
 
@@ -184,10 +187,16 @@ public class ProductDataSource {
 
 // Delete a product
 
-    public void deleteProduct(long id){
+    public void deleteProduct(ObjectProducts product){
+        // We need to destroy all associated stocks
+        List<ObjectStock> productStocks = product.getStocks();
+        for (ObjectStock s : productStocks) {
+            product.removeStock(s);
+            stockDataSource.deleteStock(s);
+        }
 
         this.db.delete(InventoryContract.ProductEntry.TABLE_PRODUCTS, InventoryContract.ProductEntry.KEY_ID + " = ?",
-                new String[]{String.valueOf(id)});
+                new String[]{String.valueOf(product.getId())});
 
     }
 }
