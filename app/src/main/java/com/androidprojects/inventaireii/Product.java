@@ -19,11 +19,9 @@ import android.widget.Toast;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Product extends AppCompatActivity {
-    ObjectCategories category;
     ObjectProducts product;
     int productId;
     int nbProducts;
@@ -92,7 +90,6 @@ public class Product extends AppCompatActivity {
         });
 
         // Set onClickListener to button "Next"
-        // TODO: 21.11.2015
         Button buttonNext = (Button) findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +123,7 @@ public class Product extends AppCompatActivity {
 
         // Fill the ListView
         ListView lvStock = (ListView) findViewById(R.id.lvStocks);
-        View header = (View) getLayoutInflater().inflate(R.layout.stock_row_header, null);
+        View header = getLayoutInflater().inflate(R.layout.stock_row_header, null);
         lvStock.addHeaderView(header);
         adapter = new StocksAdapter(this, product.getStocks());
         lvStock.setAdapter(adapter);
@@ -141,7 +138,7 @@ public class Product extends AppCompatActivity {
         txtDescription.setText(product.getDescription());
 
         // Set color of square below the ListView
-        squareTotalStock = (View) findViewById(R.id.squareTotalStock);
+        squareTotalStock = findViewById(R.id.squareTotalStock);
         squareTotalStock.setBackgroundColor(
                 Methods.giveColor(squareTotalStock,
                         Methods.getInventoryState(product)));
@@ -178,20 +175,21 @@ public class Product extends AppCompatActivity {
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
                 // Set actions to the elements of the pop up window
-                txtQuestion.setText("Êtes-vous sûr de vouloir supprimer cet article ?");
+                txtQuestion.setText(R.string.suppress_product_are_you_sure);
                 buttonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // suppress all stocks linked with the product
                         for (ObjectStock s : product.getStocks()) {
-                            product.removeStock(s);
                             stockDataSource.deleteStock(s);
                         }
 
                         productDataSource.deleteProduct(product);
                         popupWindow.dismiss();
                         Toast toast = Toast.makeText(getBaseContext(),
-                                "Produit supprimé", Toast.LENGTH_LONG);
+                                R.string.product_deleted, Toast.LENGTH_LONG);
+                        
+                        toast.show();
 
                         finish();
                     }

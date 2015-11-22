@@ -16,7 +16,6 @@ import java.util.List;
 
 public class ProductDataSource {
 
-
     private SQLiteDatabase db;
     private Context context;
     private CategoryDataSource categoryDataSource ;
@@ -64,16 +63,16 @@ public class ProductDataSource {
         if (cursor != null){
             cursor.moveToFirst();
             number = cursor.getInt(cursor.getColumnIndex("Number"));
+            cursor.close();
         }
 
-
-        cursor.close();
         return number;
     }
 
     //Find a product by Id
 
     public ObjectProducts getProductById (long id) {
+        ObjectProducts product = null;
         String sql = "SELECT * FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS +
                 " WHERE " + InventoryContract.ProductEntry.KEY_ID + " = " + id;
 
@@ -81,10 +80,10 @@ public class ProductDataSource {
 
         if (cursor!=null) {
             cursor.moveToFirst();
+            product = getProductFromCursor(cursor);
+            cursor.close();
         }
 
-        ObjectProducts product = getProductFromCursor(cursor);
-        cursor.close();
         return product;
     }
 
@@ -120,6 +119,9 @@ public class ProductDataSource {
 
         if (cursor.moveToFirst()) {
             do {
+                ObjectProducts product = getProductFromCursor(cursor);
+                //todo suppress that:
+                /*
                 ObjectProducts product = new ObjectProducts();
                 product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
                 product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
@@ -128,7 +130,7 @@ public class ProductDataSource {
                  product.setCategory(categoryDataSource.getCategoryById(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID))));
 
                 CategoryDataSource cd;
-
+                */
                 products.add(product);
             } while (cursor.moveToNext());
 
@@ -151,14 +153,7 @@ public class ProductDataSource {
 
         if (cursor.moveToFirst()) {
             do {
-                ObjectProducts product = new ObjectProducts();
-                product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
-                product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
-                product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
-                product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
-                product.setCategory(categoryDataSource.getCategoryById(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID))));
-
-
+                ObjectProducts product = getProductFromCursor(cursor);
                 products.add(product);
             } while (cursor.moveToNext());
 
