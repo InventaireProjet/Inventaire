@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class MyWarehouses extends AppCompatActivity {
     ArrayAdapter adapter;
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
+    StockDataSource stockDataSource;
     List <ObjectProducts> productsInWarehouse;
 
 
@@ -38,6 +40,7 @@ public class MyWarehouses extends AppCompatActivity {
 
         warehouseDataSource = WarehouseDataSource.getInstance(this);
         productDataSource =  ProductDataSource.getInstance(this);
+        stockDataSource = StockDataSource.getInstance(this);
 
         //activity_my_categories reused because of same structure
         setContentView(R.layout.activity_my_categories);
@@ -144,6 +147,10 @@ public class MyWarehouses extends AppCompatActivity {
 
 
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));
+
+            //todo more simple:
+            warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
+            warehouse.setNumberObjects(stockDataSource.getNumberObjects(warehouse.getId()));
             tvState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
             //Sending the warehouse name to the next screen

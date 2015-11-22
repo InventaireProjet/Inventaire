@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Warehouse extends AppCompatActivity {
     PopupWindow popupWindow;
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
+    StockDataSource stockDataSource;
     ObjectWarehouse warehouse;
     List<ObjectProducts> productsInWarehouse;
 
@@ -34,6 +36,7 @@ public class Warehouse extends AppCompatActivity {
 
         productDataSource = ProductDataSource.getInstance(this);
         warehouseDataSource = WarehouseDataSource.getInstance(this);
+        stockDataSource = StockDataSource.getInstance(this);
 
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
@@ -73,7 +76,10 @@ public class Warehouse extends AppCompatActivity {
         //TODO UP OUT, DOWN IN
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
-        //First part
+        //First part;
+        //todo : more simple
+        warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
+        warehouse.setNumberObjects(stockDataSource.getNumberObjects(warehouse.getId()));
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
         inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 

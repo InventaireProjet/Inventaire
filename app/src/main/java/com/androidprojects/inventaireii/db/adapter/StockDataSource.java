@@ -150,6 +150,40 @@ public class StockDataSource {
     }
 
 
+    // TODO Get number of inventoried objects (pieces) in a Warehouse
+    public int getInventoriedObjects(long warehouseId) {
+        String sql = "SELECT SUM(" + InventoryContract.StockEntry.KEY_QUANTITY + ") AS Number " +
+                        "FROM " + InventoryContract.StockEntry.TABLE_STOCKS +
+                        " WHERE " + InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = " + warehouseId +
+                        " AND " + InventoryContract.StockEntry.KEY_CONTROLLED + " > 0";
+
+        int quantity = 0;
+        Cursor cursor = this.db.rawQuery(sql, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            quantity = cursor.getInt(cursor.getColumnIndex("Number"));
+        }
+
+        return quantity;
+    }
+
+    // TODO Get number of pieces stocked in a Warehouse
+    public int getNumberObjects(long warehouseId) {
+        String sql = "SELECT SUM(" + InventoryContract.StockEntry.KEY_QUANTITY + ") AS Number " +
+                "FROM " + InventoryContract.StockEntry.TABLE_STOCKS +
+                " WHERE " + InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = " + warehouseId;
+
+        int quantity = 0;
+        Cursor cursor = this.db.rawQuery(sql, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            quantity = cursor.getInt(cursor.getColumnIndex("Number"));
+        }
+        return quantity ;
+    }
+
+
+
     /* Update a stock */
     public int updateStock(ObjectStock stock) {
         ContentValues values = new ContentValues();
