@@ -24,8 +24,6 @@ public class ProductDataSource {
     private static ProductDataSource instance;
 
     private  ProductDataSource (Context context) {
-        //categoryDataSource = CategoryDataSource.getInstance(context);
-        //stockDataSource = StockDataSource.getInstance(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
@@ -85,26 +83,7 @@ public class ProductDataSource {
             cursor.moveToFirst();
         }
 
-        // TODO: 22.11.2015 Voir si on ne peut pas encapsuler tout cela 
-        ObjectProducts product = new ObjectProducts();
-        product.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ID)));
-        product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
-        product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
-        product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
-        product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
-
-        // Get the category, if there is one (else KEY_CATEGORY_ID = 0)
-        int categoryId = cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID));
-        if (categoryId > 0) {
-            ObjectCategories cat = categoryDataSource.getCategoryById(categoryId);
-            product.setCategory(cat);
-        }
-
-        // Get the stocks
-        stockDataSource = StockDataSource.getInstance(context);
-        ArrayList<ObjectStock> stocks = stockDataSource.getAllStocksByProduct(product);
-        product.setStocks(stocks);
-
+        ObjectProducts product = getProductFromCursor(cursor);
         cursor.close();
         return product;
     }
@@ -119,16 +98,7 @@ public class ProductDataSource {
 
         if (cursor.moveToFirst()) {
             do {
-                ObjectProducts product = new ObjectProducts();
-                product.setId(cursor.getInt(cursor.getColumnIndex((InventoryContract.ProductEntry.KEY_ID))));
-                product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
-                product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
-                product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
-                product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
-                //TODO To adapt
-                // product.setCategory(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID)));
-
-
+                ObjectProducts product = getProductFromCursor(cursor);
                 products.add(product);
             } while (cursor.moveToNext());
 
@@ -194,6 +164,29 @@ public class ProductDataSource {
 
         }
         return products;
+    }
+
+    private ObjectProducts getProductFromCursor(Cursor cursor) {
+        ObjectProducts product = new ObjectProducts();
+        product.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ID)));
+        product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
+        product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
+        product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
+        product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
+
+        // Get the category, if there is one (else KEY_CATEGORY_ID = 0)
+        int categoryId = cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID));
+        if (categoryId > 0) {
+            categoryDataSource = CategoryDataSource.getInstance(context);
+            ObjectCategories cat = categoryDataSource.getCategoryById(categoryId);
+            product.setCategory(cat);
+        }
+
+        // Get the stocks
+        stockDataSource = StockDataSource.getInstance(context);
+        ArrayList<ObjectStock> stocks = stockDataSource.getAllStocksByProduct(product);
+        product.setStocks(stocks);
+        return product;
     }
 
 

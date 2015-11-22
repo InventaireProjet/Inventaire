@@ -2,7 +2,7 @@ package com.androidprojects.inventaireii;
 
 public class ObjectCategories {
 
-    private  int id;
+    private int id;
     private String color;
     private String name;
     private String inventoryState;

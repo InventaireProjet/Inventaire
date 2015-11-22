@@ -143,7 +143,7 @@ public class MyProducts extends AppCompatActivity {
 
             // Fill with data
             square.setBackgroundColor(Methods.giveColor(square, Methods.getInventoryState(product)));
-            txtArtNb.setText(product.getArtNb()+product.getId());
+            txtArtNb.setText(product.getArtNb());
             txtName.setText(product.getName());
             if (product.getCategory() != null)
                 txtCategory.setText(product.getCategory().getName());

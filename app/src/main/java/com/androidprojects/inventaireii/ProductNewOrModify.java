@@ -16,16 +16,17 @@ import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductNewOrModify extends AppCompatActivity {
 
-    int productId;
-    ObjectProducts product = null;
-    int categoryId;
+    private int productId;
+    private ObjectProducts product = null;
+    private int categoryId;
+    private List<ObjectCategories> categoryList;
 
-    ProductDataSource productDataSource;
-    CategoryDataSource categoryDataSource;
-
+    private ProductDataSource productDataSource;
+    private CategoryDataSource categoryDataSource;
 
 
     @Override
@@ -38,13 +39,14 @@ public class ProductNewOrModify extends AppCompatActivity {
 
         // Fill the Spinner with all categories
         final Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
+        categoryList = categoryDataSource.getAllCategories();
+        // add a "no category" in position 0
+        categoryList.add(0, new ObjectCategories("", getResources().getString(R.string.no_category),""));
         ArrayList<String> categoriesNames = new ArrayList<>();
-        for (ObjectCategories cat : categoryDataSource.getAllCategories()) {
+        //categoriesNames.add(getResources().getString(R.string.no_category)); // if no category selected
+        for (ObjectCategories cat : categoryList) {
             categoriesNames.add(cat.getName());
         }
-        // If no category exists
-        categoriesNames.add("no category");
-
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, categoriesNames );
         spinnerCategory.setAdapter(adapter);
 
@@ -60,15 +62,20 @@ public class ProductNewOrModify extends AppCompatActivity {
 
         // If it is an existing product (modification), fill the fields with products data
         if (productId >= 0) {
-            // TODO product = ObjectsLists.getProductList().get(productId);
             product = productDataSource.getProductById(productId);
             etProductName.setText(product.getName());
             etArtNb.setText(product.getArtNb());
             etPrice.setText(String.format("%,.2f", product.getPrice()));
             etDescription.setText(product.getDescription());
-            // TODO: 21.11.2015  int p = ObjectsLists.categoryList.indexOf(product.getCategory());
-            int p = categoryDataSource.getAllCategories().indexOf(product.getCategory());
-            spinnerCategory.setSelection(p);
+            // find position of product category
+            int categoryId = 0;
+            if (product.getCategory() != null)
+                categoryId = product.getCategory().getId();
+            int position = 0;
+            for (ObjectCategories c : categoryList)
+                if(c.getId() == categoryId)
+                    position = categoryList.indexOf(c);
+            spinnerCategory.setSelection(position);
         }
 
         // Button "Cancel"
@@ -91,24 +98,22 @@ public class ProductNewOrModify extends AppCompatActivity {
                     // New article
                     int categoryPosition = spinnerCategory.getSelectedItemPosition();
                     ObjectCategories cat = null;
-                    if (categoryDataSource.getAllCategories().size()>0) {
-                        cat = categoryDataSource.getAllCategories().get(categoryPosition);
-                    }
+                    if (categoryPosition > 0)
+                        cat = categoryList.get(categoryPosition);
 
                     product = new ObjectProducts(etArtNb.getText().toString(), etProductName.getText().toString(),
                             cat, Double.valueOf(etPrice.getText().toString()), etDescription.getText().toString());
 
                     long id = productDataSource.createProduct(product);
                     product.setId(((int) id));
-                    message = "Produit " + id + " créé";
+                    message = getResources().getString(R.string.product_created) + " " + id;
                 }
                 else {
                     // Modify article
                     int categoryPosition = spinnerCategory.getSelectedItemPosition();
                     ObjectCategories cat = null;
-                    if(categoryDataSource.getAllCategories().size()>0) {
-                        cat = categoryDataSource.getAllCategories().get(categoryPosition);
-                    }
+                    if (categoryPosition > 0)
+                        cat = categoryList.get(categoryPosition);
 
                     product.setArtNb(etArtNb.getText().toString());
                     product.setName(etProductName.getText().toString());
@@ -117,7 +122,7 @@ public class ProductNewOrModify extends AppCompatActivity {
                     product.setCategory(cat);
                     productDataSource.updateProduct(product);
 
-                    message = "Produit modifié";
+                    message = getResources().getString(R.string.product_modified);
                 }
                 // Confirmation for user
                 Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
