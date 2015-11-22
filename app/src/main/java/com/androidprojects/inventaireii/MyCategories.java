@@ -32,21 +32,21 @@ public class MyCategories extends AppCompatActivity {
     ArrayAdapter adapter;
     View tvSquare;
     List <ObjectProducts> productsInCategory;
-    //CategoryDataSource categoryDataSource;
-    //ProductDataSource productDataSource;
+    CategoryDataSource categoryDataSource;
+    ProductDataSource productDataSource;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
 
-       // categoryDataSource = new CategoryDataSource(this);
-         //productDataSource = new ProductDataSource(this);
+       categoryDataSource =CategoryDataSource.getInstance(this);
+        productDataSource = ProductDataSource.getInstance(this);
 
         //Using adapter
-        adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
+       // adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
         //TODO ENABLE THIS
-        // adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
+         adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
 
 
         // Fill the ListView
@@ -86,9 +86,9 @@ public class MyCategories extends AppCompatActivity {
                         }
                         else {
                             ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
-                            ObjectsLists.getCategoryList().add(newCategory);
+                            //ObjectsLists.getCategoryList().add(newCategory);
                             //TODO Enable this, disable that
-                            //categoryDataSource.createCategory(newCategory);
+                            categoryDataSource.createCategory(newCategory);
 
                             popupWindow.dismiss();
                             adapter.notifyDataSetChanged();
@@ -197,9 +197,9 @@ public class MyCategories extends AppCompatActivity {
             tvName.setText(category.getName());
 
             //Retrieving the products in the category to know which color to display
-            productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
+           // productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
             //TODO Disable up,enable down
-           // productsInCategory = productDataSource.getAllProductsByCategory(category.getId());
+            productsInCategory = productDataSource.getAllProductsByCategory(category.getId());
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInCategory)));
             tvState.setText(category.getInventoryState());
 

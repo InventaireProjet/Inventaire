@@ -44,8 +44,8 @@ public class Category extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // categoryDataSource = new CategoryDataSource(this);
-        // productDataSource = new ProductDataSource(this);
+        categoryDataSource =  CategoryDataSource.getInstance(this);
+         productDataSource =  ProductDataSource.getInstance(this);
 
 //Using the same layout as my products with some changes
         setContentView(R.layout.activity_my_products);
@@ -61,17 +61,17 @@ public class Category extends AppCompatActivity {
         //Category name retrieved from the previous screen
         final TextView title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
-        final int categoryId = intent.getIntExtra("categoryId", 0);
+        final int categoryId = intent.getIntExtra("categoryId", 1);
 
-        category = ObjectsLists.getCategoryList().get(categoryId);
+       // category = ObjectsLists.getCategoryList().get(categoryId);
         //TODO disable up, enable down
-        // category = categoryDataSource.getCategoryById(categoryId);
+         category = categoryDataSource.getCategoryById(categoryId);
         title.setText(category.getName());
 
         //Define the products to display
-        productsToDisplay =  Methods.getObjectsListbyCategory(category.getName());
+        //productsToDisplay =  Methods.getObjectsListbyCategory(category.getName());
         //TODO Disable that, enable this
-        //productsToDisplay = productDataSource.getAllProductsByCategory(categoryId);
+        productsToDisplay = productDataSource.getAllProductsByCategory(categoryId);
 
         //Inventory state
         squareInventoryState = findViewById(R.id.squareInventoryState);
@@ -156,9 +156,9 @@ public class Category extends AppCompatActivity {
                     public void onClick(View v) {
 
 //TODO CHANGE WITH DATA in comment
-                        category.setName(userEntry.getText().toString());
+                       // category.setName(userEntry.getText().toString());
 
-                        //categoryDataSource.updateCategory(category);
+                        categoryDataSource.updateCategory(category);
 
                         title.setText(userEntry.getText().toString());
 
@@ -209,10 +209,10 @@ public class Category extends AppCompatActivity {
 
                         final ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
 
-                        categories.remove(categoryId);
+                       // categories.remove(categoryId);
                         //TODO DELETE UP, ENABLE DOWN
 
-                        //categoryDataSource.deleteCategory(categoryId);
+                        categoryDataSource.deleteCategory(categoryId);
 
 
                         popupWindow.dismiss();

@@ -6,78 +6,80 @@
     android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtTitle"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/appTitle"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/text_color"
-            />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <include layout="@layout/blue_line" />
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/appTitle"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/text_color"
+                />
 
-        <TextView
-            android:id="@+id/txtInventoryRunning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/inventory_running"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/flashy"/>
+            <include layout="@layout/blue_line" />
 
-        <TextView
-            android:id="@+id/txtInventoryState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/main_activity_bottom_margin"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/flashy" />
+            <TextView
+                android:id="@+id/txtInventoryRunning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/inventory_running"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/flashy"/>
 
-        <TextView
-            android:id="@+id/txtProductAccess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/product_access"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/light_blue" />
+            <TextView
+                android:id="@+id/txtInventoryState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_activity_bottom_margin"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/flashy" />
 
-        <include layout="@layout/blue_line" />
+            <TextView
+                android:id="@+id/txtProductAccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/product_access"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/light_blue" />
 
-        <TextView
-            android:id="@+id/txtCategoryAccess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/category_access"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/light_blue" />
+            <include layout="@layout/blue_line" />
 
-        <include layout="@layout/blue_line" />
+            <TextView
+                android:id="@+id/txtCategoryAccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/category_access"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/light_blue" />
 
-        <TextView
-            android:id="@+id/txtWarehouseAccess"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/warehouse_access"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/light_blue"/>
+            <include layout="@layout/blue_line" />
 
-        <include layout="@layout/blue_line" />
+            <TextView
+                android:id="@+id/txtWarehouseAccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/warehouse_access"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/light_blue"/>
 
-        <Button
-            android:id="@+id/buttonStartInventory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/main_activity_margin"
-            android:background="@color/button_background"
-            android:text="@string/start_inventory"
-            android:textColor="@color/button_text"/>
-    </LinearLayout>
+            <include layout="@layout/blue_line" />
 
+            <Button
+                android:id="@+id/buttonStartInventory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/main_activity_margin"
+                android:background="@color/button_background"
+                android:text="@string/start_inventory"
+                android:textColor="@color/button_text"/>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
