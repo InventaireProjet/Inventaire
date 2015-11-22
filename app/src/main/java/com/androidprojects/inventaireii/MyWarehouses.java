@@ -37,7 +37,7 @@ public class MyWarehouses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         warehouseDataSource = WarehouseDataSource.getInstance(this);
-        //productDataSource = new ProductDataSource(this);
+        productDataSource =  ProductDataSource.getInstance(this);
 
         //activity_my_categories reused because of same structure
         setContentView(R.layout.activity_my_categories);
@@ -138,9 +138,9 @@ public class MyWarehouses extends AppCompatActivity {
             //Data to display are retrieved
             tvName.setText(warehouse.getName());
             //Retrieving the products in the warehouse to know which color to display
-            productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+           // productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
             //TODO UNDO UP, DO DOWN
-            // productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouse.getId());
+            productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouse.getId());
 
 
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));

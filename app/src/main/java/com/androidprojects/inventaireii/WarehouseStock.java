@@ -44,8 +44,8 @@ public class WarehouseStock extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // productDataSource = new ProductDataSource(this);
-        // warehouseDataSource = new WarehouseDataSource(this);
+         productDataSource =  ProductDataSource.getInstance(this);
+         warehouseDataSource =  WarehouseDataSource.getInstance(this);
 
 //Using the same layout as my products with some changes
         setContentView(R.layout.activity_my_products);
@@ -67,16 +67,16 @@ public class WarehouseStock extends AppCompatActivity {
         Intent intent = getIntent();
         final int warehouseId = intent.getIntExtra("warehouseId", 0);
 
-        warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
+       // warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
         //TODO UP DOWN, DOWN UP
-        //warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+        warehouse = warehouseDataSource.getWarehouseById(warehouseId);
 
         title.setText(warehouse.getName());
 
         //Define the products to display
-        productsToDisplay =  Methods.getObjectsListbyWarehouse(warehouse.getName());
+        //productsToDisplay =  Methods.getObjectsListbyWarehouse(warehouse.getName());
         //TODO UP OUT, DOWN IN
-        // productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
+         productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
 
 
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
@@ -149,9 +149,9 @@ public class WarehouseStock extends AppCompatActivity {
 
                         warehouses = ObjectsLists.getWarehouseList();
 
-                        warehouses.remove(warehouseId);
+                        //warehouses.remove(warehouseId);
                         //TODO UP OUT, DOWN IN
-                        //warehouseDataSource.deleteWarehouse(warehouseId);
+                        warehouseDataSource.deleteWarehouse(warehouseId);
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
@@ -168,8 +168,7 @@ public class WarehouseStock extends AppCompatActivity {
 
                         //TODO Deleting stock product in this warehouse (data management)
 
-
-                        //warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
+                        warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
