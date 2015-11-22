@@ -81,6 +81,10 @@ public class ObjectProducts {
         return stocks;
     }
 
+    public void setStocks(ArrayList<ObjectStock> stocks) {
+        this.stocks = stocks;
+    }
+
     public void addStock(ObjectStock stock) {
         stocks.add(stock);
     }

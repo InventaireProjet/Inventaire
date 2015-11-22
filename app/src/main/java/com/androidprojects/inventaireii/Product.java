@@ -172,12 +172,10 @@ public class Product extends AppCompatActivity {
                     public void onClick(View v) {
                         // suppress all stocks linked with the product
                         for (ObjectStock s : product.getStocks()) {
-                            // TODO: 21.11.2015  ObjectsLists.getStockList().remove(s);
                             product.removeStock(s);
                             stockDataSource.deleteStock(s);
                         }
 
-                        // TODO: 21.11.2015  ObjectsLists.getProductList().remove(product);
                         productDataSource.deleteProduct(product);
                         popupWindow.dismiss();
                         Toast toast = Toast.makeText(getBaseContext(),
@@ -208,7 +206,7 @@ public class Product extends AppCompatActivity {
         txtArtNb = (TextView) findViewById(R.id.txtArtNb);
         txtCategory = (TextView) findViewById(R.id.txtCategory);
         txtPrice = (TextView) findViewById(R.id.txtPrice);
-
+        
         txtTitle.setText(product.getName());
         txtArtNb.setText("N° Article : " + product.getArtNb());
         if (product.getCategory() != null)
@@ -282,7 +280,7 @@ public class Product extends AppCompatActivity {
 
             // Fill with data
             square.setBackgroundColor(giveColor(stock.isControlled()));
-            txtWarehouse.setText(stock.getWarehouse().getName());
+            txtWarehouse.setText(stock.getWarehouse().getName());  
             txtQuantity.setText(Integer.toString(stock.getQuantity()));
 
             // Modify the stock
@@ -290,8 +288,8 @@ public class Product extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getBaseContext(), StockNewOrModify.class);
-                    intent.putExtra("stockPosition", ObjectsLists.getStockList().indexOf(stock));
-                    intent.putExtra("productPosition", position);
+                    intent.putExtra("stockPosition", stock.getId());
+                    intent.putExtra("productPosition", product.getId());
                     startActivity(intent);
                 }
             });

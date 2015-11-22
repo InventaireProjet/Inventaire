@@ -62,6 +62,9 @@ public class StockDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
+        if (cursor != null)
+            cursor.moveToFirst();
+
         ObjectStock stock = new ObjectStock();
         stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
         stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
@@ -81,8 +84,8 @@ public class StockDataSource {
     }
 
     /* Get all stocks of a product */
-    public List<ObjectStock> getAllStocksByProduct(ObjectProducts product) {
-        List<ObjectStock> stocks = new ArrayList<>();
+    public ArrayList<ObjectStock> getAllStocksByProduct(ObjectProducts product) {
+        ArrayList<ObjectStock> stocks = new ArrayList<>();
         String sql = "SELECT * FROM " + InventoryContract.StockEntry.TABLE_STOCKS
                 + " WHERE " + InventoryContract.StockEntry.KEY_PRODUCT_ID + " = " + product.getId();
         // TODO : jointure et ORDER BY nom du magasin...
@@ -132,7 +135,7 @@ public class StockDataSource {
                 ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
                 stock.setWarehouse(warehouse);
 
-                // the Product is well known
+                // get the Product
                 int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
                 ObjectProducts product = productDataSource.getProductById(productId);
                 stock.setProduct(product);
