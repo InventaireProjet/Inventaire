@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Product extends AppCompatActivity {
@@ -53,7 +54,6 @@ public class Product extends AppCompatActivity {
         product = productDataSource.getProductById(productId);
 
         // Set onClickListener to button "All controlled"
-        // TODO: 21.11.2015
         Button buttonAllControlled = (Button) findViewById(R.id.buttonAllControlled);
         buttonAllControlled.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +61,7 @@ public class Product extends AppCompatActivity {
                 // Set all stocks to controlled
                 for (ObjectStock s : product.getStocks()) {
                     s.setControlled(true);
+                    stockDataSource.updateStock(s);
                 }
                 adapter.notifyDataSetChanged();
                 squareTotalStock.setBackgroundColor(
@@ -70,15 +71,20 @@ public class Product extends AppCompatActivity {
         });
 
         // Set onClickListener to button "Previous"
-        // TODO: 21.11.2015
         Button buttonPrevious = (Button) findViewById(R.id.buttonPrevious);
         buttonPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Product.class);
-                //TODO: 21.11.2015 find the algo for that...
-                nbProducts = productDataSource.getNumberOfProducts();
-                intent.putExtra("position", (productId+nbProducts-1)%nbProducts);
+                List<ObjectProducts> products = productDataSource.getAllProducts();
+                int position = 0;
+                for(ObjectProducts p : products)
+                        if (p.getId() == product.getId())
+                            position = products.indexOf(p);
+                
+                nbProducts = products.size();
+                position = (position+nbProducts-1)%nbProducts;
+                intent.putExtra("position", products.get(position).getId());
                 startActivity(intent);
                 finish();
 
@@ -92,9 +98,15 @@ public class Product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Product.class);
-                // TODO: 21.11.2015 find the algo for that
-                nbProducts = productDataSource.getNumberOfProducts();
-                intent.putExtra("position", (productId+nbProducts+1)%nbProducts);
+                List<ObjectProducts> products = productDataSource.getAllProducts();
+                int position = 0;
+                for (ObjectProducts p : products)
+                    if (p.getId() == product.getId())
+                        position = products.indexOf(p);
+                
+                nbProducts = products.size();
+                position = (position+nbProducts+1)%nbProducts;
+                intent.putExtra("position", products.get(position).getId());
                 startActivity(intent);
                 finish();
             }
