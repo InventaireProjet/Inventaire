@@ -156,7 +156,7 @@ public class Category extends AppCompatActivity {
                     public void onClick(View v) {
 
 //TODO CHANGE WITH DATA in comment
-                       // category.setName(userEntry.getText().toString());
+                       category.setName(userEntry.getText().toString());
 
                         categoryDataSource.updateCategory(category);
 

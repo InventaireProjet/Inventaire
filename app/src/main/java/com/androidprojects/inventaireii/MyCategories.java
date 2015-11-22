@@ -91,7 +91,7 @@ public class MyCategories extends AppCompatActivity {
                             categoryDataSource.createCategory(newCategory);
 
                             popupWindow.dismiss();
-                            adapter.notifyDataSetChanged();
+
                         }
                     }
                 });

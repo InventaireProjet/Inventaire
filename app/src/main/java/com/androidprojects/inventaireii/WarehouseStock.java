@@ -65,7 +65,7 @@ public class WarehouseStock extends AppCompatActivity {
         //Warehouse name retrieved from the previous screen
         final TextView title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
-        final int warehouseId = intent.getIntExtra("warehouseId", 0);
+        final int warehouseId = intent.getIntExtra("warehouseId", 1);
 
        // warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
         //TODO UP DOWN, DOWN UP
