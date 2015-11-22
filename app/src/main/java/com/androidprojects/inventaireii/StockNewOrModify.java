@@ -90,7 +90,7 @@ public class StockNewOrModify extends AppCompatActivity {
         final EditText etQuantity = (EditText) findViewById(R.id.etQuantity);
 
         // Get the product and the stock Id
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         productId = intent.getIntExtra("productPosition", -1);
         stockId = intent.getIntExtra("stockPosition", -1);
         // TODO: 22.11.2015  product = ObjectsLists.getProductList().get(productId);
@@ -165,6 +165,10 @@ public class StockNewOrModify extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG);
                 toast.show();
+
+                Intent intent = new Intent(getBaseContext(), Product.class);
+                intent.putExtra("position", product.getId());
+                startActivity(intent);
 
                 finish();
 

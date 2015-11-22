@@ -95,7 +95,7 @@ public class ProductNewOrModify extends AppCompatActivity {
             public void onClick(View v) {
                 String message;
                 if (productId == -1) {
-                    // New article
+                    // New product
                     int categoryPosition = spinnerCategory.getSelectedItemPosition();
                     ObjectCategories cat = null;
                     if (categoryPosition > 0)
@@ -109,7 +109,7 @@ public class ProductNewOrModify extends AppCompatActivity {
                     message = getResources().getString(R.string.product_created) + " " + id;
                 }
                 else {
-                    // Modify article
+                    // Modify existing product
                     int categoryPosition = spinnerCategory.getSelectedItemPosition();
                     ObjectCategories cat = null;
                     if (categoryPosition > 0)
@@ -127,6 +127,11 @@ public class ProductNewOrModify extends AppCompatActivity {
                 // Confirmation for user
                 Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                 toast.show();
+
+                Intent i = new Intent(getBaseContext(), Product.class);
+                i.putExtra("position", product.getId());
+                startActivity(i);
+
                 finish();
             }
         });
