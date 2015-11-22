@@ -93,17 +93,18 @@ public class StockNewOrModify extends AppCompatActivity {
         final Intent intent = getIntent();
         productId = intent.getIntExtra("productPosition", -1);
         stockId = intent.getIntExtra("stockPosition", -1);
-        // TODO: 22.11.2015  product = ObjectsLists.getProductList().get(productId);
         product = productDataSource.getProductById(productId);
 
         // If it's an existing stock, fill the fields
         if (stockId >= 0){
-            // TODO: 22.11.2015 stock = ObjectsLists.getStockList().get(stockId);
             stock = stockDataSource.getStockById(stockId);
             switchControlled.setChecked(stock.isControlled());
             etQuantity.setText(Integer.toString(stock.getQuantity()));
-            // TODO: 22.11.2015     int warehousePos = ObjectsLists.getWarehouseList().indexOf(stock.getWarehouse());
-            int warehousePos = warehousesList.indexOf(stock.getWarehouse());
+
+            int warehousePos = 0;
+            for (ObjectWarehouse w : warehousesList)
+                if(w.getId() == stock.getWarehouse().getId())
+                    warehousePos = warehousesList.indexOf(w);
             spinnerWarehouse.setSelection(warehousePos);
         }
 
@@ -127,7 +128,6 @@ public class StockNewOrModify extends AppCompatActivity {
                 finish();
             }
         });
-        // TODO: 22.11.2015  buttonCancel.setVisibility(View.INVISIBLE);
 
         // Set onClickListener to the button Suppress
         buttonSuppress.setOnClickListener(new View.OnClickListener() {
