@@ -71,36 +71,6 @@ public class Methods extends AppCompatActivity {
         return "doing";
     }
 
-    public static ArrayList getObjectsListbyCategory(String category) {
-
-        ArrayList <ObjectProducts> productsSelected = new ArrayList<ObjectProducts>();
-        for (int i =0; i<ObjectsLists.getProductList().size();i++)
-        {
-            if (ObjectsLists.getProductList().get(i).getCategory().getName().equals(category))
-            {
-                productsSelected.add(ObjectsLists.getProductList().get(i));
-            }
-        }
-        return  productsSelected;
-    }
-
-    public static ArrayList getObjectsListbyWarehouse(String warehouse) {
-
-        ArrayList <ObjectProducts> productsSelected = new ArrayList<ObjectProducts>();
-
-        for (int i =0; i<ObjectsLists.getProductList().size();i++)
-        {
-            for (int j=0; j<ObjectsLists.getProductList().get(i).getStocks().size(); j++)
-            {
-                if (ObjectsLists.getProductList().get(i).getStocks().get(j).getWarehouse().getName().equals(warehouse))
-                {
-                    productsSelected.add(ObjectsLists.getProductList().get(i));
-                }
-            }
-        }
-        return  productsSelected;
-    }
-
     // Method for management of the ActionBar
     public static Class onOptionsItemSelected(int id){
 
