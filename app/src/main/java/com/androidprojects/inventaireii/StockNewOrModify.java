@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -21,13 +20,15 @@ import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StockNewOrModify extends AppCompatActivity {
 
     private ObjectProducts product;
     private ObjectStock stock;
-    private int productPosition;
-    private int stockPosition;
+    private int productId;
+    private int stockId;
+    private List<ObjectWarehouse> warehousesList;
 
     private StockDataSource stockDataSource;
     private ProductDataSource productDataSource;
@@ -58,8 +59,9 @@ public class StockNewOrModify extends AppCompatActivity {
         // Fill the spinner with the warehouses
         final Spinner spinnerWarehouse = (Spinner) findViewById(R.id.spinnerWarehouse);
 
+        warehousesList = warehouseDataSource.getAllWarehouses();
         ArrayList<String> warehousesNames = new ArrayList<>();
-        for (ObjectWarehouse w : warehouseDataSource.getAllWarehouses()){
+        for (ObjectWarehouse w : warehousesList){
             warehousesNames.add(w.getName());
         }
 
@@ -89,17 +91,20 @@ public class StockNewOrModify extends AppCompatActivity {
 
         // Get the product and the stock Id
         Intent intent = getIntent();
-        productPosition = intent.getIntExtra("productPosition", -1);
-        stockPosition = intent.getIntExtra("stockPosition", -1);
-        product = ObjectsLists.getProductList().get(productPosition);
+        productId = intent.getIntExtra("productPosition", -1);
+        stockId = intent.getIntExtra("stockPosition", -1);
+        // TODO: 22.11.2015  product = ObjectsLists.getProductList().get(productId);
+        product = productDataSource.getProductById(productId);
 
         // If it's an existing stock, fill the fields
-        if (stockPosition >= 0){
-            stock = ObjectsLists.getStockList().get(stockPosition);
+        if (stockId >= 0){
+            // TODO: 22.11.2015 stock = ObjectsLists.getStockList().get(stockId);
+            stock = stockDataSource.getStockById(stockId);
             switchControlled.setChecked(stock.isControlled());
             etQuantity.setText(Integer.toString(stock.getQuantity()));
-            int p = ObjectsLists.getWarehouseList().indexOf(stock.getWarehouse());
-            spinnerWarehouse.setSelection(p);
+            // TODO: 22.11.2015     int warehousePos = ObjectsLists.getWarehouseList().indexOf(stock.getWarehouse());
+            int warehousePos = warehousesList.indexOf(stock.getWarehouse());
+            spinnerWarehouse.setSelection(warehousePos);
         }
 
         // Product name is known in both cases
@@ -112,7 +117,7 @@ public class StockNewOrModify extends AppCompatActivity {
         buttonSave = (Button) findViewById(R.id.buttonSave);
 
         // If it's a new stock, suppress the button suppress
-        if (stockPosition == -1)
+        if (stockId == -1)
             buttonSuppress.setVisibility(View.INVISIBLE);
 
         // Set onClickListener to the button Cancel
@@ -129,7 +134,8 @@ public class StockNewOrModify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 product.removeStock(stock);
-                ObjectsLists.getStockList().remove(stock);
+                // TODO: 22.11.2015  ObjectsLists.getStockList().remove(stock);
+                stockDataSource.deleteStock(stock);
                 finish();
             }
         });
@@ -139,20 +145,24 @@ public class StockNewOrModify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message = "";
-                if (stockPosition == -1) {
+                if (stockId == -1) {
                     // New stock, to create
                     stock = new ObjectStock(Integer.parseInt(etQuantity.getText().toString()),
                             switchControlled.isChecked(),
                             product,
-                            ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
-                    ObjectsLists.getStockList().add(stock);
+                            warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
+                            // TODO: 22.11.2015  ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
+                    // TODO: 22.11.2015  ObjectsLists.getStockList().add(stock);
+                    stockDataSource.createStock(stock);
                     product.addStock(stock);
                     message = getResources().getString(R.string.stock_added);
                 } else {
                     // Modification of an existing stock
                     stock.setControlled(switchControlled.isChecked());
                     stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
-                    stock.setWarehouse(ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
+                    // TODO: 22.11.2015  stock.setWarehouse(ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
+                    stock.setWarehouse(warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
+                    stockDataSource.updateStock(stock);
                     message = getResources().getString(R.string.stock_updated);
                 }
 
