@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Methods extends AppCompatActivity {
 
-
+    // Give the color for an inventory state
     public static int giveColor(View cl,  String s) {
         if(s.equals("todo"))
             return cl.getResources().getColor(R.color.indicator_to_do);
@@ -20,6 +22,7 @@ public class Methods extends AppCompatActivity {
         return cl.getResources().getColor(R.color.indicator_doing);
     }
 
+    // Get the inventory state (done, to do or doing) of one product
     public static String getInventoryState(ObjectProducts product) {
         int nbControlled = 0;
         int nbNotControlled = 0;
@@ -43,30 +46,7 @@ public class Methods extends AppCompatActivity {
         return "doing";
     }
 
-    public static String getInventoryState() {
-        int nbControlled = 0;
-        int nbNotControlled = 0;
-
-        if (ObjectsLists.getProductList().isEmpty()){
-            return "done";
-        }
-
-        for (ObjectProducts p : ObjectsLists.getProductList()){
-            switch (getInventoryState(p)) {
-                case "done": nbControlled++ ; break ;
-                case "todo": nbNotControlled++ ; break;
-            }
-        }
-
-        if (nbControlled == 0)
-            return "todo";
-
-        if (nbNotControlled == 0)
-            return "done";
-
-        return "doing";
-    }
-
+    // Get the inventory state (done, to do, or doing) of a list of products
     public static String getInventoryState(List<ObjectProducts> productsToDisplay) {
         int nbControlled = 0;
         int nbNotControlled = 0;

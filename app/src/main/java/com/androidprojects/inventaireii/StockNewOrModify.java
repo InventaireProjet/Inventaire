@@ -127,6 +127,7 @@ public class StockNewOrModify extends AppCompatActivity {
                 finish();
             }
         });
+        // TODO: 22.11.2015  buttonCancel.setVisibility(View.INVISIBLE);
 
         // Set onClickListener to the button Suppress
         buttonSuppress.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +135,7 @@ public class StockNewOrModify extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 product.removeStock(stock);
-                // TODO: 22.11.2015  ObjectsLists.getStockList().remove(stock);
                 stockDataSource.deleteStock(stock);
-                finish();
             }
         });
 
@@ -151,8 +150,7 @@ public class StockNewOrModify extends AppCompatActivity {
                             switchControlled.isChecked(),
                             product,
                             warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
-                            // TODO: 22.11.2015  ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
-                    // TODO: 22.11.2015  ObjectsLists.getStockList().add(stock);
+
                     stockDataSource.createStock(stock);
                     product.addStock(stock);
                     message = getResources().getString(R.string.stock_added);
@@ -160,7 +158,6 @@ public class StockNewOrModify extends AppCompatActivity {
                     // Modification of an existing stock
                     stock.setControlled(switchControlled.isChecked());
                     stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
-                    // TODO: 22.11.2015  stock.setWarehouse(ObjectsLists.getWarehouseList().get(spinnerWarehouse.getSelectedItemPosition()));
                     stock.setWarehouse(warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
                     stockDataSource.updateStock(stock);
                     message = getResources().getString(R.string.stock_updated);

@@ -208,9 +208,9 @@ public class Product extends AppCompatActivity {
         txtPrice = (TextView) findViewById(R.id.txtPrice);
         
         txtTitle.setText(product.getName());
-        txtArtNb.setText("N° Article : " + product.getArtNb());
+        txtArtNb.setText(getResources().getString(R.string.article_number_colon) + " " + product.getArtNb());
         if (product.getCategory() != null)
-            txtCategory.setText("Catégorie : " + product.getCategory().getName());
+            txtCategory.setText(getResources().getString(R.string.category_colon) + " " + product.getCategory().getName());
         else
             txtCategory.setText(R.string.no_category);
         txtPrice.setText("Prix : " + String.format("%,.2f", product.getPrice()) + " CHF");

@@ -93,6 +93,8 @@
     <string name="stock_updated">Stock mis à jour</string>
     <string name="product_created">Produit créé</string>
     <string name="product_modified">Produit modifié</string>
+    <string name="category_colon">Catégorie :</string>
+    <string name="article_number_colon">N° d\'article :</string>
 
 
 </resources>

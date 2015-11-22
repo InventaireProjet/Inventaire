@@ -70,7 +70,6 @@ public class MyProducts extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
-        //todo squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
 
         // Three elements below the ListView : total quantity of products and value of stock
         int totalQuantity = 0;
@@ -82,7 +81,7 @@ public class MyProducts extends AppCompatActivity {
         squareTotalStock = findViewById(R.id.squareTotalStock);
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState()));
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsList)));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
         txtStockValue.setText("Valeur : CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
     }
