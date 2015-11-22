@@ -39,6 +39,7 @@ public class Category extends AppCompatActivity {
     CategoryDataSource categoryDataSource;
     ProductDataSource productDataSource;
     ObjectCategories category;
+    int nbCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +64,7 @@ public class Category extends AppCompatActivity {
         Intent intent = getIntent();
         final int categoryId = intent.getIntExtra("categoryId", 1);
 
-       // category = ObjectsLists.getCategoryList().get(categoryId);
-        //TODO disable up, enable down
-         category = categoryDataSource.getCategoryById(categoryId);
+        category = categoryDataSource.getCategoryById(categoryId);
         title.setText(category.getName());
 
         //Define the products to display
@@ -78,15 +77,21 @@ public class Category extends AppCompatActivity {
         squareInventoryState.setVisibility(View.VISIBLE);
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
 
-// Set onClickListener to button "Previous"
+        // Set onClickListener to button "Previous"
 
         btnPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Category.class);
-                int nbItems = ObjectsLists.getCategoryList().size();
-                //TODO GéRER AVEC ID AVEC VRAIES DONNEES
-                //intent.putExtra("position", (position+nbItems-1)%nbItems);
+                List<ObjectCategories> categories = categoryDataSource.getAllCategories();
+                int position = 0;
+                for(ObjectCategories c : categories)
+                    if(c.getId() == categoryId)
+                        position = categories.indexOf(c);
+
+                nbCategories = categories.size();
+                position = (position+nbCategories-1)%nbCategories;
+                intent.putExtra("categoryId", categories.get(position).getId());
                 startActivity(intent);
                 finish();
 
@@ -99,9 +104,15 @@ public class Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Category.class);
-                int nbItems = ObjectsLists.getCategoryList().size();
-                //TODO GéRER AVEC ID AVEC VRAIES DONNEES
-                //intent.putExtra("position", (position + nbItems + 1) % nbItems);
+                List<ObjectCategories> categories = categoryDataSource.getAllCategories();
+                int position = 0;
+                for(ObjectCategories c : categories)
+                    if(c.getId() == categoryId)
+                        position = categories.indexOf(c);
+
+                nbCategories = categories.size();
+                position = (position+nbCategories+1)%nbCategories;
+                intent.putExtra("categoryId", categories.get(position).getId());
                 startActivity(intent);
                 finish();
             }
@@ -206,11 +217,6 @@ public class Category extends AppCompatActivity {
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        final ArrayList<ObjectCategories> categories = ObjectsLists.getCategoryList();
-
-                       // categories.remove(categoryId);
-                        //TODO DELETE UP, ENABLE DOWN
 
                         categoryDataSource.deleteCategory(categoryId);
 
@@ -341,15 +347,14 @@ public class Category extends AppCompatActivity {
             txtQuantity.setText(Integer.toString(product.getQuantity()));
             txtPrice.setText("CHF " + Double.toString(product.getPrice()));
 
-            // Sending the product to the next field
+            // Sending the product to the next activity
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO ASK WHAT IS THE USE OF THE LINE BELOW ???????????????????????????????
-                    ObjectsLists.setProductList((ArrayList) productsToDisplay);
+                    // there is no use ;-) DM // ObjectsLists.setProductList((ArrayList) productsToDisplay);
                     Intent intent = new Intent(getBaseContext(), Product.class);
-                    // TODO in the final version, send only the product Id...
-                    intent.putExtra("position", position);
+                    intent.putExtra("position", product.getId());
                     startActivity(intent);
                 }
             });

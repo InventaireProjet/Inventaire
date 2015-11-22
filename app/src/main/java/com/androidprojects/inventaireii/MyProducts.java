@@ -155,7 +155,6 @@ public class MyProducts extends AppCompatActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // todo ObjectsLists.setProductList((ArrayList) productsList);
                     Intent intent = new Intent(getBaseContext(), Product.class);
                     intent.putExtra("position", product.getId());
                     startActivity(intent);

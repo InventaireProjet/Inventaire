@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.androidprojects.inventaireii.ObjectCategories;
+import com.androidprojects.inventaireii.ObjectProducts;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
 
@@ -17,6 +18,8 @@ public class CategoryDataSource {
     private SQLiteDatabase db;
     private Context context;
     private static CategoryDataSource instance;
+
+    private ProductDataSource productDataSource;
 
     private   CategoryDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
@@ -96,6 +99,13 @@ public class CategoryDataSource {
     // Delete a Category without deletion of its products
 
     public void deleteCategory(long id){
+
+        productDataSource = ProductDataSource.getInstance(context);
+        List<ObjectProducts> products = productDataSource.getAllProductsByCategory(id);
+        for (ObjectProducts p : products) {
+            p.setCategory(null);
+            productDataSource.updateProduct(p);
+        }
 
         this.db.delete(InventoryContract.CategorieEntry.TABLE_CATEGORIES, InventoryContract.CategorieEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
