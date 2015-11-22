@@ -67,8 +67,8 @@ public class Warehouse extends AppCompatActivity {
 
         warehouseName.setText(warehouse.getName());
 
-        final ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
 
+        //final ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
         //productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
         //TODO UP OUT, DOWN IN
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);

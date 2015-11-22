@@ -60,7 +60,7 @@ public class MyProducts extends AppCompatActivity {
         });
 
         // Fill the ListView
-        View header = (View) getLayoutInflater().inflate(R.layout.product_row_header, null);
+        View header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
         adapter = new ProductsAdapter(this, productsList);
         lvProducts.setAdapter(adapter);
@@ -82,8 +82,10 @@ public class MyProducts extends AppCompatActivity {
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsList)));
-        txtStock.setText("Stock : " + Integer.toString(totalQuantity));
-        txtStockValue.setText("Valeur : CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " "
+                + Integer.toString(totalQuantity));
+        txtStockValue.setText(getResources().getString(R.string.value_colon)
+                + " CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
     }
 
 

@@ -142,7 +142,7 @@ public class ProductDataSource {
 
     public List<ObjectProducts> getAllProductsByWarehouse (long warehouse_id) {
         List<ObjectProducts> products = new ArrayList<>();
-        String sql = "SELECT * FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS + " p, "
+        String sql = "SELECT p.* FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS + " p, "
                 + InventoryContract.StockEntry.TABLE_STOCKS + " s "
                 + " WHERE s." + InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = " +warehouse_id
                 + " AND s." + InventoryContract.StockEntry.KEY_PRODUCT_ID + " = " + "p." + InventoryContract.ProductEntry.KEY_ID

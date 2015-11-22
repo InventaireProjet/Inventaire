@@ -97,6 +97,8 @@
     <string name="article_number_colon">N° d\'article :</string>
     <string name="product_deleted">Produit supprimé</string>
     <string name="suppress_product_are_you_sure">Êtes-vous sûr de vouloir supprimer cet article ?</string>
+    <string name="stock_colon">Stock :</string>
+    <string name="value_colon">Valeur :</string>
 
 
 </resources>

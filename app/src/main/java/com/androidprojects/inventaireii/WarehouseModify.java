@@ -88,10 +88,11 @@ public class WarehouseModify extends AppCompatActivity {
         warehouseName.setVisibility(View.INVISIBLE);
         editWarehouseName.setVisibility(View.VISIBLE);
 
-        warehouses = ObjectsLists.getWarehouseList();
+
 
         //First part
         //Retrieving the products in the warehouse to know which color to display
+        //warehouses = ObjectsLists.getWarehouseList();
        // productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
         //TODO UP OUT, DOWN IN
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);

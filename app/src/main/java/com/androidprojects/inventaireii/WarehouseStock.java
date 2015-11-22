@@ -38,6 +38,7 @@ public class WarehouseStock extends AppCompatActivity {
     ProductDataSource productDataSource;
     ObjectWarehouse  warehouse;
     ArrayList<ObjectWarehouse> warehouses;
+    int nbWarehouses;
 
 
     @Override
@@ -87,9 +88,15 @@ public class WarehouseStock extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WarehouseStock.class);
-                int nbItems = ObjectsLists.getWarehouseList().size();
-                //TODO GéRER AVEC ID AVEC VRAIES DONNEES
-                //intent.putExtra("position", (position+nbItems-1)%nbItems);
+                List<ObjectWarehouse> warehouses = warehouseDataSource.getAllWarehouses();
+                int position = 0;
+                for (ObjectWarehouse w : warehouses)
+                    if(w.getId() == warehouse.getId())
+                        position = warehouses.indexOf(w);
+
+                nbWarehouses = warehouses.size();
+                position = (position+nbWarehouses-1)%nbWarehouses;
+                intent.putExtra("warehouseId", warehouses.get(position).getId());
                 startActivity(intent);
                 finish();
 
@@ -102,9 +109,15 @@ public class WarehouseStock extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), WarehouseStock.class);
-                int nbItems = ObjectsLists.getWarehouseList().size();
-                //TODO GéRER AVEC ID AVEC VRAIES DONNEES
-                //intent.putExtra("position", (position + nbItems + 1) % nbItems);
+                List<ObjectWarehouse> warehouses = warehouseDataSource.getAllWarehouses();
+                int position = 0;
+                for (ObjectWarehouse w : warehouses)
+                    if (w.getId() == warehouse.getId())
+                        position = warehouses.indexOf(w);
+
+                nbWarehouses = warehouses.size();
+                position = (position+nbWarehouses+1)%nbWarehouses;
+                intent.putExtra("warehouseId", warehouses.get(position).getId());
                 startActivity(intent);
                 finish();
             }
@@ -147,8 +160,7 @@ public class WarehouseStock extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        warehouses = ObjectsLists.getWarehouseList();
-
+                        //warehouses = ObjectsLists.getWarehouseList();
                         //warehouses.remove(warehouseId);
                         //TODO UP OUT, DOWN IN
                         warehouseDataSource.deleteWarehouse(warehouseId);
@@ -203,7 +215,7 @@ public class WarehouseStock extends AppCompatActivity {
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
         txtStock.setText("Stock : " + Integer.toString(totalQuantity));
-        txtStockValue.setText("Valeur : CHF " + Double.toString(totalValue));
+        txtStockValue.setText("Valeur : CHF " + String.format("%,.2f",totalValue));
     }
 
 
@@ -288,18 +300,19 @@ public class WarehouseStock extends AppCompatActivity {
             square.setBackgroundColor(Methods.giveColor(square, Methods.getInventoryState(product)));
             txtArtNb.setText(product.getArtNb());
             txtName.setText(product.getName());
-            txtCategory.setText(product.getCategory().getName());
+            if (product.getCategory() != null)
+                txtCategory.setText(product.getCategory().getName());
+            else
+                txtCategory.setText(R.string.no_category);
             txtQuantity.setText(Integer.toString(product.getQuantity()));
-            txtPrice.setText("CHF " + Double.toString(product.getPrice()));
+            txtPrice.setText("CHF " + String.format("%,.2f", product.getPrice()));
 
-            // Sending the product to the next field
+            // Sending the product to the next activity
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ObjectsLists.setProductList((ArrayList) productsToDisplay);
                     Intent intent = new Intent(getBaseContext(), Product.class);
-                    // TODO in the final version, send only the product Id...
-                    intent.putExtra("position", position);
+                    intent.putExtra("position", product.getId());
                     startActivity(intent);
                 }
             });
