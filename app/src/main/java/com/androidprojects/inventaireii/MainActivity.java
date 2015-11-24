@@ -1,8 +1,8 @@
 package com.androidprojects.inventaireii;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,11 +14,12 @@ import android.widget.TextView;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
+import com.androidprojects.inventaireii.preferences.AppSettingsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
 
     // Declarations of variables
     int nbItems = 0;
@@ -35,10 +36,14 @@ public class MainActivity extends AppCompatActivity {
     PopupWindow popupWindow;
     Button buttonStartInventory;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         stockDataSource = StockDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
@@ -169,10 +174,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if( id== R.id.action_settings) {
+           Intent intent = new Intent(this, AppSettingsActivity.class);
+            startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -191,4 +197,7 @@ public class MainActivity extends AppCompatActivity {
         txtInventoryState.setVisibility(View.VISIBLE);
 
     }
+
+
+
 }

@@ -3,7 +3,9 @@ package com.androidprojects.inventaireii;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,9 +23,10 @@ import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.preferences.AppSettingsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MyCategories extends AppCompatActivity {
 
@@ -40,13 +43,19 @@ public class MyCategories extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_categories);
 
-       categoryDataSource =CategoryDataSource.getInstance(this);
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setLocale(sharedPrefs.getString("pref_lang", "en"));
+
+
+        categoryDataSource =CategoryDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
 
+
         //Using adapter
-       // adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
+        // adapter = new CategoriesAdapter(this, ObjectsLists.getCategoryList());
         //TODO ENABLE THIS
-         adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
+        adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
 
 
         // Fill the ListView
@@ -138,6 +147,11 @@ public class MyCategories extends AppCompatActivity {
 
         switch (id) {
 
+            case R.id.action_settings:
+                intent = new Intent(this, AppSettingsActivity.class);
+                startActivity(intent);
+                return  true;
+
             case R.id.go_home:
                 intent = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(intent);
@@ -171,6 +185,15 @@ public class MyCategories extends AppCompatActivity {
 
     }
 
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+    }
+
     private class CategoriesAdapter extends ArrayAdapter {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 
@@ -197,7 +220,7 @@ public class MyCategories extends AppCompatActivity {
             tvName.setText(category.getName());
 
             //Retrieving the products in the category to know which color to display
-           // productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
+            // productsInCategory =  Methods.getObjectsListbyCategory(category.getName());
             //TODO Disable up,enable down
             productsInCategory = productDataSource.getAllProductsByCategory(category.getId());
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInCategory)));
@@ -218,4 +241,5 @@ public class MyCategories extends AppCompatActivity {
             return convertView;
         }
     }
+
 }

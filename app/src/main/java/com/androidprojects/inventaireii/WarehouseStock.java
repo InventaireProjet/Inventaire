@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
+import com.androidprojects.inventaireii.preferences.AppSettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,6 +246,11 @@ public class WarehouseStock extends AppCompatActivity {
         Intent intent;
 
         switch (id) {
+
+            case R.id.action_settings:
+                intent = new Intent(this, AppSettingsActivity.class);
+                startActivity(intent);
+                return  true;
 
             case R.id.go_home:
                 intent = new Intent(getBaseContext(), MainActivity.class);
