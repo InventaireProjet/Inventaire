@@ -92,7 +92,7 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name=".preferences.AppSettingsActivity"
+        <activity android:name=".Preferences.AppSettingsActivity"
            android:label="@string/preferences"
             android:parentActivityName=".MainActivity">
         </activity>

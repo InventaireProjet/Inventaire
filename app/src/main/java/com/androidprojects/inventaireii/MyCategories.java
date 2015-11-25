@@ -23,7 +23,8 @@ import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
-import com.androidprojects.inventaireii.preferences.AppSettingsActivity;
+import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
+
 
 import java.util.List;
 import java.util.Locale;
@@ -182,6 +183,7 @@ public class MyCategories extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+
 
     }
 

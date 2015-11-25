@@ -15,9 +15,9 @@ import android.widget.TextView;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
-import com.androidprojects.inventaireii.preferences.AppSettingsActivity;
+import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class Warehouse extends AppCompatActivity {

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
-import com.androidprojects.inventaireii.preferences.AppSettingsActivity;
+import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
