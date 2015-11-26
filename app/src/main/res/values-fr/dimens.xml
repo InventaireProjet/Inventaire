@@ -1,0 +1,21 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="main_activity_margin">40dp</dimen>
+    <dimen name="main_activity_bottom_margin">20dp</dimen>
+    <dimen name="line_height">3dp</dimen>
+    <dimen name="square_height">20dp</dimen>
+    <dimen name="square_width">20dp</dimen>
+    <dimen name="interCategories_bottomMargin">10dp</dimen>
+
+    <!--Txt !-->
+    <dimen name="warehouse_text_entry">12dp</dimen>
+    <dimen name="warehouse_align">65dp</dimen>
+    <dimen name="txt_buttons_popup_delete_warehouse">11dp</dimen>
+    <dimen name="buttons_delete_warehouse_height">50dp</dimen>
+    <dimen name="buttons_delete_warehouse_width">90dp</dimen>
+    <dimen name="middle_space">50dp</dimen>
+    <dimen name="navigation_button">40dp</dimen>
+
+</resources>
