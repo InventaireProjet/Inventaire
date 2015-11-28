@@ -42,8 +42,8 @@
             android:id="@+id/switchControlled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textOn="oui"
-            android:textOff="non"
+            android:textOn="@string/yes"
+            android:textOff="@string/no"
             android:background="@color/button_background"
             android:textColor="@color/text_color" />
     </LinearLayout>

@@ -39,6 +39,7 @@ public class MyProducts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Methods.setLocale(this);
         setContentView(R.layout.activity_my_products);
 
         // Catch views of the activity
@@ -69,6 +70,7 @@ public class MyProducts extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Methods.setLocale(this);
         adapter.notifyDataSetChanged();
 
         // Three elements below the ListView : total quantity of products and value of stock

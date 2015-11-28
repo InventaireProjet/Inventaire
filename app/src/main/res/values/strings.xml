@@ -101,6 +101,7 @@
     <string name="progress_of_your_inventory_colon">Inventory progress:</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="price_colon">Price:</string>
 
 
 </resources>

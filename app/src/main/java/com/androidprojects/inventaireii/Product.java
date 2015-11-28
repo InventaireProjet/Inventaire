@@ -36,13 +36,20 @@ public class Product extends AppCompatActivity {
     TextView txtArtNb;
     TextView txtCategory;
     TextView txtPrice;
+    TextView txtQuantityStorage;
+    TextView txtDescriptionTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Methods.setLocale(this);
         setContentView(R.layout.activity_product);
 
         productDataSource = ProductDataSource.getInstance(this);
         stockDataSource = StockDataSource.getInstance(this);
+
+        // Get some views
+        txtQuantityStorage = (TextView) findViewById(R.id.txtQuantityStorage);
+        txtDescriptionTitle = (TextView) findViewById(R.id.txtDescriptionTitle);
 
         // Get the product from the Intent
         Intent intent = getIntent();
@@ -210,6 +217,7 @@ public class Product extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Methods.setLocale(this);
 
         // Set values in top of screen
         txtTitle = (TextView) findViewById(R.id.txtTitle);
@@ -223,8 +231,11 @@ public class Product extends AppCompatActivity {
             txtCategory.setText(getResources().getString(R.string.category_colon) + " " + product.getCategory().getName());
         else
             txtCategory.setText(R.string.no_category);
-        txtPrice.setText("Prix : " + String.format("%,.2f", product.getPrice()) + " CHF");
+        txtPrice.setText(getResources().getString(R.string.price_colon) + " "
+                + String.format("%,.2f", product.getPrice()) + " CHF");
 
+        txtDescriptionTitle.setText(R.string.product_description);
+        txtQuantityStorage.setText(R.string.quantity_and_storage);
 
         adapter.notifyDataSetChanged();
         squareTotalStock.setBackgroundColor(
