@@ -254,8 +254,8 @@ public class Category extends AppCompatActivity {
         TextView txtStock = (TextView) findViewById(R.id.txtStock);
         TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText("Stock : " + Integer.toString(totalQuantity));
-        txtStockValue.setText("Valeur : CHF " + String.format("%,.2f", totalValue));
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
+        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f", totalValue));
     }
 
     @Override

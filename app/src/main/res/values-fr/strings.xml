@@ -51,7 +51,7 @@
     <string name="delete_warehouse_option2">Si vous désirez supprimer le magasin et tous ses éléments : cliquez sur \"Tout supprimer\".</string>
     <string name="btn_delete_only_warehouse">Supprimer seulement le magasin</string>
     <string name="btn_delete_all">Tout supprimer</string>
-    <string name="title_activity_stock_row">stock_row</string>
+    <string name="title_activity_stock_row">Ligne_stock</string>
     <string name="title_activity_product_new_or_modify">Données produit</string>
     <string name="select_category">-- Catégories --</string>
     <string name="title_activity_stock_new_or_modify">Stock</string>
@@ -97,6 +97,13 @@
     <string name="article_number_colon">N° d\'article :</string>
     <string name="product_deleted">Produit supprimé</string>
     <string name="suppress_product_are_you_sure">Êtes-vous sûr de vouloir supprimer cet article ?</string>
+    <string name="stock_colon">Stock :</string>
+    <string name="value_colon">Valeur :</string>
+    <string name="preferences">Préférences</string>
+    <string name="language">Langue</string>
+    <string name="choose_language">Choisissez votre langue</string>
+    <string name="question_restart_inventory">Êtes-vous sûr de vouloir lancer l\'inventaire ?\n\nSi oui le processus d\'inventaire sera remis à zéro et tous vos produits apparaîtront comme étant non inventoriés.</string>
+    <string name="progress_of_your_inventory_colon">Avancement de votre inventaire :</string>
 
 
 </resources>
