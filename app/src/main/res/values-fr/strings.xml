@@ -2,7 +2,7 @@
     <string name="app_name">Inventaire</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Préférences</string>
     <string name="appTitle">AppInventaire</string>
     <string name="product_access">Accès par produit</string>
     <string name="category_access">Accès par catégorie</string>

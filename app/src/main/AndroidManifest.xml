@@ -94,7 +94,7 @@
 
         <activity android:name=".Preferences.AppSettingsActivity"
            android:label="@string/preferences"
-            android:parentActivityName=".MainActivity">
+            >
         </activity>
     </application>
 

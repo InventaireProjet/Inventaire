@@ -38,6 +38,7 @@ public class MyCategories extends AppCompatActivity {
     List <ObjectProducts> productsInCategory;
     CategoryDataSource categoryDataSource;
     ProductDataSource productDataSource;
+    SharedPreferences sharedPrefs;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,6 @@ public class MyCategories extends AppCompatActivity {
         setContentView(R.layout.activity_my_categories);
 
 
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setLocale(sharedPrefs.getString("pref_lang", "en"));
 
 
         categoryDataSource =CategoryDataSource.getInstance(this);
@@ -184,6 +183,11 @@ public class MyCategories extends AppCompatActivity {
         super.onResume();
         adapter.notifyDataSetChanged();
 
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setLocale(sharedPrefs.getString("pref_language", "en"));
+        // TODO: 28.11.2015 suppress this toast 
+        Toast toast = Toast.makeText(getBaseContext(), sharedPrefs.getString("pref_language", "to"), Toast.LENGTH_LONG);
+        toast.show();
 
     }
 
