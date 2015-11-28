@@ -46,6 +46,9 @@ public class Category extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//Language management
+        Methods.setLocale(this);
+
         categoryDataSource =  CategoryDataSource.getInstance(this);
          productDataSource =  ProductDataSource.getInstance(this);
 
@@ -266,6 +269,9 @@ public class Category extends AppCompatActivity {
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
         showTotalInStock();
+
+        //Language management
+        Methods.setLocale(this);
 
 
 

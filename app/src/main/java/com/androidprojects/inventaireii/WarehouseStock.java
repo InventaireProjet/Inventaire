@@ -39,11 +39,16 @@ public class WarehouseStock extends AppCompatActivity {
     ProductDataSource productDataSource;
     ObjectWarehouse  warehouse;
     int nbWarehouses;
+    Button buttonDeleteWarehouse;
+    Button buttonCancel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Language management
+        Methods.setLocale(this);
 
          productDataSource =  ProductDataSource.getInstance(this);
          warehouseDataSource =  WarehouseDataSource.getInstance(this);
@@ -146,8 +151,8 @@ public class WarehouseStock extends AppCompatActivity {
 
 
                 // Catch the elements of the pop-up view
-                Button buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
-                Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
+                 buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
+                 buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
                 //Deleting  the warehouse and the stocks of its products
@@ -200,10 +205,17 @@ public class WarehouseStock extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
+        //Language management to refresh
+        Methods.setLocale(this);
+
         adapter.notifyDataSetChanged();
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
         showTotalInStock();
+
+
     }
 
     @Override

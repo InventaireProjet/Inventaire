@@ -77,8 +77,7 @@ public class NewWarehouse extends AppCompatActivity {
                             etWarehouseLocation.getText().toString(),
                             etWarehouseCountry.getText().toString());
 
-                    //ObjectsLists.getWarehouseList().add(newWarehouse);
-                    //TODO NO UP, YES DOWN
+
                     warehouseDataSource.createWarehouse(newWarehouse);
 
                     Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
