@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ProductDataSource productDataSource;
 
     // Declarations of views
+    TextView txtTitle;
     TextView txtInventoryRunning;
     TextView txtInventoryState;
     TextView txtProductAccess;
@@ -129,6 +130,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Methods.setLocale(this);
+
+        // Setting all texts, necessary for management of languages
+        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+        txtTitle.setText(R.string.appTitle);
+        txtProductAccess.setText(R.string.product_access);
+        txtCategoryAccess.setText(R.string.category_access);
+        txtWarehouseAccess.setText(R.string.warehouse_access);
+
 
         /* Display of Inventory-depending fields */
         nbInventoriedItems = 0;

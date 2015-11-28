@@ -63,7 +63,7 @@
     <string name="save">Save</string>
     <string name="warehouse_colon">Warehouse:</string>
     <string name="inventory_shorted">Inv.</string>
-    <string name="article_number_short">N° Prod</string>
+    <string name="article_number_short">Prod Nb.</string>
     <string name="name_short">Name</string>
     <string name="category_short">Category</string>
     <string name="quantity_short">Qty</string>
