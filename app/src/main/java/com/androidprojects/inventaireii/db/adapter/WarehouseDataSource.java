@@ -61,10 +61,8 @@ public class WarehouseDataSource {
 
         ObjectWarehouse warehouse = new ObjectWarehouse();
 
-        if (cursor!=null)
+        if (cursor!=null && cursor.getCount() > 0) {
             cursor.moveToFirst();
-
-        if (cursor.getCount() > 0) {
 
             warehouse.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ID)));
             warehouse.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_NAME)));
