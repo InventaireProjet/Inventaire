@@ -204,4 +204,11 @@ public class StockDataSource {
                 new String[]{String.valueOf(stock.getId())});
     }
 
+    /* Delete all stocks of a Warehouse */
+    public void deleteAllStocksByWarehouse(long id) {
+        this.db.delete(InventoryContract.StockEntry.TABLE_STOCKS,
+                InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = ?",
+                new String[]{String.valueOf(id)});
+    }
+
 }

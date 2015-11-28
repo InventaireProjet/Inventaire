@@ -59,21 +59,23 @@ public class WarehouseDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor!=null) {
-            cursor.moveToFirst();
-        }
-
         ObjectWarehouse warehouse = new ObjectWarehouse();
-        warehouse.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ID)));
-        warehouse.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_NAME)));
-        warehouse.setStockCapacity(cursor.getInt(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CAPACITY)));
-        warehouse.setTelNumber(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_PHONE_NUMBER)));
-        warehouse.setStreet(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_STREET)));
-        warehouse.setStreetNumber(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_STREET_NUMBER)));
-        warehouse.setLocation(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CITY)));
-        warehouse.setPostalCode(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ZIPCODE)));
-        warehouse.setCountry(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_COUNTRY)));
 
+        if (cursor!=null)
+            cursor.moveToFirst();
+
+        if (cursor.getCount() > 0) {
+
+            warehouse.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ID)));
+            warehouse.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_NAME)));
+            warehouse.setStockCapacity(cursor.getInt(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CAPACITY)));
+            warehouse.setTelNumber(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_PHONE_NUMBER)));
+            warehouse.setStreet(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_STREET)));
+            warehouse.setStreetNumber(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_STREET_NUMBER)));
+            warehouse.setLocation(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CITY)));
+            warehouse.setPostalCode(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ZIPCODE)));
+            warehouse.setCountry(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_COUNTRY)));
+        }
 
         return warehouse;
     }
@@ -105,6 +107,7 @@ public class WarehouseDataSource {
             } while (cursor.moveToNext());
 
         }
+        cursor.close();
         return warehouses;
     }
 
@@ -128,23 +131,27 @@ public class WarehouseDataSource {
                 new String[] { String.valueOf(warehouse.getId()) });
     }
 
-    // Delete a Warehouse without deletion of its products
+    // Delete a Warehouse without deletion of its products : will not be used in this application at this moment
 
     public void deleteWarehouse(long id){
 
-        this.db.delete(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES, InventoryContract.WarehouseEntry.KEY_ID + " = ?",
-                new String[]{String.valueOf(id)});
+        // Delete stocks contained in this Warehouse
+        StockDataSource stockDataSource = StockDataSource.getInstance(context);
+        stockDataSource.deleteAllStocksByWarehouse(id);
 
     }
 
-    // TODO Delete a Warehouse with deletion of its products
+    // Delete a Warehouse WITH deletion of its products
 
     public void deleteWarehouseAndProducts(long id){
 
-
+        // Delete stocks contained in this Warehouse
+        StockDataSource stockDataSource = StockDataSource.getInstance(context);
+        stockDataSource.deleteAllStocksByWarehouse(id);
 
         //Warehouse deletion
-        this.db.delete(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES, InventoryContract.WarehouseEntry.KEY_ID + " = ?",
+        this.db.delete(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES,
+                InventoryContract.WarehouseEntry.KEY_ID + " = ?",
                 new String[]{String.valueOf(id)});
     }
 

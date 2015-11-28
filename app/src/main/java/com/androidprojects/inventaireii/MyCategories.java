@@ -134,14 +134,15 @@ public class MyCategories extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_action_bar, menu);
         menu.findItem(R.id.goto_categories).setVisible(false);
 
-
+        // TODO: 28.11.2015 suppress this ...
+        /*
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-
+        */
         return true;
     }
 

@@ -156,7 +156,7 @@ public class WarehouseStock extends AppCompatActivity {
                     public void onClick(View v) {
 
 
-                        warehouseDataSource.deleteWarehouse(warehouseId);
+                        warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
 
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
