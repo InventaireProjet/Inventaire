@@ -15,4 +15,5 @@
     <color name="list_header_backcolor">#f0f0f0</color>
     <color name="list_header_bordercolor">#000</color>
     <color name="text_color_hint">#e0e0e0</color>
+    <color name="popup_background">#777</color>
 </resources>

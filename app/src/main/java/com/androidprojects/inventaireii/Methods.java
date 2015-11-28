@@ -3,13 +3,17 @@ package com.androidprojects.inventaireii;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Methods extends AppCompatActivity {
 
@@ -90,9 +94,23 @@ public class Methods extends AppCompatActivity {
             case R.id.action_search:
                 return MyWarehouses.class;
 
+            case R.id.action_settings:
+                return  AppSettingsActivity.class;
+
+
         }
         return null;
     }
 
+    // Method to set the language
+    public static void setLocale(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String lang = sharedPreferences.getString("pref_language", "en");
+        Locale myLocale = new Locale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+    }
 
 }

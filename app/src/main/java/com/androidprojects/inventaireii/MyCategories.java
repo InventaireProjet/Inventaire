@@ -43,6 +43,11 @@ public class MyCategories extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Methods.setLocale(sharedPrefs.getString("pref_language", "en"), this);
+        Methods.setLocale(this);
+
         setContentView(R.layout.activity_my_categories);
 
 
@@ -181,24 +186,15 @@ public class MyCategories extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Methods.setLocale(this);
+
         adapter.notifyDataSetChanged();
 
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setLocale(sharedPrefs.getString("pref_language", "en"));
-        // TODO: 28.11.2015 suppress this toast 
-        Toast toast = Toast.makeText(getBaseContext(), sharedPrefs.getString("pref_language", "to"), Toast.LENGTH_LONG);
-        toast.show();
+        TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
+        txtTitle.setText(R.string.my_categories);
 
     }
 
-    public void setLocale(String lang) {
-        Locale myLocale = new Locale(lang);
-        Locale.setDefault(myLocale);
-        android.content.res.Configuration config = new android.content.res.Configuration();
-        config.locale = myLocale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-    }
 
     private class CategoriesAdapter extends ArrayAdapter {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView

@@ -102,6 +102,8 @@
     <string name="preferences">Préférences</string>
     <string name="language">Langue</string>
     <string name="choose_language">Choisissez votre langue</string>
+    <string name="question_restart_inventory">Êtes-vous sûr de vouloir lancer l\'inventaire ?\n\nSi oui le processus d\'inventaire sera remis à zéro et tous vos produits apparaîtront comme étant non inventoriés.</string>
+    <string name="progress_of_your_inventory_colon">"Avancement de votre inventaire : "</string>
 
 
 </resources>

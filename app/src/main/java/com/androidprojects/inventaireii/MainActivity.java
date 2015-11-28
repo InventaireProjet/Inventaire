@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Methods.setLocale(this);
         setContentView(R.layout.activity_main);
 
 
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // TODO replace this pop-up window with a dialog ???
         // Pop-up Window on click on 'New Inventory'
         buttonStartInventory = (Button) findViewById(R.id.buttonStartInventory);
         buttonStartInventory.setOnClickListener(new Button.OnClickListener() {
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Create the pop-up window
+                Methods.setLocale(getBaseContext());
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView =
@@ -101,9 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
                 // Set actions to the elements
-                txtQuestion.setText("Êtes-vous sûr de vouloir lancer l'inventaire ?\n\n" +
-                        "Si oui le processus d'inventaire sera remis à zéro et tous vos" +
-                        "produits apparaîtront comme étant non inventoriés.");
+                txtQuestion.setText(getString(R.string.question_restart_inventory));
 
                 buttonOk.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                popupWindow.showAsDropDown(buttonStartInventory, 0, -100);
+                popupWindow.showAsDropDown(buttonStartInventory, 0, -500);
 
             }
         });
@@ -129,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Methods.setLocale(this);
 
         /* Display of Inventory-depending fields */
         nbInventoriedItems = 0;
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
         txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
 
-        txtInventoryState.setText("Avancement de votre inventaire : "
+        txtInventoryState.setText(getString(R.string.progress_of_your_inventory_colon) + " "
                 + nbInventoriedItems + "/" + nbItems);
 
         if (nbItems > nbInventoriedItems) {
@@ -191,9 +191,9 @@ public class MainActivity extends AppCompatActivity {
             stockDataSource.updateStock(stock);
         }
 
-        nbItems = allStocks.size();
+        nbItems = productDataSource.getNumberOfProducts();
 
-        txtInventoryState.setText("Avancement de votre inventaire : "
+        txtInventoryState.setText(getResources().getString(R.string.progress_of_your_inventory_colon) + " "
                 + nbInventoriedItems + "/" + nbItems);
         txtInventoryState.setVisibility(View.VISIBLE);
 

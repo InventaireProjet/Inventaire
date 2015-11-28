@@ -85,7 +85,7 @@ public class MyProducts extends AppCompatActivity {
         txtStock.setText(getResources().getString(R.string.stock_colon) + " "
                 + Integer.toString(totalQuantity));
         txtStockValue.setText(getResources().getString(R.string.value_colon)
-                + " CHF " + String.format("%,.2f", totalValue));  //Double.toString(totalValue));
+                + " CHF " + String.format("%,.2f", totalValue));
     }
 
 
