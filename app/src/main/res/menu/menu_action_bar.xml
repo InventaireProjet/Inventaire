@@ -28,13 +28,6 @@
         android:title="@string/warehouses_initial"
         app:showAsAction="always" />
 
-    <!-- TODO Correct problem !-->
-    <item android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
-        android:orderInCategory="4"
-        android:title="search"
-        app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always"/>
 
     <item android:id="@+id/action_settings"
         android:icon="@drawable/add"

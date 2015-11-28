@@ -38,7 +38,6 @@ public class WarehouseStock extends AppCompatActivity {
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
     ObjectWarehouse  warehouse;
-    ArrayList<ObjectWarehouse> warehouses;
     int nbWarehouses;
 
 
@@ -69,15 +68,11 @@ public class WarehouseStock extends AppCompatActivity {
         Intent intent = getIntent();
         final int warehouseId = intent.getIntExtra("warehouseId", 1);
 
-       // warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
-        //TODO UP DOWN, DOWN UP
         warehouse = warehouseDataSource.getWarehouseById(warehouseId);
 
         title.setText(warehouse.getName());
 
         //Define the products to display
-        //productsToDisplay =  Methods.getObjectsListbyWarehouse(warehouse.getName());
-        //TODO UP OUT, DOWN IN
          productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
 
 
@@ -152,18 +147,15 @@ public class WarehouseStock extends AppCompatActivity {
 
                 // Catch the elements of the pop-up view
                 Button buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
-                Button buttonDeleteAll = (Button) popupView.findViewById(R.id.buttonDeleteAll);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
-                //Deleting only the warehouse
+                //Deleting  the warehouse and the stocks of its products
                 buttonDeleteWarehouse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        //warehouses = ObjectsLists.getWarehouseList();
-                        //warehouses.remove(warehouseId);
-                        //TODO UP OUT, DOWN IN
+
                         warehouseDataSource.deleteWarehouse(warehouseId);
 
                         popupWindow.dismiss();
@@ -172,22 +164,6 @@ public class WarehouseStock extends AppCompatActivity {
                     }
                 });
 
-                //Deleting the warehouse and all its stock
-                buttonDeleteAll.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-
-                        //TODO Deleting stock product in this warehouse (data management)
-
-                        warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
-
-                        popupWindow.dismiss();
-                        Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
-                        startActivity(intent);
-                    }
-                });
 
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override

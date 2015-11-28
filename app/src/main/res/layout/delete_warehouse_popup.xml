@@ -1,45 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
+    android:layout_height="match_parent"
     android:background="@color/dark_Grey"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <!-- TODO Ugly -> to improve -->
     <TextView
-        android:id="@+id/deleteQuestionOption1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete_warehouse_option1"
-        android:textColor="@color/text_color"/>
-
-.
-    <TextView
-        android:id="@+id/deleteQuestionOption2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/deleteQuestionOption1"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/delete_warehouse_option2"
-        android:textColor="@color/text_color"/>
-
-
-    <RelativeLayout
+        android:id="@+id/deleteQuestionOption"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/buttons_delete_warehouse_height"
-        android:layout_below="@+id/deleteQuestionOption2"
-        android:layout_marginTop="20dp">
+        android:layout_height="wrap_content"
+        android:text="@string/delete_warehouse_option"
+        android:textColor="@color/text_color"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/deleteQuestionOption"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
 
 
         <Button
             android:id="@+id/buttonCancel"
-            android:layout_width="@dimen/buttons_delete_warehouse_width"
-            android:layout_height="@dimen/buttons_delete_warehouse_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@color/button_background"
             android:text="@string/cancel"
             android:textColor="@color/text_color"
@@ -47,27 +36,16 @@
 
         <Button
             android:id="@+id/buttonDeleteWarehouse"
-            android:layout_width="@dimen/buttons_delete_warehouse_width"
-            android:layout_height="@dimen/buttons_delete_warehouse_height"
-            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:background="@color/button_background"
-            android:text="@string/btn_delete_only_warehouse"
+            android:text="@string/delete"
             android:textColor="@color/text_color"
             android:textSize="@dimen/txt_buttons_popup_delete_warehouse"/>
 
 
-        <Button
-            android:id="@+id/buttonDeleteAll"
-            android:layout_width="@dimen/buttons_delete_warehouse_width"
-            android:layout_height="@dimen/buttons_delete_warehouse_height"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="5dp"
-            android:background="@color/button_background"
-            android:text="@string/btn_delete_all"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/txt_buttons_popup_delete_warehouse"/>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

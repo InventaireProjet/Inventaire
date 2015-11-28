@@ -4,12 +4,9 @@ package com.androidprojects.inventaireii;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +20,9 @@ public class WarehouseModify extends AppCompatActivity {
 
     Button btnCancel;
     Button btnValidate;
-    PopupWindow popupWindow;
     ObjectWarehouse warehouse;
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
-    ArrayList<ObjectWarehouse> warehouses;
     List<ObjectProducts> productsInWarehouse;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,7 +192,6 @@ public class WarehouseModify extends AppCompatActivity {
                     warehouse.setLocation(editCity.getText().toString());
                     warehouse.setCountry(editCountry.getText().toString());
 
-                    //TODO ENABLE DOWN
                     warehouseDataSource.updateWarehouse(warehouse);
 
                     Intent intent = new Intent(getBaseContext(), Warehouse.class);

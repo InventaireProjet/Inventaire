@@ -50,9 +50,6 @@ public class MyCategories extends AppCompatActivity {
 
         setContentView(R.layout.activity_my_categories);
 
-
-
-
         categoryDataSource =CategoryDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
 
@@ -81,9 +78,16 @@ public class MyCategories extends AppCompatActivity {
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
 
-                //Um die Tastatur zu sehen
+                //To view the keyboard
                 popupWindow.setFocusable(true);
 
+              /*  popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                                                  public void onDismiss(){
+                                                      adapter.notifyDataSetChanged();
+                                                  }
+                                               });
+*/
                 // Catch the elements of the pop-up view
                 Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
@@ -105,7 +109,6 @@ public class MyCategories extends AppCompatActivity {
                             categoryDataSource.createCategory(newCategory);
 
                             popupWindow.dismiss();
-
                         }
                     }
                 });
@@ -172,11 +175,6 @@ public class MyCategories extends AppCompatActivity {
                 intent = new Intent(getBaseContext(), MyWarehouses.class);
                 startActivity(intent);
                 return true;
-
-            case R.id.action_search:
-                intent = new Intent(getBaseContext(), SearchActivity.class);
-                startActivity(intent);
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -186,9 +184,9 @@ public class MyCategories extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
         Methods.setLocale(this);
 
-        adapter.notifyDataSetChanged();
 
         TextView txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtTitle.setText(R.string.my_categories);

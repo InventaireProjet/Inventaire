@@ -17,7 +17,7 @@
     <string name="inventory_state">Inventory state</string>
     <string name="title_activity_my_categories">My categories</string>
     <string name="add">+</string>
-    <string name="validate">Ok</string>
+    <string name="validate">OK</string>
     <string name="category_popup_title">Add a category</string>
     <string name="delete">Delete</string>
     <string name="delete_category_question">Do you really want to delete this category?</string>
@@ -45,11 +45,7 @@
     <string name="free_space">Free space</string>
     <string name="phone_short">Phone:</string>
     <string name="warehouse_address_colon">Address:</string>
-    <!-- Todo-->
-    <string name="delete_warehouse_option1">Si vous désirez supprimer le magasin, mais pas les éléments qu\'il contient : cliquez sur \"Supprimer seulement le magasin\".</string>
-    <string name="delete_warehouse_option2">Si vous désirez supprimer le magasin et tous ses éléments : cliquez sur \"Tout supprimer\".</string>
-    <string name="btn_delete_only_warehouse">Supprimer seulement le magasin</string>
-    <string name="btn_delete_all">Delete all</string>
+    <string name="delete_warehouse_option">By deleting the warehouse the stocks of its products will be reset to zero.</string>
     <string name="title_activity_stock_row">stock_row</string>
     <string name="title_activity_product_new_or_modify">Product data</string>
     <string name="select_category">-- Categories --</string>

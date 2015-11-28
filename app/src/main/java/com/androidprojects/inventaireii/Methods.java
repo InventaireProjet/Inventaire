@@ -91,8 +91,6 @@ public class Methods extends AppCompatActivity {
             case R.id.goto_warehouses:
                 return MyWarehouses.class;
 
-            case R.id.action_search:
-                return MyWarehouses.class;
 
             case R.id.action_settings:
                 return  AppSettingsActivity.class;

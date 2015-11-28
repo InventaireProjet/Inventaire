@@ -25,8 +25,6 @@ import java.util.List;
 
 public class MyWarehouses extends AppCompatActivity {
 
-
-    PopupWindow popupWindow;
     Button addButton;
     ArrayAdapter adapter;
     WarehouseDataSource warehouseDataSource;

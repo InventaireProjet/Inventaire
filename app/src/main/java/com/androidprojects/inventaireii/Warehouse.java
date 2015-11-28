@@ -142,17 +142,14 @@ public class Warehouse extends AppCompatActivity {
 
                 // Catch the elements of the pop-up view
                 Button buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
-                Button buttonDeleteAll = (Button) popupView.findViewById(R.id.buttonDeleteAll);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
-                //Deleting only the warehouse
+                //Deleting  the warehouse and the associated stocks
                 buttonDeleteWarehouse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                       // warehouses.remove(warehouseId);
-                        //TODO UP OUT, DOWN IN
                         warehouseDataSource.deleteWarehouse(warehouseId);
 
                         popupWindow.dismiss();
@@ -161,21 +158,6 @@ public class Warehouse extends AppCompatActivity {
                     }
                 });
 
-                //Deleting the warehouse and all its stock
-                buttonDeleteAll.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-                        //TODO Deleting stock product in this warehouse (data management)
-
-                        warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
-
-                        popupWindow.dismiss();
-                        Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
-                        startActivity(intent);
-                    }
-                });
 
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
