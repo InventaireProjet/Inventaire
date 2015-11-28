@@ -36,36 +36,7 @@ public class MyWarehouses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Language management
-        Methods.setLocale(this);
 
-
-        warehouseDataSource = WarehouseDataSource.getInstance(this);
-        productDataSource =  ProductDataSource.getInstance(this);
-        stockDataSource = StockDataSource.getInstance(this);
-
-        //activity_my_categories reused because of same structure
-        setContentView(R.layout.activity_my_categories);
-
-
-        //Using adapter
-        adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
-
-        // Fill the ListView
-        ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);
-        lvWarehouses.setAdapter(adapter);
-
-
-        //Adding Warehouses
-        addButton = (Button) findViewById(R.id.btnAdd);
-        addButton.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), NewWarehouse.class);
-                startActivity(intent);
-            }
-        });
     }
 
 
@@ -115,12 +86,41 @@ public class MyWarehouses extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
 
         //Language management to refresh
         Methods.setLocale(this);
+
+
+
+        warehouseDataSource = WarehouseDataSource.getInstance(this);
+        productDataSource =  ProductDataSource.getInstance(this);
+        stockDataSource = StockDataSource.getInstance(this);
+
+        //activity_my_categories reused because of same structure
+        setContentView(R.layout.activity_my_categories);
+
         TextView title = (TextView) findViewById(R.id.txtTitle);
         title.setText(R.string.my_warehouses);
+
+        //Using adapter
+        adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
+
+        // Fill the ListView
+        ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);
+        lvWarehouses.setAdapter(adapter);
+
+
+        //Adding Warehouses
+        addButton = (Button) findViewById(R.id.btnAdd);
+        addButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), NewWarehouse.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private class WarehousesAdapter extends ArrayAdapter {

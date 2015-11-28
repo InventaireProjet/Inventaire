@@ -42,15 +42,40 @@ public class Category extends AppCompatActivity {
     ObjectCategories category;
     int nbCategories;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//Language management
+
+
+    }
+
+    private void showTotalInStock() {
+        int totalQuantity = 0;
+        double totalValue = 0.0;
+        for (ObjectProducts product : productsToDisplay) {
+            totalQuantity += product.getQuantity();
+            totalValue += product.getPrice() * product.getQuantity();
+        }
+        squareTotalStock = findViewById(R.id.squareTotalStock);
+        TextView txtStock = (TextView) findViewById(R.id.txtStock);
+        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
+        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f", totalValue));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Language management
         Methods.setLocale(this);
 
-        categoryDataSource =  CategoryDataSource.getInstance(this);
-         productDataSource =  ProductDataSource.getInstance(this);
+        categoryDataSource = CategoryDataSource.getInstance(this);
+        productDataSource = ProductDataSource.getInstance(this);
+
 
 //Using the same layout as my products with some changes
         setContentView(R.layout.activity_my_products);
@@ -66,14 +91,12 @@ public class Category extends AppCompatActivity {
         //Category name retrieved from the previous screen
         final TextView title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
-        final int categoryId = intent.getIntExtra("categoryId", 1);
 
+        final int categoryId = intent.getIntExtra("categoryId", 0);
         category = categoryDataSource.getCategoryById(categoryId);
         title.setText(category.getName());
 
         //Define the products to display
-        //productsToDisplay =  Methods.getObjectsListbyCategory(category.getName());
-        //TODO Disable that, enable this
         productsToDisplay = productDataSource.getAllProductsByCategory(categoryId);
 
         //Inventory state
@@ -125,16 +148,13 @@ public class Category extends AppCompatActivity {
 
 // Fill the ListView with products
 
-
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
         View header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
 
-
-
-            adapter = new ProductsAdapter(this, productsToDisplay);
-            lvProducts.setAdapter(adapter);
-            // Total quantity of products and value of stock
+        adapter = new ProductsAdapter(this, productsToDisplay);
+        lvProducts.setAdapter(adapter);
+        // Total quantity of products and value of stock
         showTotalInStock();
 
         //Modify the category name
@@ -170,15 +190,14 @@ public class Category extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-//TODO CHANGE WITH DATA in comment
-                       category.setName(userEntry.getText().toString());
+                        category.setName(userEntry.getText().toString());
 
                         categoryDataSource.updateCategory(category);
 
                         title.setText(userEntry.getText().toString());
 
                         if (productsToDisplay!=null){
-                        adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
                         }
                         popupWindow.dismiss();
 
@@ -216,7 +235,6 @@ public class Category extends AppCompatActivity {
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
-
                 //Deleting the category by validating the text entry
                 buttonValidate.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -224,11 +242,9 @@ public class Category extends AppCompatActivity {
 
                         categoryDataSource.deleteCategory(categoryId);
 
-
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyCategories.class);
                         startActivity(intent);
-
                     }
                 });
 
@@ -240,39 +256,15 @@ public class Category extends AppCompatActivity {
                 });
 
                 popupWindow.showAsDropDown(buttonValidate, 0, -100);
-
             }
         });
 
-    }
-
-    private void showTotalInStock() {
-        int totalQuantity = 0;
-        double totalValue = 0.0;
-        for (ObjectProducts product : productsToDisplay) {
-            totalQuantity += product.getQuantity();
-            totalValue += product.getPrice() * product.getQuantity();
-        }
-        squareTotalStock = findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
-        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f", totalValue));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
         adapter.notifyDataSetChanged();
+        /*
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        */
         showTotalInStock();
-
-        //Language management
-        Methods.setLocale(this);
-
 
 
     }
@@ -286,7 +278,6 @@ public class Category extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
 
         int id = item.getItemId();
 
@@ -319,7 +310,6 @@ public class Category extends AppCompatActivity {
                 intent = new Intent(getBaseContext(), MyWarehouses.class);
                 startActivity(intent);
                 return true;
-
 
         }
 
@@ -363,8 +353,7 @@ public class Category extends AppCompatActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO ASK WHAT IS THE USE OF THE LINE BELOW ???????????????????????????????
-                    // there is no use ;-) DM // ObjectsLists.setProductList((ArrayList) productsToDisplay);
+
                     Intent intent = new Intent(getBaseContext(), Product.class);
                     intent.putExtra("position", product.getId());
                     startActivity(intent);
@@ -372,7 +361,6 @@ public class Category extends AppCompatActivity {
             });
 
             return convertView;
-
         }
     }
 }

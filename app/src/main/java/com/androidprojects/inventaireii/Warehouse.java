@@ -34,6 +34,62 @@ public class Warehouse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        int id = item.getItemId();
+
+        Intent intent;
+
+        switch (id) {
+
+            case R.id.action_settings:
+                intent = new Intent(this, AppSettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.go_home:
+                intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.goto_products:
+                intent = new Intent(getBaseContext(), MyProducts.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.goto_categories:
+                intent = new Intent(getBaseContext(), MyCategories.class);
+                startActivity(intent);
+                return true;
+
+
+            case R.id.goto_warehouses:
+                intent = new Intent(getBaseContext(), MyWarehouses.class);
+                startActivity(intent);
+                return true;
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
         //Language management
         Methods.setLocale(this);
 
@@ -166,62 +222,5 @@ public class Warehouse extends AppCompatActivity {
 
             }
         });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        int id = item.getItemId();
-
-        Intent intent;
-
-        switch (id) {
-
-            case R.id.action_settings:
-                intent = new Intent(this, AppSettingsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.go_home:
-                intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.goto_products:
-                intent = new Intent(getBaseContext(), MyProducts.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.goto_categories:
-                intent = new Intent(getBaseContext(), MyCategories.class);
-                startActivity(intent);
-                return true;
-
-
-            case R.id.goto_warehouses:
-                intent = new Intent(getBaseContext(), MyWarehouses.class);
-                startActivity(intent);
-                return true;
-
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected void onResume() {
-        super.onResume();
-
-        //Language management
-        Methods.setLocale(this);
     }
 }

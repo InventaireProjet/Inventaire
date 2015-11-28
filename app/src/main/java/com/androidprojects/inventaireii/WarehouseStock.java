@@ -47,11 +47,39 @@ public class WarehouseStock extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Language management
+
+
+    }
+
+    // Total quantity of products and value of stock
+    private void showTotalInStock() {
+        int totalQuantity = 0;
+        double totalValue = 0.0;
+        for (ObjectProducts product : productsToDisplay) {
+            totalQuantity += product.getQuantity();
+            totalValue += product.getPrice()*product.getQuantity();
+        }
+        squareTotalStock =  findViewById(R.id.squareTotalStock);
+        TextView txtStock = (TextView) findViewById(R.id.txtStock);
+        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
+        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f",totalValue));
+    }
+
+
+    //Refreshing the adapter so it shows the changes
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        //Language management to refresh
         Methods.setLocale(this);
 
-         productDataSource =  ProductDataSource.getInstance(this);
-         warehouseDataSource =  WarehouseDataSource.getInstance(this);
+
+        productDataSource =  ProductDataSource.getInstance(this);
+        warehouseDataSource =  WarehouseDataSource.getInstance(this);
 
 //Using the same layout as my products with some changes
         setContentView(R.layout.activity_my_products);
@@ -78,7 +106,7 @@ public class WarehouseStock extends AppCompatActivity {
         title.setText(warehouse.getName());
 
         //Define the products to display
-         productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
+        productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
 
 
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
@@ -151,8 +179,8 @@ public class WarehouseStock extends AppCompatActivity {
 
 
                 // Catch the elements of the pop-up view
-                 buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
-                 buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
+                buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
+                buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
                 //Deleting  the warehouse and the stocks of its products
@@ -182,39 +210,11 @@ public class WarehouseStock extends AppCompatActivity {
             }
         });
 
-    }
-
-    // Total quantity of products and value of stock
-    private void showTotalInStock() {
-        int totalQuantity = 0;
-        double totalValue = 0.0;
-        for (ObjectProducts product : productsToDisplay) {
-            totalQuantity += product.getQuantity();
-            totalValue += product.getPrice()*product.getQuantity();
-        }
-        squareTotalStock =  findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
-        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f",totalValue));
-    }
-
-
-    //Refreshing the adapter so it shows the changes
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        //Language management to refresh
-        Methods.setLocale(this);
-
-        adapter.notifyDataSetChanged();
+/*        adapter.notifyDataSetChanged();
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
         showTotalInStock();
-
+*/
 
     }
 
