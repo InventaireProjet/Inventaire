@@ -33,6 +33,10 @@ public class Warehouse extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Language management
+        Methods.setLocale(this);
+
         setContentView(R.layout.activity_warehouse);
 
         productDataSource = ProductDataSource.getInstance(this);
@@ -43,8 +47,6 @@ public class Warehouse extends AppCompatActivity {
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
         View squareInventoryState = findViewById(R.id.squareInventoryState);
         TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
-        //TODO ?
-        View squareFreeSpace = findViewById(R.id.squareFreeSpace);
         TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
         TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
         TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
@@ -64,17 +66,11 @@ public class Warehouse extends AppCompatActivity {
         Intent intent = getIntent();
         final int warehouseId = intent.getIntExtra("warehouseId", 1);
 
-        //warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
-        //TODO UP DOWN, DOWN UP
-        warehouse = warehouseDataSource.getWarehouseById(warehouseId);
 
+        warehouse = warehouseDataSource.getWarehouseById(warehouseId);
 
         warehouseName.setText(warehouse.getName());
 
-
-        //final ArrayList<ObjectWarehouse> warehouses = ObjectsLists.getWarehouseList();
-        //productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
-        //TODO UP OUT, DOWN IN
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
         //First part;
@@ -85,17 +81,17 @@ public class Warehouse extends AppCompatActivity {
         inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
         //Second part
-        int freeSpace = warehouse.getStockCapacity()-warehouse.getNumberObjects();
+        int freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
         freeSpaceNumber.setText(freeSpace + " places");
 
-        if (warehouse.getStockCapacity()!=0) {
+        if (warehouse.getStockCapacity() != 0) {
             int freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
             freeSpacePercentage.setText(freeSpaceInPercent + "%");
         }
 
 
         //Third part
-        capacityNumber.setText(warehouse.getStockCapacity() +" places");
+        capacityNumber.setText(warehouse.getStockCapacity() + " places");
 
         //Fourth part
         phoneEntry.setText(warehouse.getTelNumber());
@@ -193,7 +189,7 @@ public class Warehouse extends AppCompatActivity {
             case R.id.action_settings:
                 intent = new Intent(this, AppSettingsActivity.class);
                 startActivity(intent);
-                return  true;
+                return true;
 
             case R.id.go_home:
                 intent = new Intent(getBaseContext(), MainActivity.class);
@@ -220,5 +216,12 @@ public class Warehouse extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        //Language management
+        Methods.setLocale(this);
     }
 }

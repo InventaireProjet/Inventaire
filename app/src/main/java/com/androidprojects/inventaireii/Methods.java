@@ -109,6 +109,7 @@ public class Methods extends AppCompatActivity {
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
         context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+
     }
 
 }

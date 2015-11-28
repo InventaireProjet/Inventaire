@@ -36,18 +36,19 @@ public class MyWarehouses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Language management
+        Methods.setLocale(this);
+
+
         warehouseDataSource = WarehouseDataSource.getInstance(this);
         productDataSource =  ProductDataSource.getInstance(this);
         stockDataSource = StockDataSource.getInstance(this);
 
         //activity_my_categories reused because of same structure
         setContentView(R.layout.activity_my_categories);
-        TextView title = (TextView) findViewById(R.id.txtTitle);
-        title.setText(R.string.my_warehouses);
+
 
         //Using adapter
-        //adapter = new WarehousesAdapter(this, ObjectsLists.getWarehouseList());
-        //TODO ERASE UP, ENABLE DOWN
         adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
 
         // Fill the ListView
@@ -113,7 +114,13 @@ public class MyWarehouses extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         adapter.notifyDataSetChanged();
+
+        //Language management to refresh
+        Methods.setLocale(this);
+        TextView title = (TextView) findViewById(R.id.txtTitle);
+        title.setText(R.string.my_warehouses);
     }
 
     private class WarehousesAdapter extends ArrayAdapter {
@@ -143,15 +150,14 @@ public class MyWarehouses extends AppCompatActivity {
 
             //Data to display are retrieved
             tvName.setText(warehouse.getName());
+
             //Retrieving the products in the warehouse to know which color to display
-           // productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
-            //TODO UNDO UP, DO DOWN
             productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouse.getId());
 
 
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));
 
-            //todo more simple:
+
             warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
             warehouse.setNumberObjects(stockDataSource.getNumberObjects(warehouse.getId()));
             tvState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
