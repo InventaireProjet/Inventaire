@@ -193,10 +193,18 @@ public class MyCategories extends AppCompatActivity {
             //Data to display are retrieved
             tvName.setText(category.getName());
 
-            //Retrieving the products in the category to know which color to display
 
+
+            //Retrieving the products in the category to know which color to display
             productsInCategory = productDataSource.getAllProductsByCategory(category.getId());
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInCategory)));
+
+            //Setting and displaying the inventory state
+            int inventoriedObjects = Methods.getNumberOfInventoried(productsInCategory);
+            int numberOfProducts = Methods.getNumberObjects(productsInCategory);
+        //   int numberOfProducts = categoryDataSource.getNumberObjects(category.getId());
+          //  int inventoriedObjects = categoryDataSource.getInventoriedObjects(category.getId());
+            category.setInventoryState(inventoriedObjects +"/" +numberOfProducts);
             tvState.setText(category.getInventoryState());
 
             //Sending the category name to the next screen

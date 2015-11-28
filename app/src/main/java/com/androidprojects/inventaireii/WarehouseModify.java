@@ -29,16 +29,14 @@ public class WarehouseModify extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warehouse);
 
-         productDataSource =  ProductDataSource.getInstance(this);
-         warehouseDataSource =  WarehouseDataSource.getInstance(this);
+        productDataSource =  ProductDataSource.getInstance(this);
+        warehouseDataSource =  WarehouseDataSource.getInstance(this);
 
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
         final EditText editWarehouseName = (EditText) findViewById(R.id.editWarehouseName);
         View squareInventoryState = findViewById(R.id.squareInventoryState);
         TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
-        //TODO ?
-        View squareFreeSpace = findViewById(R.id.squareFreeSpace);
         TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
         TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
         TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
@@ -73,9 +71,7 @@ public class WarehouseModify extends AppCompatActivity {
         Intent intent = getIntent();
         final int warehouseId = intent.getIntExtra("warehouseId", 0);
 
-        //warehouse = ObjectsLists.getWarehouseList().get(warehouseId);
-        //TODO UP DOWN, DOWN UP
-        warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+              warehouse = warehouseDataSource.getWarehouseById(warehouseId);
 
         editWarehouseName.setText(warehouse.getName());
 
@@ -87,9 +83,6 @@ public class WarehouseModify extends AppCompatActivity {
 
         //First part
         //Retrieving the products in the warehouse to know which color to display
-        //warehouses = ObjectsLists.getWarehouseList();
-       // productsInWarehouse =  Methods.getObjectsListbyWarehouse(warehouse.getName());
-        //TODO UP OUT, DOWN IN
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
 
@@ -195,7 +188,7 @@ public class WarehouseModify extends AppCompatActivity {
                     warehouseDataSource.updateWarehouse(warehouse);
 
                     Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                    intent.putExtra("warehouseId", editWarehouseName.getText().toString());
+                    intent.putExtra("warehouseId", warehouseId);
                     startActivity(intent);
                 }
             }

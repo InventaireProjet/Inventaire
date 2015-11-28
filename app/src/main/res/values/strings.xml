@@ -86,8 +86,8 @@
     <string name="you_have_to_create_warehouse">You have to create at least one warehouse</string>
     <string name="stock_added">Stock added</string>
     <string name="stock_updated">Stock updated</string>
-    <string name="product_created">Produit created</string>
-    <string name="product_modified">Produit modified</string>
+    <string name="product_created">Product created</string>
+    <string name="product_modified">Product modified</string>
     <string name="category_colon">Category:</string>
     <string name="article_number_colon">Product no:</string>
     <string name="product_deleted">Product deleted</string>

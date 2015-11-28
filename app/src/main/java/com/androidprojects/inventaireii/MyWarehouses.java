@@ -157,7 +157,7 @@ public class MyWarehouses extends AppCompatActivity {
 
             tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));
 
-
+//Number of products inventoried
             warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
             warehouse.setNumberObjects(stockDataSource.getNumberObjects(warehouse.getId()));
             tvState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());

@@ -15,10 +15,9 @@ import java.util.List;
 
 public class CategoryDataSource {
 
+    private static CategoryDataSource instance;
     private SQLiteDatabase db;
     private Context context;
-    private static CategoryDataSource instance;
-
     private ProductDataSource productDataSource;
 
     private   CategoryDataSource (Context context) {
@@ -111,4 +110,52 @@ public class CategoryDataSource {
                 new String[] { String.valueOf(id) });
 
     }
+
+/*
+
+    // Number of inventoried objects in a category
+    public int getInventoriedObjects(long categoryId) {
+        String sql = "SELECT SUM(" + InventoryContract.StockEntry.KEY_QUANTITY + ") AS Number " +
+                "FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES + " C, "
+                + InventoryContract.StockEntry.TABLE_STOCKS + " S, "
+                +InventoryContract.ProductEntry.TABLE_PRODUCTS + " P, "
+                + " WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + categoryId
+                +  " AND " +  "C." +InventoryContract.CategorieEntry.KEY_ID
+                + " = " +  "P." +InventoryContract.ProductEntry.KEY_CATEGORY_ID
+                + " AND " +  "P." +InventoryContract.ProductEntry.KEY_ID
+                + " = " +  "S." +InventoryContract.StockEntry.KEY_PRODUCT_ID
+                + " AND " + InventoryContract.StockEntry.KEY_CONTROLLED + " > 0";
+
+        int quantity = 0;
+        Cursor cursor = this.db.rawQuery(sql, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            quantity = cursor.getInt(cursor.getColumnIndex("Number"));
+        }
+
+        return quantity;
+    }
+
+    // Number of pieces in a category
+    public int getNumberObjects(long categoryId) {
+        String sql = "SELECT SUM(" + InventoryContract.StockEntry.KEY_QUANTITY + ") AS Number " +
+                "FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES + " C, "
+                + InventoryContract.StockEntry.TABLE_STOCKS + " S, "
+                +InventoryContract.ProductEntry.TABLE_PRODUCTS + " P, "
+                + "WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + categoryId
+                +  " AND " +  "C." +InventoryContract.CategorieEntry.KEY_ID
+                + " = " +  "P." +InventoryContract.CategorieEntry.KEY_ID
+                + " AND " +  "P." +InventoryContract.ProductEntry.KEY_ID
+                + " = " +  "S." +InventoryContract.ProductEntry.KEY_ID;
+
+        int quantity = 0;
+        Cursor cursor = this.db.rawQuery(sql, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            quantity = cursor.getInt(cursor.getColumnIndex("Number"));
+        }
+        return quantity ;
+    }*/
+
+
 }

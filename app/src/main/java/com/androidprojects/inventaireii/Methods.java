@@ -75,6 +75,39 @@ public class Methods extends AppCompatActivity {
         return "doing";
     }
 
+    // Get the number of elements in a list of products
+    public static int getNumberObjects(List<ObjectProducts> productsToDisplay) {
+        int nb = 0;
+
+        if (productsToDisplay.isEmpty()) {
+            return 0;
+        }
+
+        for (ObjectProducts p : productsToDisplay){
+            nb = nb+p.getQuantity();
+        }
+
+        return nb;
+    }
+
+
+    // Get the number of elements inventoried of a list of products
+    public static int getNumberOfInventoried(List<ObjectProducts> productsToDisplay) {
+        int nbControlled = 0;
+
+        if (productsToDisplay.isEmpty()) {
+            return 0;
+        }
+
+        for (ObjectProducts p : productsToDisplay){
+            switch (getInventoryState(p)) {
+                case "done": nbControlled++ ; break ;
+            }
+        }
+
+        return nbControlled;
+    }
+
     // Method for management of the ActionBar
     public static Class onOptionsItemSelected(int id){
 
