@@ -120,17 +120,6 @@ public class ProductDataSource {
         if (cursor.moveToFirst()) {
             do {
                 ObjectProducts product = getProductFromCursor(cursor);
-                //todo suppress that:
-                /*
-                ObjectProducts product = new ObjectProducts();
-                product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
-                product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
-                product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
-                product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
-                 product.setCategory(categoryDataSource.getCategoryById(cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID))));
-
-                CategoryDataSource cd;
-                */
                 products.add(product);
             } while (cursor.moveToNext());
 

@@ -10,11 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,37 +26,49 @@ public class ProductNewOrModify extends AppCompatActivity {
     private ObjectProducts product = null;
     private int categoryId;
     private List<ObjectCategories> categoryList;
+    private ArrayList<String> categoriesNames;
+    private ArrayAdapter adapter;
 
     private ProductDataSource productDataSource;
     private CategoryDataSource categoryDataSource;
 
+    // Declaration of the views
+    private TextView txtTitle;
+    private Spinner spinnerCategory;
+    private EditText etProductName;
+    private EditText etArtNb;
+    private EditText etPrice;
+    private EditText etDescription;
+    private Button buttonCancel;
+    private Button buttonSave;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Methods.setLocale(this);
         setContentView(R.layout.activity_product_new_or_modify);
 
         productDataSource = ProductDataSource.getInstance(this);
         categoryDataSource = CategoryDataSource.getInstance(this);
 
         // Fill the Spinner with all categories
-        final Spinner spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
+        spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         categoryList = categoryDataSource.getAllCategories();
-        // add a "no category" in position 0
+            // add a "no category" in position 0
         categoryList.add(0, new ObjectCategories("", getResources().getString(R.string.no_category),""));
-        ArrayList<String> categoriesNames = new ArrayList<>();
-        //categoriesNames.add(getResources().getString(R.string.no_category)); // if no category selected
-        for (ObjectCategories cat : categoryList) {
+        categoriesNames = new ArrayList<>();
+        for (ObjectCategories cat : categoryList)
             categoriesNames.add(cat.getName());
-        }
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, categoriesNames );
+        adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, categoriesNames );
         spinnerCategory.setAdapter(adapter);
 
         // Get the elements of the activity
-        final EditText etProductName = (EditText) findViewById(R.id.productName);
-        final EditText etArtNb = (EditText) findViewById(R.id.artNb);
-        final EditText etPrice = (EditText) findViewById(R.id.price);
-        final EditText etDescription = (EditText) findViewById(R.id.description);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+        etProductName = (EditText) findViewById(R.id.productName);
+        etArtNb = (EditText) findViewById(R.id.artNb);
+        etPrice = (EditText) findViewById(R.id.price);
+        etDescription = (EditText) findViewById(R.id.description);
 
         // Get the product Id from intent. If position = -1, it is a new product
         Intent intent = getIntent();
@@ -79,7 +93,7 @@ public class ProductNewOrModify extends AppCompatActivity {
         }
 
         // Button "Cancel"
-        Button buttonCancel = (Button) findViewById(R.id.buttonCancel);
+        buttonCancel = (Button) findViewById(R.id.buttonCancel);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +103,7 @@ public class ProductNewOrModify extends AppCompatActivity {
         });
 
         // Button "Save"
-        Button buttonSave = (Button) findViewById(R.id.buttonSave);
+        buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +149,26 @@ public class ProductNewOrModify extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Update localization
+        Methods.setLocale(this);
+        txtTitle.setText(R.string.enter_following_informations_colon);
+        etProductName.setHint(R.string.product_name);
+        etArtNb.setHint(R.string.article_number);
+        etPrice.setHint(R.string.price);
+        etDescription.setHint(R.string.description);
+        buttonCancel.setText(R.string.cancel);
+        buttonSave.setText(R.string.save);
+
+        categoryList.get(0).setName(getResources().getString(R.string.no_category));
+        categoriesNames.remove(0);
+        categoriesNames.add(0, getResources().getString(R.string.no_category));
+        adapter.notifyDataSetChanged();
     }
 
     @Override
