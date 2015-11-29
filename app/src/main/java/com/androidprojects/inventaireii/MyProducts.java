@@ -39,13 +39,20 @@ public class MyProducts extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Methods.setLocale(this);
+
         setContentView(R.layout.activity_my_products);
 
         // Catch views of the activity
         square = (View) findViewById(R.id.squareInventoryState);
         lvProducts = (ListView) findViewById(R.id.lvProducts);
 
+        // Catch data sources
         productDataSource = ProductDataSource.getInstance(this);
         productsList = productDataSource.getAllProducts();
 
@@ -65,12 +72,7 @@ public class MyProducts extends AppCompatActivity {
         lvProducts.addHeaderView(header);
         adapter = new ProductsAdapter(this, productsList);
         lvProducts.setAdapter(adapter);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Methods.setLocale(this);
         adapter.notifyDataSetChanged();
 
         // Three elements below the ListView : total quantity of products and value of stock
