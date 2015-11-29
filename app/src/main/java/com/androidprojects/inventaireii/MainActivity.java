@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         txtProductAccess.setText(R.string.product_access);
         txtCategoryAccess.setText(R.string.category_access);
         txtWarehouseAccess.setText(R.string.warehouse_access);
+        getSupportActionBar().setTitle(R.string.app_name);
 
 
         /* Display of Inventory-depending fields */

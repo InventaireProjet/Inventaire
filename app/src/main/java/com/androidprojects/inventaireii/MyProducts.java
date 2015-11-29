@@ -2,10 +2,8 @@ package com.androidprojects.inventaireii;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,10 +16,6 @@ import android.widget.TextView;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyProducts extends AppCompatActivity {
@@ -35,7 +29,6 @@ public class MyProducts extends AppCompatActivity {
     // Declaration of views
     TextView txtTitle;
     View squareTotalStock;
-    View square;
     View header;
     Button buttonAddProduct;
     ListView lvProducts;
@@ -107,6 +100,7 @@ public class MyProducts extends AppCompatActivity {
                 + Integer.toString(totalQuantity));
         txtStockValue.setText(getResources().getString(R.string.value_colon)
                 + " CHF " + String.format("%,.2f", totalValue));
+        getSupportActionBar().setTitle(R.string.my_products);
 
         adapter.notifyDataSetChanged();
     }

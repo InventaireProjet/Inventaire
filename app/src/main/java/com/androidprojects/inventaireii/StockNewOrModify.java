@@ -206,6 +206,10 @@ public class StockNewOrModify extends AppCompatActivity {
         buttonCancel.setText(R.string.cancel);
         buttonSuppress.setText(R.string.suppress);
         buttonSave.setText(R.string.save);
+        if (stockId == -1)
+            getSupportActionBar().setTitle(R.string.new_stock);
+        else
+            getSupportActionBar().setTitle(R.string.title_activity_stock_new_or_modify);
     }
 
     @Override

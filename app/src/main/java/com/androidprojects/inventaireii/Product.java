@@ -236,6 +236,7 @@ public class Product extends AppCompatActivity {
         Methods.setLocale(this);
 
         // Set values in top of screen
+        getSupportActionBar().setTitle(R.string.title_activity_product);
         txtTitle.setText(product.getName());
         txtArtNb.setText(getResources().getString(R.string.article_number_colon) + " " + product.getArtNb());
         if (product.getCategory() != null)

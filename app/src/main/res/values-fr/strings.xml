@@ -104,6 +104,9 @@
     <string name="yes">oui</string>
     <string name="no">non</string>
     <string name="price_colon">Prix :</string>
+    <string name="add_product">Ajouter produit</string>
+    <string name="modify_product">Modifier produit</string>
+    <string name="new_stock">Nouveau stock</string>
 
 
 </resources>

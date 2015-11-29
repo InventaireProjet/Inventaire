@@ -166,6 +166,11 @@ public class ProductNewOrModify extends AppCompatActivity {
         categoryList.get(0).setName(getResources().getString(R.string.no_category));
         categoriesNames.remove(0);
         categoriesNames.add(0, getResources().getString(R.string.no_category));
+        if (productId == -1)
+            getSupportActionBar().setTitle(R.string.add_product);
+        else
+            getSupportActionBar().setTitle(R.string.modify_product);
+
         adapter.notifyDataSetChanged();
     }
 
