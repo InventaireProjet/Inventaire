@@ -121,8 +121,6 @@ public class MyProducts extends AppCompatActivity {
     }
 
     private class ProductsAdapter extends ArrayAdapter {
-        // TODO suppress public ProductsAdapter() { super(MyProducts.this, R.layout.product_row);}
-
         public ProductsAdapter(Context context, List<ObjectProducts> productsList) {
             super(context, 0, productsList);
         }

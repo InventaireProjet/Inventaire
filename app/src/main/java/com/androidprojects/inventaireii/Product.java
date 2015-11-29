@@ -38,6 +38,16 @@ public class Product extends AppCompatActivity {
     TextView txtPrice;
     TextView txtQuantityStorage;
     TextView txtDescriptionTitle;
+    ListView lvStock;
+    View header;
+    TextView txtLabelTotalStock;
+    TextView txtLabelTotalValue;
+    TextView txtValueTotalStock;
+    TextView txtValueTotalValue;
+    TextView txtDescription;
+    Button buttonModify;
+    Button buttonSuppress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +60,10 @@ public class Product extends AppCompatActivity {
         // Get some views
         txtQuantityStorage = (TextView) findViewById(R.id.txtQuantityStorage);
         txtDescriptionTitle = (TextView) findViewById(R.id.txtDescriptionTitle);
+        txtTitle = (TextView) findViewById(R.id.txtTitle); // TODO: 29.11.2015 suppress this 4 lines ?
+        txtArtNb = (TextView) findViewById(R.id.txtArtNb);
+        txtCategory = (TextView) findViewById(R.id.txtCategory);
+        txtPrice = (TextView) findViewById(R.id.txtPrice);
 
         // Get the product from the Intent
         Intent intent = getIntent();
@@ -122,23 +136,25 @@ public class Product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), StockNewOrModify.class);
-                intent.putExtra("stockPosition" , -1);
+                intent.putExtra("stockPosition", -1);
                 intent.putExtra("productPosition", productId);
                 startActivity(intent);
             }
         });
 
         // Fill the ListView
-        ListView lvStock = (ListView) findViewById(R.id.lvStocks);
-        View header = getLayoutInflater().inflate(R.layout.stock_row_header, null);
+        lvStock = (ListView) findViewById(R.id.lvStocks);
+        header = getLayoutInflater().inflate(R.layout.stock_row_header, null);
         lvStock.addHeaderView(header);
         adapter = new StocksAdapter(this, product.getStocks());
         lvStock.setAdapter(adapter);
 
         // Set Values below the ListView
-        TextView txtValueTotalStock = (TextView) findViewById(R.id.txtValueTotalStock);
-        TextView txtValueTotalValue = (TextView) findViewById(R.id.txtValueStockValue);
-        final TextView txtDescription = (TextView) findViewById(R.id.txtDescription);
+        txtLabelTotalStock = (TextView) findViewById(R.id.txtLabelTotalStock);
+        txtLabelTotalValue = (TextView) findViewById(R.id.txtLabelStockValue);
+        txtValueTotalStock = (TextView) findViewById(R.id.txtValueTotalStock);
+        txtValueTotalValue = (TextView) findViewById(R.id.txtValueStockValue);
+        txtDescription = (TextView) findViewById(R.id.txtDescription);
         txtValueTotalStock.setText(Integer.toString(product.getQuantity()));
         double stockValue = product.getQuantity() * product.getPrice();
         txtValueTotalValue.setText(String.format("%,.2f", stockValue));
@@ -151,7 +167,7 @@ public class Product extends AppCompatActivity {
                         Methods.getInventoryState(product)));
 
         // Set listener to Button "MODIFY"
-        Button buttonModify = (Button) findViewById(R.id.buttonModify);
+        buttonModify = (Button) findViewById(R.id.buttonModify);
         buttonModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +178,7 @@ public class Product extends AppCompatActivity {
         });
 
         // Set listener to Button "SUPPRESS"
-        final Button buttonSuppress = (Button) findViewById(R.id.buttonSuppress);
+        buttonSuppress = (Button) findViewById(R.id.buttonSuppress);
         buttonSuppress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,11 +236,6 @@ public class Product extends AppCompatActivity {
         Methods.setLocale(this);
 
         // Set values in top of screen
-        txtTitle = (TextView) findViewById(R.id.txtTitle);
-        txtArtNb = (TextView) findViewById(R.id.txtArtNb);
-        txtCategory = (TextView) findViewById(R.id.txtCategory);
-        txtPrice = (TextView) findViewById(R.id.txtPrice);
-        
         txtTitle.setText(product.getName());
         txtArtNb.setText(getResources().getString(R.string.article_number_colon) + " " + product.getArtNb());
         if (product.getCategory() != null)
@@ -234,8 +245,19 @@ public class Product extends AppCompatActivity {
         txtPrice.setText(getResources().getString(R.string.price_colon) + " "
                 + String.format("%,.2f", product.getPrice()) + " CHF");
 
-        txtDescriptionTitle.setText(R.string.product_description);
+        // Set value to section Quantity & Storage
         txtQuantityStorage.setText(R.string.quantity_and_storage);
+        ((TextView) header.findViewById(R.id.square)).setText(R.string.inventory_shorted);
+        ((TextView) header.findViewById(R.id.warehouse)).setText(R.string.warehouse);
+        ((TextView) header.findViewById(R.id.quantity)).setText(R.string.quantity_short);
+
+
+        // Set values in the bottom of the screen
+        txtLabelTotalStock.setText(R.string.total_stock);
+        txtLabelTotalValue.setText(R.string.stock_value);
+        txtDescriptionTitle.setText(R.string.product_description);
+        buttonModify.setText(R.string.modify);
+        buttonSuppress.setText(R.string.suppress);
 
         adapter.notifyDataSetChanged();
         squareTotalStock.setBackgroundColor(

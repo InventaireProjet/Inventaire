@@ -63,7 +63,7 @@
 
                 <include layout="@layout/blue_line"/>
 
-                <!-- Some informations -->
+                <!-- Some information -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
