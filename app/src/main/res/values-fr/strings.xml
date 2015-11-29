@@ -107,6 +107,8 @@
     <string name="add_product">Ajouter produit</string>
     <string name="modify_product">Modifier produit</string>
     <string name="new_stock">Nouveau stock</string>
+    <string name="no_product_name">Vous devez saisir un nom de produit pour créer un produit</string>
+    <string name="name_can_not_be_empty">The name can not be empty</string>
 
 
 </resources>

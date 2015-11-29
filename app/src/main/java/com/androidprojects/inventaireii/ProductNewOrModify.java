@@ -108,17 +108,33 @@ public class ProductNewOrModify extends AppCompatActivity {
                 String message;
                 if (productId == -1) {
                     // New product
-                    int categoryPosition = spinnerCategory.getSelectedItemPosition();
-                    ObjectCategories cat = null;
-                    if (categoryPosition > 0)
-                        cat = categoryList.get(categoryPosition);
+                    if (etProductName.getText().length() > 0) {
+                        int categoryPosition = spinnerCategory.getSelectedItemPosition();
+                        ObjectCategories cat = null;
+                        if (categoryPosition > 0)
+                            cat = categoryList.get(categoryPosition);
 
-                    product = new ObjectProducts(etArtNb.getText().toString(), etProductName.getText().toString(),
-                            cat, Double.valueOf(etPrice.getText().toString()), etDescription.getText().toString());
+                        double price;
+                        try {
+                            price = Double.valueOf(etPrice.getText().toString());
+                        } catch (NumberFormatException e) {
+                            price = 0.0;
+                        }
 
-                    long id = productDataSource.createProduct(product);
-                    product.setId(((int) id));
-                    message = getResources().getString(R.string.product_created) + " " + id;
+                        product = new ObjectProducts(
+                                etArtNb.getText().toString(),
+                                etProductName.getText().toString(),
+                                cat,
+                                price,
+                                etDescription.getText().toString());
+
+                        long id = productDataSource.createProduct(product);
+                        product.setId(((int) id));
+                        message = getResources().getString(R.string.product_created) + " " + id;
+                    }
+                    else {
+                        message = getResources().getString(R.string.no_product_name);
+                    }
                 }
                 else {
                     // Modify existing product
@@ -128,7 +144,13 @@ public class ProductNewOrModify extends AppCompatActivity {
                         cat = categoryList.get(categoryPosition);
 
                     product.setArtNb(etArtNb.getText().toString());
-                    product.setName(etProductName.getText().toString());
+                    if (etProductName.getText().length() > 0)
+                        product.setName(etProductName.getText().toString());
+                    else {
+                        Toast.makeText(ProductNewOrModify.this,
+                                getResources().getString(R.string.name_can_not_be_empty),
+                                Toast.LENGTH_SHORT).show();
+                    }
                     product.setPrice(Double.parseDouble(etPrice.getText().toString()));
                     product.setDescription(etDescription.getText().toString());
                     product.setCategory(cat);
@@ -140,11 +162,14 @@ public class ProductNewOrModify extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                 toast.show();
 
-                Intent i = new Intent(getBaseContext(), Product.class);
-                i.putExtra("position", product.getId());
-                startActivity(i);
+                if (product != null) {
+                    Intent i = new Intent(getBaseContext(), Product.class);
+                    i.putExtra("position", product.getId());
+                    startActivity(i);
+                    finish();
+                }
 
-                finish();
+
             }
         });
     }

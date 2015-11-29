@@ -24,7 +24,7 @@
     <string name="new_category">Enter the new category name:</string>
     <string name="delete_category_info">Be aware that products included in the category will not be deleted.</string>
     <string name="title_activity_product">Product details</string>
-    <string name="quantity_and_storage">Quantity and storage location</string>
+    <string name="quantity_and_storage">Quantity \&amp; storage location</string>
     <string name="total_stock">Stock total:</string>
     <string name="stock_value">Stock value:</string>
     <string name="product_description">Product description</string>
@@ -105,6 +105,8 @@
     <string name="add_product">Add product</string>
     <string name="modify_product">Modifiy product</string>
     <string name="new_stock">New stock</string>
+    <string name="no_product_name">You have to enter a product name to create a new product</string>
+    <string name="name_can_not_be_empty">The name can not be empty</string>
 
 
 </resources>
