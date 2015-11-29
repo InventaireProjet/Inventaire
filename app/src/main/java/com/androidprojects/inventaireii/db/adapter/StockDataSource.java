@@ -86,9 +86,11 @@ public class StockDataSource {
     /* Get all stocks of a product */
     public ArrayList<ObjectStock> getAllStocksByProduct(ObjectProducts product) {
         ArrayList<ObjectStock> stocks = new ArrayList<>();
-        String sql = "SELECT * FROM " + InventoryContract.StockEntry.TABLE_STOCKS
-                + " WHERE " + InventoryContract.StockEntry.KEY_PRODUCT_ID + " = " + product.getId();
-        // TODO : jointure et ORDER BY nom du magasin...
+        String sql = "SELECT s.* FROM " + InventoryContract.StockEntry.TABLE_STOCKS + " AS s, "
+                + InventoryContract.WarehouseEntry.TABLE_WAREHOUSES + " AS w"
+                + " WHERE s." + InventoryContract.StockEntry.KEY_PRODUCT_ID + " = " + product.getId()
+                + " AND w." + InventoryContract.WarehouseEntry.KEY_ID + " = s." + InventoryContract.StockEntry.KEY_WAREHOUSE_ID
+                + " ORDER BY w." + InventoryContract.WarehouseEntry.KEY_NAME + " ASC;";
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
