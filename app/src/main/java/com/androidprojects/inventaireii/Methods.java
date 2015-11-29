@@ -26,6 +26,18 @@ public class Methods extends AppCompatActivity {
         return cl.getResources().getColor(R.color.indicator_doing);
     }
 
+    // Get the inventory state (done, to do or doing) by comparing inventoried products and the total of products
+    public static String getInventoryState(int inventoried, int numberOfProducts) {
+        if (inventoried==numberOfProducts) {
+            return "done";
+        }
+        if (inventoried==0) {
+            return "todo";
+        }
+        return "doing";
+    }
+
+
     // Get the inventory state (done, to do or doing) of one product
     public static String getInventoryState(ObjectProducts product) {
         int nbControlled = 0;
@@ -63,6 +75,8 @@ public class Methods extends AppCompatActivity {
             switch (getInventoryState(p)) {
                 case "done": nbControlled++ ; break ;
                 case "todo": nbNotControlled++ ; break;
+                //If one product is in "doing" state, the whole is necessary in that state
+                default: return "doing";
             }
         }
 

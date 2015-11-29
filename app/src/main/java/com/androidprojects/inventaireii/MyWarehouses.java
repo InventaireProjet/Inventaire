@@ -90,7 +90,7 @@ public class MyWarehouses extends AppCompatActivity {
 
         //Language management to refresh
         Methods.setLocale(this);
-getSupportActionBar().setTitle(R.string.title_activity_my_warehouses);
+        getSupportActionBar().setTitle(R.string.title_activity_my_warehouses);
 
 
         warehouseDataSource = WarehouseDataSource.getInstance(this);
@@ -157,30 +157,37 @@ getSupportActionBar().setTitle(R.string.title_activity_my_warehouses);
             //Data to display are retrieved
             tvName.setText(warehouse.getName());
 
-            //Retrieving the products in the warehouse to know which color to display
+        /*TODO Remove   : Retrieving the products in the warehouse to know which color to display
             productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouse.getId());
 
 
-            tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));
+            tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));*/
 
 //Number of products inventoried
-            warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
-            warehouse.setNumberObjects(stockDataSource.getNumberObjects(warehouse.getId()));
+            int inventoriedObjects = stockDataSource.getInventoriedObjects(warehouse.getId());
+            int totalNumberOfObjects = stockDataSource.getNumberObjects(warehouse.getId());
+            warehouse.setInventoriedObjects(inventoriedObjects);
+            warehouse.setNumberObjects(totalNumberOfObjects);
             tvState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
-            //Sending the warehouse name to the next screen
+            //Setting the color of the inventory state
+            tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(inventoriedObjects, totalNumberOfObjects)));
 
-            tvName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                    int warehouseId = warehouse.getId();
-                    intent.putExtra("warehouseId", warehouseId);
-                    startActivity(intent);
-                }
-            });
 
-            return convertView;
-        }
+
+        //Sending the warehouse name to the next screen
+
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), Warehouse.class);
+                int warehouseId = warehouse.getId();
+                intent.putExtra("warehouseId", warehouseId);
+                startActivity(intent);
+            }
+        });
+
+        return convertView;
     }
+}
 }
