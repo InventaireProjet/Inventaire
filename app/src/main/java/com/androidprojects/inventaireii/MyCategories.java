@@ -208,8 +208,6 @@ public class MyCategories extends AppCompatActivity {
             //Setting and displaying the inventory state
             int inventoriedObjects = Methods.getNumberOfInventoried(productsInCategory);
             int numberOfProducts = Methods.getNumberObjects(productsInCategory);
-        //   int numberOfProducts = categoryDataSource.getNumberObjects(category.getId());
-          //  int inventoriedObjects = categoryDataSource.getInventoriedObjects(category.getId());
             category.setInventoryState(inventoriedObjects +"/" +numberOfProducts);
             tvState.setText(category.getInventoryState());
 
