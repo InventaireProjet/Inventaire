@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     int nbInventoriedItems = 0;
     StockDataSource stockDataSource;
     ProductDataSource productDataSource;
+    boolean popupWindowIsOn;
 
     // Declarations of views
     TextView txtTitle;
@@ -97,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
 
+                popupWindowIsOn = true;
+
                 // Catch the elements of the pop-up view
                 TextView txtQuestion = (TextView) popupView.findViewById(R.id.txtQuestion);
                 Button buttonOk = (Button) popupView.findViewById(R.id.buttonOk);
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         restartInventory();
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                     }
                 });
@@ -116,14 +121,27 @@ public class MainActivity extends AppCompatActivity {
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                     }
                 });
+                buttonStartInventory.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.showAsDropDown(buttonStartInventory, 0, -1000);
+                    }
+                });
 
-                popupWindow.showAsDropDown(buttonStartInventory, 0, -500);
 
             }
         });
+
+        if (savedInstanceState != null) {
+            popupWindowIsOn = savedInstanceState.getBoolean("popupWindowIsOn");
+            if (popupWindowIsOn) {
+                buttonStartInventory.performClick();
+            }
+        }
     }
 
     @Override
@@ -173,6 +191,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("popupWindowIsOn", popupWindowIsOn);
     }
 
     private void restartInventory() {
