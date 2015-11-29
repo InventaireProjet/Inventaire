@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +23,6 @@ public class ProductNewOrModify extends AppCompatActivity {
 
     private int productId;
     private ObjectProducts product = null;
-    private int categoryId;
     private List<ObjectCategories> categoryList;
     private ArrayList<String> categoriesNames;
     private ArrayAdapter adapter;

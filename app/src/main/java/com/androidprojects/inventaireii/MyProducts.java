@@ -28,33 +28,33 @@ public class MyProducts extends AppCompatActivity {
     private ProductDataSource productDataSource;
     private List<ObjectProducts> productsList;
     ArrayAdapter adapter;
+    int totalQuantity = 0;
+    double totalValue = 0.0;
+
 
     // Declaration of views
+    TextView txtTitle;
     View squareTotalStock;
     View square;
+    View header;
     Button buttonAddProduct;
     ListView lvProducts;
+    TextView txtStock;
+    TextView txtStockValue;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         Methods.setLocale(this);
-
         setContentView(R.layout.activity_my_products);
-
-        // Catch views of the activity
-        square = (View) findViewById(R.id.squareInventoryState);
-        lvProducts = (ListView) findViewById(R.id.lvProducts);
 
         // Catch data sources
         productDataSource = ProductDataSource.getInstance(this);
         productsList = productDataSource.getAllProducts();
+
+        // Catch views
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
 
         // Set OnClickListener to Button "Add product"
         buttonAddProduct = (Button) findViewById(R.id.buttonAddProduct);
@@ -68,28 +68,47 @@ public class MyProducts extends AppCompatActivity {
         });
 
         // Fill the ListView
-        View header = getLayoutInflater().inflate(R.layout.product_row_header, null);
+        lvProducts = (ListView) findViewById(R.id.lvProducts);
+        header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
         adapter = new ProductsAdapter(this, productsList);
         lvProducts.setAdapter(adapter);
 
-        adapter.notifyDataSetChanged();
-
         // Three elements below the ListView : total quantity of products and value of stock
-        int totalQuantity = 0;
-        double totalValue = 0.0;
         for (ObjectProducts product : productsList) {
             totalQuantity += product.getQuantity();
             totalValue += product.getPrice()*product.getQuantity();
         }
         squareTotalStock = findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        txtStock = (TextView) findViewById(R.id.txtStock);
+        txtStockValue = (TextView) findViewById(R.id.txtStockValue);
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsList)));
         txtStock.setText(getResources().getString(R.string.stock_colon) + " "
                 + Integer.toString(totalQuantity));
         txtStockValue.setText(getResources().getString(R.string.value_colon)
                 + " CHF " + String.format("%,.2f", totalValue));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Update localization
+        Methods.setLocale(this);
+        txtTitle.setText(R.string.my_products);
+        ((TextView) header.findViewById(R.id.square)).setText(R.string.inventory_shorted);
+        ((TextView) header.findViewById(R.id.no_art)).setText(R.string.article_number_short);
+        ((TextView) header.findViewById(R.id.name)).setText(R.string.name_short);
+        ((TextView) header.findViewById(R.id.category)).setText(R.string.category_short);
+        ((TextView) header.findViewById(R.id.quantity)).setText(R.string.quantity_short);
+        ((TextView) header.findViewById(R.id.price)).setText(R.string.price);
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " "
+                + Integer.toString(totalQuantity));
+        txtStockValue.setText(getResources().getString(R.string.value_colon)
+                + " CHF " + String.format("%,.2f", totalValue));
+
+        adapter.notifyDataSetChanged();
     }
 
 
