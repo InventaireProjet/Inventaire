@@ -186,11 +186,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void setInventoryFields() {
         nbInventoriedItems = 0;
+        nbItems = 0;
         for (ObjectProducts p : productDataSource.getAllProducts()){
+            nbItems += p.getQuantity();
             if (Methods.getInventoryState(p).equals("done"))
-                nbInventoriedItems++;
+                nbInventoriedItems += p.getQuantity();
         }
-        nbItems = productDataSource.getNumberOfProducts();
 
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
         txtInventoryState = (TextView) findViewById(R.id.txtInventoryState);
