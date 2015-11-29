@@ -100,8 +100,8 @@ public class Methods extends AppCompatActivity {
         }
 
         for (ObjectProducts p : productsToDisplay){
-            switch (getInventoryState(p)) {
-                case "done": nbControlled++ ; break ;
+            if (getInventoryState(p).equals("done")) {
+                 nbControlled=nbControlled+p.getQuantity() ;
             }
         }
 
