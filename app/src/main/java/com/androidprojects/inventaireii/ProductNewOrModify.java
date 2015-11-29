@@ -116,6 +116,14 @@ public class ProductNewOrModify extends AppCompatActivity {
 
                         double price;
                         try {
+                            /*
+                            String stringPrice = etPrice.getText().toString();
+                            if (stringPrice.charAt(stringPrice.length() - 3) == ',') {
+                                price = Double.valueOf(stringPrice.replace(',', '.'));
+                            } */
+                            if (etPrice.getText().toString().charAt(etPrice.getText().length() - 3) == ',') {
+                                etPrice.setText(etPrice.getText().toString().replace(',' , '.'));
+                            }
                             price = Double.valueOf(etPrice.getText().toString());
                         } catch (NumberFormatException e) {
                             price = 0.0;
@@ -150,6 +158,10 @@ public class ProductNewOrModify extends AppCompatActivity {
                         Toast.makeText(ProductNewOrModify.this,
                                 getResources().getString(R.string.name_can_not_be_empty),
                                 Toast.LENGTH_SHORT).show();
+                    }
+                    // Double.parseDouble needs a '.' as decimal separator, not a ',':
+                    if (etPrice.getText().toString().charAt(etPrice.getText().length() - 3) == ',') {
+                        etPrice.setText(etPrice.getText().toString().replace(',' , '.'));
                     }
                     product.setPrice(Double.parseDouble(etPrice.getText().toString()));
                     product.setDescription(etDescription.getText().toString());
