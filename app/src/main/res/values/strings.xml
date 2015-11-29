@@ -75,7 +75,7 @@
     <string name="modify_Category">Category name modification</string>
     <string name="warehouse_stock">Warehouse stock</string>
     <string name="products_initial">P</string>
-    <string name="warehouses_initial">M</string>
+    <string name="warehouses_initial">W</string>
     <string name="my_warehouses">My warehouses</string>
     <string name="stock_modify">Stock modification</string>
     <string name="no_warehousename">Enter a warehouse name.</string>

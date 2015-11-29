@@ -158,7 +158,11 @@ public class StockNewOrModify extends AppCompatActivity {
                 } else {
                     // Modification of an existing stock
                     stock.setControlled(switchControlled.isChecked());
-                    stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
+                    try {
+                        stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
+                    } catch (NumberFormatException e) {
+                        stock.setQuantity(0);
+                    }
                     stock.setWarehouse(warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
                     stockDataSource.updateStock(stock);
                     message = getResources().getString(R.string.stock_updated);
