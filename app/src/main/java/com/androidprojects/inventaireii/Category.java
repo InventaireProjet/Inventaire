@@ -72,6 +72,7 @@ public class Category extends AppCompatActivity {
 
         //Language management
         Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.category_short);
 
         categoryDataSource = CategoryDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
@@ -314,6 +315,12 @@ public class Category extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        invalidateOptionsMenu();
+        return true;
     }
 
     private class ProductsAdapter extends ArrayAdapter {

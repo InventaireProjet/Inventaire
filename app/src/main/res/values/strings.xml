@@ -69,7 +69,7 @@
     <string name="quantity_short">Qty</string>
     <string name="warehouse">Warehouse</string>
     <string name="categories_initial">C</string>
-    <string name="title_activity_my_warehouses">My warehouse</string>
+    <string name="title_activity_my_warehouses">My warehouses</string>
     <string name="title_activity_new_warehouse">New warehouse</string>
     <string name="warehouse_modification">Warehouse modification</string>
     <string name="modify_Category">Category name modification</string>

@@ -76,7 +76,7 @@ public class WarehouseStock extends AppCompatActivity {
 
         //Language management to refresh
         Methods.setLocale(this);
-
+        getSupportActionBar().setTitle(R.string.warehouse_stock);
 
         productDataSource =  ProductDataSource.getInstance(this);
         warehouseDataSource =  WarehouseDataSource.getInstance(this);
@@ -265,6 +265,12 @@ public class WarehouseStock extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        invalidateOptionsMenu();
+        return true;
+    }
+
     private class ProductsAdapter extends ArrayAdapter {
         // TODO suppress public ProductsAdapter() { super(MyProducts.this, R.layout.product_row);}
         public ProductsAdapter(Context context, List<ObjectProducts> productsList) {
@@ -315,5 +321,6 @@ public class WarehouseStock extends AppCompatActivity {
 
         }
     }
+
 }
 

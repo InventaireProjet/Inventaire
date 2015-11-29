@@ -90,7 +90,7 @@ public class MyWarehouses extends AppCompatActivity {
 
         //Language management to refresh
         Methods.setLocale(this);
-
+getSupportActionBar().setTitle(R.string.title_activity_my_warehouses);
 
 
         warehouseDataSource = WarehouseDataSource.getInstance(this);
@@ -121,6 +121,12 @@ public class MyWarehouses extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        invalidateOptionsMenu();
+        return true;
     }
 
     private class WarehousesAdapter extends ArrayAdapter {

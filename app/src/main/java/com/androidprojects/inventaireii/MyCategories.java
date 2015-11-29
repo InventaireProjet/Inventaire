@@ -93,6 +93,7 @@ public class MyCategories extends AppCompatActivity {
 
         //Refresh the language
         Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.my_categories);
 
         setContentView(R.layout.activity_my_categories);
 
@@ -167,6 +168,11 @@ public class MyCategories extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        invalidateOptionsMenu();
+        return true;
+    }
 
     private class CategoriesAdapter extends ArrayAdapter {
         // Ref: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
@@ -222,5 +228,4 @@ public class MyCategories extends AppCompatActivity {
             return convertView;
         }
     }
-
 }

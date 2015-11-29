@@ -92,6 +92,7 @@ public class Warehouse extends AppCompatActivity {
 
         //Language management
         Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.warehouse);
 
         setContentView(R.layout.activity_warehouse);
 
@@ -222,5 +223,11 @@ public class Warehouse extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        invalidateOptionsMenu();
+        return true;
     }
 }
