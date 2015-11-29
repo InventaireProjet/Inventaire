@@ -66,7 +66,7 @@ public class Product extends AppCompatActivity {
         txtPrice = (TextView) findViewById(R.id.txtPrice);
 
         // Get the product from the Intent
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         productId = intent.getIntExtra("position", 1);
 
         // Get the product. Note that we don't have to manage a productId=0, while the user have to click on a product to come here...
@@ -215,8 +215,11 @@ public class Product extends AppCompatActivity {
                         toast.show();
 
                         finish();
+                        Intent i = new Intent(getBaseContext(), MyProducts.class);
+                        startActivity(i);
                     }
                 });
+
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
