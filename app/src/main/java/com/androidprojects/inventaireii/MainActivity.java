@@ -187,10 +187,10 @@ public class MainActivity extends AppCompatActivity {
     public void setInventoryFields() {
         nbInventoriedItems = 0;
         nbItems = 0;
-        for (ObjectProducts p : productDataSource.getAllProducts()){
-            nbItems += p.getQuantity();
-            if (Methods.getInventoryState(p).equals("done"))
-                nbInventoriedItems += p.getQuantity();
+        for (ObjectStock s : stockDataSource.getAllStocks()) {
+            nbItems += s.getQuantity();
+            if (s.isControlled())
+                nbInventoriedItems += s.getQuantity();
         }
 
         txtInventoryRunning = (TextView) findViewById(R.id.txtInventoryRunning);
