@@ -100,9 +100,11 @@ public class Methods extends AppCompatActivity {
         }
 
         for (ObjectProducts p : productsToDisplay){
-            if (getInventoryState(p).equals("done")) {
-                 nbControlled=nbControlled+p.getQuantity() ;
-            }
+
+            for (ObjectStock s : p.getStocks())
+                if (s.isControlled()) {
+                    nbControlled=nbControlled+s.getQuantity() ;
+                }
         }
 
         return nbControlled;
