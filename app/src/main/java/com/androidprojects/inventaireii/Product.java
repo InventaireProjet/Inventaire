@@ -60,7 +60,7 @@ public class Product extends AppCompatActivity {
         // Get some views
         txtQuantityStorage = (TextView) findViewById(R.id.txtQuantityStorage);
         txtDescriptionTitle = (TextView) findViewById(R.id.txtDescriptionTitle);
-        txtTitle = (TextView) findViewById(R.id.txtTitle); // TODO: 29.11.2015 suppress this 4 lines ?
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtArtNb = (TextView) findViewById(R.id.txtArtNb);
         txtCategory = (TextView) findViewById(R.id.txtCategory);
         txtPrice = (TextView) findViewById(R.id.txtPrice);

@@ -33,6 +33,7 @@ public class StockNewOrModify extends AppCompatActivity {
     private StockDataSource stockDataSource;
     private ProductDataSource productDataSource;
     private WarehouseDataSource warehouseDataSource;
+    private ArrayAdapter adapter;
 
     // Declaration of views
     TextView txtProductName;
@@ -65,7 +66,7 @@ public class StockNewOrModify extends AppCompatActivity {
             warehousesNames.add(w.getName());
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, warehousesNames);
+        adapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, warehousesNames);
         spinnerWarehouse.setAdapter(adapter);
         // Give a color to the selected item of spinner
         spinnerWarehouse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -86,8 +87,8 @@ public class StockNewOrModify extends AppCompatActivity {
         txtControlled = (TextView)findViewById(R.id.txtControlled);
         txtQuantity = (TextView)findViewById(R.id.txtQuantity);
         txtWarehouse = (TextView) findViewById(R.id.txtWarehouse);
-        final ToggleButton switchControlled = (ToggleButton) findViewById(R.id.switchControlled);
-        final EditText etQuantity = (EditText) findViewById(R.id.etQuantity);
+        switchControlled = (ToggleButton) findViewById(R.id.switchControlled);
+        etQuantity = (EditText) findViewById(R.id.etQuantity);
 
         // Get the product and the stock Id
         final Intent intent = getIntent();
@@ -186,6 +187,21 @@ public class StockNewOrModify extends AppCompatActivity {
             buttonSave.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Methods.setLocale(this);
+        txtControlled.setText(R.string.controlled_colon);
+        switchControlled.setTextOn(getResources().getString(R.string.yes));
+        switchControlled.setTextOff(getResources().getString(R.string.no));
+        switchControlled.setChecked(switchControlled.isChecked());
+        txtQuantity.setText(R.string.quantity_colon);
+        txtWarehouse.setText(R.string.warehouse_colon);
+        buttonCancel.setText(R.string.cancel);
+        buttonSuppress.setText(R.string.suppress);
+        buttonSave.setText(R.string.save);
     }
 
     @Override
