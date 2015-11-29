@@ -234,6 +234,10 @@ public class WarehouseStock extends AppCompatActivity {
         Intent intent;
 
         switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+
 
             case R.id.action_settings:
                 intent = new Intent(this, AppSettingsActivity.class);
