@@ -61,11 +61,13 @@
             android:parentActivityName=".MyWarehouses">
         </activity>
         <activity android:name=".NewWarehouse"
-            android:label="@string/title_activity_new_warehouse">
+            android:label="@string/title_activity_new_warehouse"
+            android:parentActivityName=".MyWarehouses">
         </activity>
 
         <activity android:name=".WarehouseModify"
-            android:label="@string/warehouse_modification">
+            android:label="@string/warehouse_modification"
+            android:parentActivityName=".Warehouse">
         </activity>
         <activity android:name=".WarehouseStock"
             android:label="@string/warehouse_stock"

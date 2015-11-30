@@ -157,11 +157,6 @@ public class MyWarehouses extends AppCompatActivity {
             //Data to display are retrieved
             tvName.setText(warehouse.getName());
 
-        /*TODO Remove   : Retrieving the products in the warehouse to know which color to display
-            productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouse.getId());
-
-
-            tvSquare.setBackgroundColor(Methods.giveColor(tvSquare, Methods.getInventoryState(productsInWarehouse)));*/
 
 //Number of products inventoried
             int inventoriedObjects = stockDataSource.getInventoriedObjects(warehouse.getId());

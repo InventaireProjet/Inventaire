@@ -37,42 +37,20 @@ public class Category extends AppCompatActivity {
     View square;
     View squareInventoryState;
     View squareTotalStock;
+    TextView title;
     CategoryDataSource categoryDataSource;
     ProductDataSource productDataSource;
     ObjectCategories category;
     int nbCategories;
-
+    View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-    }
-
-    private void showTotalInStock() {
-        int totalQuantity = 0;
-        double totalValue = 0.0;
-        for (ObjectProducts product : productsToDisplay) {
-            totalQuantity += product.getQuantity();
-            totalValue += product.getPrice() * product.getQuantity();
-        }
-        squareTotalStock = findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
-        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f", totalValue));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //Language management
+//Language management
         Methods.setLocale(this);
-        getSupportActionBar().setTitle(R.string.category_short);
+
 
         categoryDataSource = CategoryDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
@@ -90,12 +68,12 @@ public class Category extends AppCompatActivity {
         btnPrevious.setVisibility(View.VISIBLE);
 
         //Category name retrieved from the previous screen
-        final TextView title = (TextView) findViewById(R.id.txtTitle);
+        title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
 
         final int categoryId = intent.getIntExtra("categoryId", 0);
         category = categoryDataSource.getCategoryById(categoryId);
-        title.setText(category.getName());
+
 
         //Define the products to display
         productsToDisplay = productDataSource.getAllProductsByCategory(categoryId);
@@ -150,7 +128,7 @@ public class Category extends AppCompatActivity {
 // Fill the ListView with products
 
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
-        View header = getLayoutInflater().inflate(R.layout.product_row_header, null);
+         header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
 
         adapter = new ProductsAdapter(this, productsToDisplay);
@@ -175,7 +153,7 @@ public class Category extends AppCompatActivity {
                 popupWindow.setFocusable(true);
 
                 // Catch the elements of the pop-up view
-                final TextView title2 = (TextView) popupView.findViewById(R.id.txtTitle);
+                final TextView titleModify = (TextView) popupView.findViewById(R.id.txtTitle);
                 Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
                 final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
@@ -183,7 +161,7 @@ public class Category extends AppCompatActivity {
                 final String categoryName = title.getText().toString();
 
                 //Display the title and the category name in EditText
-                title2.setText(getResources().getText(R.string.modify_Category));
+                titleModify.setText(getResources().getText(R.string.modify_Category));
                 userEntry.setText(categoryName);
 
                 //Saving the new category name by validating the text entry
@@ -260,13 +238,32 @@ public class Category extends AppCompatActivity {
             }
         });
 
-        adapter.notifyDataSetChanged();
-        /*
-        squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        */
         showTotalInStock();
 
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Language management
+        Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.category_short);
+        title.setText(category.getName());
+
+        ((TextView) header.findViewById(R.id.square)).setText(R.string.inventory_shorted);
+        ((TextView) header.findViewById(R.id.no_art)).setText(R.string.article_number_short);
+        ((TextView) header.findViewById(R.id.name)).setText(R.string.name_short);
+        ((TextView) header.findViewById(R.id.category)).setText(R.string.category_short);
+        ((TextView) header.findViewById(R.id.quantity)).setText(R.string.quantity_short);
+        ((TextView) header.findViewById(R.id.price)).setText(R.string.price);
+
+        showTotalInStock();
+
+        btnModify.setText(R.string.modify);
+        btnDelete.setText(R.string.delete);
 
     }
 
@@ -321,6 +318,21 @@ public class Category extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         invalidateOptionsMenu();
         return true;
+    }
+
+    private void showTotalInStock() {
+        int totalQuantity = 0;
+        double totalValue = 0.0;
+        for (ObjectProducts product : productsToDisplay) {
+            totalQuantity += product.getQuantity();
+            totalValue += product.getPrice() * product.getQuantity();
+        }
+        squareTotalStock = findViewById(R.id.squareTotalStock);
+        TextView txtStock = (TextView) findViewById(R.id.txtStock);
+        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
+        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f", totalValue));
     }
 
     private class ProductsAdapter extends ArrayAdapter {

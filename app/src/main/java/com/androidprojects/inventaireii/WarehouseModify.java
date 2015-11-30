@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
+import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class WarehouseModify extends AppCompatActivity {
     ObjectWarehouse warehouse;
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
+    StockDataSource stockDataSource;
     List<ObjectProducts> productsInWarehouse;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class WarehouseModify extends AppCompatActivity {
 
         productDataSource =  ProductDataSource.getInstance(this);
         warehouseDataSource =  WarehouseDataSource.getInstance(this);
+        stockDataSource = StockDataSource.getInstance(this);
 
         //Layout elements
         TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
@@ -94,12 +97,13 @@ public class WarehouseModify extends AppCompatActivity {
         editWarehouseName.setVisibility(View.VISIBLE);
 
 
-
-        //First part
         //Retrieving the products in the warehouse to know which color to display
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
 
+        //First part
+        warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
+        warehouse.setNumberObjects(Methods.warehouseStockQuantity(productsInWarehouse,warehouse));
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
         inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
@@ -227,6 +231,10 @@ public class WarehouseModify extends AppCompatActivity {
         Intent intent;
 
         switch (id) {
+
+            case android.R.id.home:
+                finish();
+                return true;
 
             case R.id.action_settings:
                 intent = new Intent(this, AppSettingsActivity.class);

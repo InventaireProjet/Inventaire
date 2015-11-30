@@ -130,10 +130,9 @@ public class Warehouse extends AppCompatActivity {
 
         productsInWarehouse = productDataSource.getAllProductsByWarehouse(warehouseId);
 
-        //First part;
-        //todo : more simple
+        //First part
         warehouse.setInventoriedObjects(stockDataSource.getInventoriedObjects(warehouse.getId()));
-        warehouse.setNumberObjects(stockDataSource.getNumberObjects(warehouse.getId()));
+        warehouse.setNumberObjects(Methods.warehouseStockQuantity(productsInWarehouse,warehouse));
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsInWarehouse)));
         inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 

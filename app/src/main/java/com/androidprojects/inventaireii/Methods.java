@@ -161,4 +161,59 @@ public class Methods extends AppCompatActivity {
 
     }
 
+
+    //Calculate the quantity of one product in one warehouse
+    public static int warehouseProductQuantity(ObjectProducts product, ObjectWarehouse warehouse){
+
+
+        for (ObjectStock s : product.getStocks()) {
+
+            if (s.getWarehouse().getId()==warehouse.getId()) {
+
+                return s.getQuantity() ;
+            }
+        }
+
+        return  0;
+    }
+
+
+    //Calculate the quantity of stock in one warehouse
+    public static int warehouseStockQuantity(List<ObjectProducts> productsInStock, ObjectWarehouse warehouse){
+
+        int totalQuantity = 0;
+
+        for (ObjectProducts p : productsInStock){
+
+            for (ObjectStock s : p.getStocks()) {
+
+                if (s.getWarehouse().getId()==warehouse.getId()) {
+
+                    totalQuantity += s.getQuantity();
+                }
+            }
+        }
+
+        return  totalQuantity;
+    }
+
+    //Calculate the value of stock in one warehouse
+    public static double warehouseStockValue(List<ObjectProducts> productsInStock, ObjectWarehouse warehouse){
+
+        double totalValue = 0.0;
+
+        for (ObjectProducts p : productsInStock){
+
+            for (ObjectStock s : p.getStocks()) {
+
+                if (s.getWarehouse().getId()==warehouse.getId()) {
+
+                    totalValue += p.getPrice() * s.getQuantity();
+                }
+            }
+        }
+
+        return  totalValue;
+    }
+
 }

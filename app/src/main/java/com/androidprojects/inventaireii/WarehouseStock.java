@@ -51,22 +51,6 @@ public class WarehouseStock extends AppCompatActivity {
 
     }
 
-    // Total quantity of products and value of stock
-    private void showTotalInStock() {
-        int totalQuantity = 0;
-        double totalValue = 0.0;
-        for (ObjectProducts product : productsToDisplay) {
-            totalQuantity += product.getQuantity();
-            totalValue += product.getPrice()*product.getQuantity();
-        }
-        squareTotalStock =  findViewById(R.id.squareTotalStock);
-        TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
-        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
-        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(totalQuantity));
-        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f",totalValue));
-    }
-
 
     //Refreshing the adapter so it shows the changes
     @Override
@@ -275,6 +259,17 @@ public class WarehouseStock extends AppCompatActivity {
         return true;
     }
 
+    // Total quantity of products and value of stock
+    private void showTotalInStock() {
+
+        squareTotalStock =  findViewById(R.id.squareTotalStock);
+        TextView txtStock = (TextView) findViewById(R.id.txtStock);
+        TextView txtStockValue = (TextView) findViewById(R.id.txtStockValue);
+        squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
+        txtStock.setText(getResources().getString(R.string.stock_colon) + " " + Integer.toString(Methods.warehouseStockQuantity(productsToDisplay, warehouse)));
+        txtStockValue.setText(getResources().getString(R.string.value_colon) +" CHF " + String.format("%,.2f",Methods.warehouseStockValue(productsToDisplay, warehouse)));
+    }
+
     private class ProductsAdapter extends ArrayAdapter {
         // TODO suppress public ProductsAdapter() { super(MyProducts.this, R.layout.product_row);}
         public ProductsAdapter(Context context, List<ObjectProducts> productsList) {
@@ -308,7 +303,7 @@ public class WarehouseStock extends AppCompatActivity {
                 txtCategory.setText(product.getCategory().getName());
             else
                 txtCategory.setText(R.string.no_category);
-            txtQuantity.setText(Integer.toString(product.getQuantity()));
+            txtQuantity.setText(Integer.toString(Methods.warehouseProductQuantity(product, warehouse)));
             txtPrice.setText("CHF " + String.format("%,.2f", product.getPrice()));
 
             // Sending the product to the next activity
@@ -325,6 +320,7 @@ public class WarehouseStock extends AppCompatActivity {
 
         }
     }
+
 
 }
 
