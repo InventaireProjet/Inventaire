@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
@@ -19,21 +20,18 @@ public class NewWarehouse extends AppCompatActivity {
     Button btnCancel;
     Button btnValidate;
     WarehouseDataSource warehouseDataSource;
+    EditText etWarehouseName ;
+    EditText etWarehouseCapacity;
+    EditText etWarehousePhone ;
+    EditText etWarehouseStreet;
+    EditText etWarehouseStreetNo;
+    EditText etWarehousePostalCode;
+    EditText etWarehouseLocation ;
+    EditText etWarehouseCountry;
+    TextView title;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        //Refresh the language
-        Methods.setLocale(this);
-        getSupportActionBar().setTitle(R.string.title_activity_new_warehouse);
 
         warehouseDataSource = WarehouseDataSource.getInstance(this);
 
@@ -51,14 +49,14 @@ public class NewWarehouse extends AppCompatActivity {
         });
 
 
-        final EditText etWarehouseName = (EditText) findViewById(R.id.warehouseName);
-        final EditText etWarehouseCapacity = (EditText) findViewById(R.id.warehouseCapacity);
-        final EditText etWarehousePhone = (EditText) findViewById(R.id.warehousePhone);
-        final EditText etWarehouseStreet = (EditText) findViewById(R.id.warehouseStreet);
-        final EditText etWarehouseStreetNo = (EditText) findViewById(R.id.warehouseStreetNo);
-        final EditText etWarehousePostalCode = (EditText) findViewById(R.id.warehousePostalCode);
-        final EditText etWarehouseLocation = (EditText) findViewById(R.id.warehouseLocation);
-        final EditText etWarehouseCountry = (EditText) findViewById(R.id.warehouseCountry);
+        etWarehouseName = (EditText) findViewById(R.id.warehouseName);
+        etWarehouseCapacity = (EditText) findViewById(R.id.warehouseCapacity);
+        etWarehousePhone = (EditText) findViewById(R.id.warehousePhone);
+        etWarehouseStreet = (EditText) findViewById(R.id.warehouseStreet);
+        etWarehouseStreetNo = (EditText) findViewById(R.id.warehouseStreetNo);
+        etWarehousePostalCode = (EditText) findViewById(R.id.warehousePostalCode);
+        etWarehouseLocation = (EditText) findViewById(R.id.warehouseLocation);
+        etWarehouseCountry = (EditText) findViewById(R.id.warehouseCountry);
 
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +99,33 @@ public class NewWarehouse extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        //Refresh the language
+        Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.title_activity_new_warehouse);
+
+        title = (TextView) findViewById(R.id.categoryName);
+        title.setText(R.string.instruction);
+
+        etWarehouseName.setHint(R.string.new_warehouse_name);
+        etWarehouseCapacity.setHint(R.string.warehouse_capacity);
+        etWarehousePhone.setHint(R.string.warehouse_phone);
+        etWarehouseStreet.setHint(R.string.street);
+        etWarehouseStreetNo.setHint(R.string.streetNo);
+        etWarehousePostalCode.setHint(R.string.postalCode);
+        etWarehouseLocation.setHint(R.string.city);
+        etWarehouseCountry.setHint(R.string.country);
+
+        btnCancel.setText(R.string.cancel);
+        btnValidate.setText(R.string.validate);
+
+
     }
 
     @Override
