@@ -147,14 +147,24 @@ public class StockNewOrModify extends AppCompatActivity {
                 String message = "";
                 if (stockId == -1) {
                     // New stock, to create
-                    stock = new ObjectStock(Integer.parseInt(etQuantity.getText().toString()),
+                    ObjectWarehouse warehouse = warehousesList.get(spinnerWarehouse.getSelectedItemPosition());
+                    int quantity = Integer.parseInt(etQuantity.getText().toString());
+                    stock = new ObjectStock(quantity,
                             switchControlled.isChecked(),
                             product,
-                            warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
+                            warehouse);
 
-                    stockDataSource.createStock(stock);
-                    product.addStock(stock);
-                    message = getResources().getString(R.string.stock_added);
+                    // Control if there is place enough in the warehouse
+                    int warehouseNumberOfObjects = stockDataSource.getNumberObjects(warehouse.getId());
+                    if (warehouseNumberOfObjects + quantity <= warehouse.getStockCapacity()) {
+                        stockDataSource.createStock(stock);
+                        product.addStock(stock);
+                        message = getResources().getString(R.string.stock_added);
+                    } else {
+                        message = getResources().getString(R.string.warehouse_contains_already) + warehouseNumberOfObjects +
+                                getResources().getString(R.string.and_its_capacity)+ warehouse.getStockCapacity();
+                    }
+
                 } else {
                     // Modification of an existing stock
                     stock.setControlled(switchControlled.isChecked());
