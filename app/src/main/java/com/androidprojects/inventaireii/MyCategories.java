@@ -33,11 +33,83 @@ public class MyCategories extends AppCompatActivity {
     CategoryDataSource categoryDataSource;
     ProductDataSource productDataSource;
     ListView lvCategories;
+    TextView title;
+    TextView inventoryStateTitle;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_categories);
 
+        categoryDataSource =CategoryDataSource.getInstance(this);
+        productDataSource = ProductDataSource.getInstance(this);
+
+
+        //Using adapter
+        adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
+
+
+        // Fill the ListView
+        lvCategories = (ListView) findViewById(R.id.lvCategories);
+        lvCategories.setAdapter(adapter);
+
+
+        //Adding Categories
+        addButton = (Button) findViewById(R.id.btnAdd);
+        addButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                LayoutInflater layoutInflater =
+                        (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
+                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+
+                //To view the keyboard
+                popupWindow.setFocusable(true);
+
+
+
+                // Catch the elements of the pop-up view
+                Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
+                Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
+                final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
+
+
+                //Saving the new category by validating the text entry
+                buttonValidate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (userEntry.getText().toString().equals("")) {
+                            Toast toast = Toast.makeText(getBaseContext(), R.string.no_categoryName, Toast.LENGTH_LONG);
+                            toast.show();
+                        } else {
+                            ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
+
+                            categoryDataSource.createCategory(newCategory);
+
+                            popupWindow.dismiss();
+                            finish();
+                            startActivity(new Intent(getBaseContext(), MyCategories.class));
+
+                        }
+                    }
+                });
+
+                buttonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+
+                popupWindow.showAsDropDown(addButton, 0, -100);
+
+            }
+        });
 
     }
 
@@ -93,78 +165,16 @@ public class MyCategories extends AppCompatActivity {
 
         //Refresh the language
         Methods.setLocale(this);
+
         getSupportActionBar().setTitle(R.string.my_categories);
 
-        setContentView(R.layout.activity_my_categories);
+        title = (TextView) findViewById(R.id.txtTitle);
+        title.setText(R.string.my_categories);
 
-        categoryDataSource =CategoryDataSource.getInstance(this);
-        productDataSource = ProductDataSource.getInstance(this);
+        inventoryStateTitle = (TextView) findViewById(R.id.txtStockValue);
+        inventoryStateTitle.setText(R.string.inventory_state);
 
-
-        //Using adapter
-        adapter = new CategoriesAdapter(this, categoryDataSource.getAllCategories());
-
-
-        // Fill the ListView
-        lvCategories = (ListView) findViewById(R.id.lvCategories);
-        lvCategories.setAdapter(adapter);
-
-
-        //Adding Categories
-        addButton = (Button) findViewById(R.id.btnAdd);
-        addButton.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                LayoutInflater layoutInflater =
-                        (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
-                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
-
-                //To view the keyboard
-                popupWindow.setFocusable(true);
-
-
-
-                // Catch the elements of the pop-up view
-                Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
-                Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
-                final EditText userEntry = (EditText) popupView.findViewById(R.id.userEntry);
-
-
-                //Saving the new category by validating the text entry
-                buttonValidate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (userEntry.getText().toString().equals("")) {
-                            Toast toast = Toast.makeText(getBaseContext(), R.string.no_categoryName, Toast.LENGTH_LONG);
-                            toast.show();
-                        } else {
-                            ObjectCategories newCategory = new ObjectCategories("done", userEntry.getText().toString(), "0/0");
-
-                            categoryDataSource.createCategory(newCategory);
-                            finish();
-                            popupWindow.dismiss();
-                            startActivity(new Intent(getBaseContext(), MyCategories.class));
-
-                        }
-                    }
-                });
-
-                buttonCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupWindow.dismiss();
-                    }
-                });
-
-                popupWindow.showAsDropDown(addButton, 0, -100);
-
-            }
-        });
+        adapter.notifyDataSetChanged();
 
     }
 

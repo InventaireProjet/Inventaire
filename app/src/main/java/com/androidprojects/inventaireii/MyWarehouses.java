@@ -30,12 +30,42 @@ public class MyWarehouses extends AppCompatActivity {
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
     StockDataSource stockDataSource;
-    List <ObjectProducts> productsInWarehouse;
+    TextView title;
+    TextView inventoryStateTitle;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        warehouseDataSource = WarehouseDataSource.getInstance(this);
+        productDataSource =  ProductDataSource.getInstance(this);
+        stockDataSource = StockDataSource.getInstance(this);
+
+        //activity_my_categories reused because of same structure
+        setContentView(R.layout.activity_my_categories);
+
+        title = (TextView) findViewById(R.id.txtTitle);
+        title.setText(R.string.my_warehouses);
+
+        //Using adapter
+        adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
+
+        // Fill the ListView
+        ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);
+        lvWarehouses.setAdapter(adapter);
+
+
+        //Adding Warehouses
+        addButton = (Button) findViewById(R.id.btnAdd);
+        addButton.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), NewWarehouse.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -86,41 +116,15 @@ public class MyWarehouses extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        adapter.notifyDataSetChanged();
-
         //Language management to refresh
         Methods.setLocale(this);
         getSupportActionBar().setTitle(R.string.title_activity_my_warehouses);
-
-
-        warehouseDataSource = WarehouseDataSource.getInstance(this);
-        productDataSource =  ProductDataSource.getInstance(this);
-        stockDataSource = StockDataSource.getInstance(this);
-
-        //activity_my_categories reused because of same structure
-        setContentView(R.layout.activity_my_categories);
-
-        TextView title = (TextView) findViewById(R.id.txtTitle);
         title.setText(R.string.my_warehouses);
 
-        //Using adapter
-        adapter = new WarehousesAdapter(this, warehouseDataSource.getAllWarehouses());
+        inventoryStateTitle = (TextView) findViewById(R.id.txtStockValue);
+        inventoryStateTitle.setText(R.string.inventory_state);
 
-        // Fill the ListView
-        ListView lvWarehouses = (ListView) findViewById(R.id.lvCategories);
-        lvWarehouses.setAdapter(adapter);
-
-
-        //Adding Warehouses
-        addButton = (Button) findViewById(R.id.btnAdd);
-        addButton.setOnClickListener(new Button.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), NewWarehouse.class);
-                startActivity(intent);
-            }
-        });
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -170,19 +174,19 @@ public class MyWarehouses extends AppCompatActivity {
 
 
 
-        //Sending the warehouse name to the next screen
+            //Sending the warehouse name to the next screen
 
-        tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), Warehouse.class);
-                int warehouseId = warehouse.getId();
-                intent.putExtra("warehouseId", warehouseId);
-                startActivity(intent);
-            }
-        });
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), Warehouse.class);
+                    int warehouseId = warehouse.getId();
+                    intent.putExtra("warehouseId", warehouseId);
+                    startActivity(intent);
+                }
+            });
 
-        return convertView;
+            return convertView;
+        }
     }
-}
 }
