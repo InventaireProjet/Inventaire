@@ -103,7 +103,7 @@
     <string name="no">no</string>
     <string name="price_colon">Price:</string>
     <string name="add_product">Add product</string>
-    <string name="modify_product">Modifiy product</string>
+    <string name="modify_product">Modify product</string>
     <string name="new_stock">New stock</string>
     <string name="no_product_name">You have to enter a product name to create a new product</string>
     <string name="name_can_not_be_empty">The name can not be empty</string>
