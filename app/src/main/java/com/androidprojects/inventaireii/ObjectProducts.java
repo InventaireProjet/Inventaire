@@ -1,7 +1,6 @@
 package com.androidprojects.inventaireii;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Administrateur on 25.10.2015.

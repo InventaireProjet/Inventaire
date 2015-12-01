@@ -113,6 +113,9 @@
     <string name="and_its_capacity"> et sa capacité est de </string>
     <string name="quantity_not_updated">Quantité non mise à jour</string>
     <string name="price_not_changed">Prix inchangé</string>
+    <string name="btn_next">&gt;</string>
+    <string name="btn_previous"><![CDATA[<]]></string>
+    <string name="home">home</string>
 
 
 </resources>

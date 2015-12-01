@@ -17,7 +17,6 @@ import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WarehouseModify extends AppCompatActivity {

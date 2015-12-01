@@ -60,7 +60,7 @@ public class CategoryDataSource {
         ObjectCategories category = new ObjectCategories();
         category.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
         category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
-
+        cursor.close();
         return category;
     }
 
@@ -81,6 +81,7 @@ public class CategoryDataSource {
                 categories.add(category);
             } while (cursor.moveToNext());
 
+            cursor.close();
         }
         return categories;
     }

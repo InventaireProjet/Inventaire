@@ -4,21 +4,21 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.androidprojects.inventaireii.Warehouse;
-
-import static com.androidprojects.inventaireii.db.InventoryContract.*;
+import static com.androidprojects.inventaireii.db.InventoryContract.CategorieEntry;
+import static com.androidprojects.inventaireii.db.InventoryContract.ProductEntry;
+import static com.androidprojects.inventaireii.db.InventoryContract.StockEntry;
+import static com.androidprojects.inventaireii.db.InventoryContract.WarehouseEntry;
 
 /**
  * Created by David on 07.11.2015.
  */
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db;
-
     // Infos about database
     private static final String DATABASE_NAME = "inventory";
     private static final int DATABASE_VERSION = 1;
     private static SQLiteHelper instance;
+    private SQLiteDatabase db;
 
     // SINGLETON !
     private SQLiteHelper(Context context) {

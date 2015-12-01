@@ -16,12 +16,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
-import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class WarehouseStock extends AppCompatActivity {
@@ -210,7 +208,7 @@ public class WarehouseStock extends AppCompatActivity {
         ((TextView) header.findViewById(R.id.quantity)).setText(R.string.quantity_short);
         ((TextView) header.findViewById(R.id.price)).setText(R.string.price);
 
-        showTotalInStock();;
+        showTotalInStock();
         btnDelete.setText(R.string.delete);
         adapter.notifyDataSetChanged();
 
