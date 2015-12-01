@@ -11,7 +11,6 @@ public class ObjectCategories {
     public ObjectCategories() {
     }
 
-    //TODO remove
     public ObjectCategories (String color, String name, String inventoryState) {
 
         this.color = color;
