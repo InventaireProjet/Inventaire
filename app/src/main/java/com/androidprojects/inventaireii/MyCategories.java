@@ -35,6 +35,7 @@ public class MyCategories extends AppCompatActivity {
     ListView lvCategories;
     TextView title;
     TextView inventoryStateTitle;
+    boolean popupWindowIsOn;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class MyCategories extends AppCompatActivity {
                 //To view the keyboard
                 popupWindow.setFocusable(true);
 
-
+                popupWindowIsOn = true;
 
                 // Catch the elements of the pop-up view
                 Button buttonValidate = (Button) popupView.findViewById(R.id.buttonValidate);
@@ -91,6 +92,7 @@ public class MyCategories extends AppCompatActivity {
 
                             categoryDataSource.createCategory(newCategory);
 
+                            popupWindowIsOn = false;
                             popupWindow.dismiss();
                             finish();
                             startActivity(new Intent(getBaseContext(), MyCategories.class));
@@ -102,17 +104,36 @@ public class MyCategories extends AppCompatActivity {
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                     }
                 });
 
-                popupWindow.showAsDropDown(addButton, 0, -100);
+                addButton.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.showAsDropDown(addButton, 0, -100);
+                    }
+                });
+
 
             }
         });
 
+        if (savedInstanceState != null) {
+            popupWindowIsOn = savedInstanceState.getBoolean("popupWindowIsOn");
+            if (popupWindowIsOn) {
+                addButton.performClick();
+            }
+        }
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("popupWindowIsOn", popupWindowIsOn);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -152,7 +152,7 @@ public class StockDataSource {
     }
 
 
-    // TODO Get number of inventoried objects (pieces) in a Warehouse
+    // Get number of inventoried objects (pieces) in a Warehouse
     public int getInventoriedObjects(long warehouseId) {
         String sql = "SELECT SUM(" + InventoryContract.StockEntry.KEY_QUANTITY + ") AS Number " +
                         "FROM " + InventoryContract.StockEntry.TABLE_STOCKS +
@@ -169,7 +169,7 @@ public class StockDataSource {
         return quantity;
     }
 
-    // TODO Get number of pieces stocked in a Warehouse
+    // Get number of pieces stocked in a Warehouse
     public int getNumberObjects(long warehouseId) {
         String sql = "SELECT SUM(" + InventoryContract.StockEntry.KEY_QUANTITY + ") AS Number " +
                 "FROM " + InventoryContract.StockEntry.TABLE_STOCKS +
