@@ -109,6 +109,7 @@
     <string name="name_can_not_be_empty">The name can not be empty</string>
     <string name="warehouse_contains_already">This warehouse contains already </string>
     <string name="and_its_capacity"> and its capacity is </string>
+    <string name="quantity_not_updated">Quantity not updated</string>
 
 
 </resources>

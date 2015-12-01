@@ -146,14 +146,18 @@ public class StockNewOrModify extends AppCompatActivity {
             public void onClick(View v) {
                 String message = "";
                 if (stockId == -1) {
-                    // New stock, to create
+                    /* New stock, to create */
                     ObjectWarehouse warehouse = warehousesList.get(spinnerWarehouse.getSelectedItemPosition());
-                    int quantity = Integer.parseInt(etQuantity.getText().toString());
+                    int quantity;
+                    try {
+                        quantity = Integer.parseInt(etQuantity.getText().toString());
+                    } catch (NumberFormatException e) {
+                        quantity = 0;
+                    }
                     stock = new ObjectStock(quantity,
                             switchControlled.isChecked(),
                             product,
                             warehouse);
-
                     // Control if there is place enough in the warehouse
                     int warehouseNumberOfObjects = stockDataSource.getNumberObjects(warehouse.getId());
                     if (warehouseNumberOfObjects + quantity <= warehouse.getStockCapacity()) {
@@ -161,21 +165,33 @@ public class StockNewOrModify extends AppCompatActivity {
                         product.addStock(stock);
                         message = getResources().getString(R.string.stock_added);
                     } else {
-                        message = getResources().getString(R.string.warehouse_contains_already) + warehouseNumberOfObjects +
-                                getResources().getString(R.string.and_its_capacity)+ warehouse.getStockCapacity();
+                        message = getResources().getString(R.string.warehouse_contains_already) + " " + warehouseNumberOfObjects + " "
+                                + getResources().getString(R.string.and_its_capacity)+ " " + warehouse.getStockCapacity();
                     }
 
                 } else {
-                    // Modification of an existing stock
+                    /* Modification of an existing stock */
                     stock.setControlled(switchControlled.isChecked());
+                    int quantity;
                     try {
-                        stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
+                        quantity = Integer.parseInt(etQuantity.getText().toString());
+                        //stock.setQuantity(Integer.parseInt(etQuantity.getText().toString()));
                     } catch (NumberFormatException e) {
-                        stock.setQuantity(0);
+                        quantity = stock.getQuantity();
                     }
-                    stock.setWarehouse(warehousesList.get(spinnerWarehouse.getSelectedItemPosition()));
+                    // Control if there is place enough in the warehouse
+                    ObjectWarehouse warehouse = warehousesList.get(spinnerWarehouse.getSelectedItemPosition());
+                    int warehouseNumberOfObjects = stockDataSource.getNumberObjects(warehouse.getId());
+                    if (warehouseNumberOfObjects + quantity - stock.getQuantity() <= warehouse.getStockCapacity()) {
+                        stock.setQuantity(quantity);
+                        message = getResources().getString(R.string.stock_updated);
+                    } else {
+                        message = getResources().getString(R.string.warehouse_contains_already)+ " " + warehouseNumberOfObjects + " " +
+                                getResources().getString(R.string.and_its_capacity)+ " " + warehouse.getStockCapacity() + ". " +
+                                getResources().getString(R.string.quantity_not_updated);
+                    }
+                    stock.setWarehouse(warehouse);
                     stockDataSource.updateStock(stock);
-                    message = getResources().getString(R.string.stock_updated);
                 }
 
                 Toast toast = Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG);

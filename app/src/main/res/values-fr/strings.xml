@@ -111,6 +111,7 @@
     <string name="name_can_not_be_empty">Le champ de nom ne peut pas être vide</string>
     <string name="warehouse_contains_already">Ce magasin contient déjà </string>
     <string name="and_its_capacity"> et sa capacité est de </string>
+    <string name="quantity_not_updated">Quantité non mise à jour</string>
 
 
 </resources>
