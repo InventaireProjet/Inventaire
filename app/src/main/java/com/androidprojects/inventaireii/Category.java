@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -147,7 +148,8 @@ public class Category extends AppCompatActivity {
 
                 View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
-                        800);
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+               popupWindow.showAtLocation(popupView, Gravity.CENTER, 0,0);
 
                 //To view the keyboard
                 popupWindow.setFocusable(true);
