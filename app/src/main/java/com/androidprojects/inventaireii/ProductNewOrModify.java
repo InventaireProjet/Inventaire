@@ -77,7 +77,11 @@ public class ProductNewOrModify extends AppCompatActivity {
             product = productDataSource.getProductById(productId);
             etProductName.setText(product.getName());
             etArtNb.setText(product.getArtNb());
+            // Price : replace decimal separator ',' with '.'; its necessary for Double.parseDouble()
             etPrice.setText(String.format("%,.2f", product.getPrice()));
+            if (etPrice.getText().toString().charAt(etPrice.getText().length() - 3) == ',') {
+                etPrice.setText(etPrice.getText().toString().replace(',', '.'));
+            }
             etDescription.setText(product.getDescription());
             // find position of product category
             int categoryId = 0;
@@ -116,16 +120,11 @@ public class ProductNewOrModify extends AppCompatActivity {
 
                         double price;
                         try {
-                            /*
-                            String stringPrice = etPrice.getText().toString();
-                            if (stringPrice.charAt(stringPrice.length() - 3) == ',') {
-                                price = Double.valueOf(stringPrice.replace(',', '.'));
-                            } */
                             if (etPrice.getText().toString().charAt(etPrice.getText().length() - 3) == ',') {
                                 etPrice.setText(etPrice.getText().toString().replace(',' , '.'));
                             }
                             price = Double.valueOf(etPrice.getText().toString());
-                        } catch (NumberFormatException e) {
+                        } catch (Exception e) {
                             price = 0.0;
                         }
 
@@ -159,11 +158,13 @@ public class ProductNewOrModify extends AppCompatActivity {
                                 getResources().getString(R.string.name_can_not_be_empty),
                                 Toast.LENGTH_SHORT).show();
                     }
-                    // Double.parseDouble needs a '.' as decimal separator, not a ',':
-                    if (etPrice.getText().toString().charAt(etPrice.getText().length() - 3) == ',') {
-                        etPrice.setText(etPrice.getText().toString().replace(',' , '.'));
+                    try {
+                        product.setPrice(Double.parseDouble(etPrice.getText().toString()));
+                    } catch (Exception e) {
+                        Toast.makeText(ProductNewOrModify.this, getResources().getString(R.string.price_not_changed), Toast.LENGTH_SHORT).show();
                     }
-                    product.setPrice(Double.parseDouble(etPrice.getText().toString()));
+
+
                     product.setDescription(etDescription.getText().toString());
                     product.setCategory(cat);
                     productDataSource.updateProduct(product);
