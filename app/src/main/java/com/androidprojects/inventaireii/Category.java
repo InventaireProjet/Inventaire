@@ -147,7 +147,7 @@ public class Category extends AppCompatActivity {
 
                 View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
-                        500);
+                        800);
 
                 //To view the keyboard
                 popupWindow.setFocusable(true);
@@ -189,7 +189,7 @@ public class Category extends AppCompatActivity {
                     }
                 });
 
-                popupWindow.showAsDropDown(btnModify, 0, -100);
+                popupWindow.showAsDropDown(btnModify, 0, 0);
             }
         });
 
