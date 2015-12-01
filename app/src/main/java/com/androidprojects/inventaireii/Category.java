@@ -69,7 +69,7 @@ public class Category extends AppCompatActivity {
 
         //Category name retrieved from the previous screen
         title = (TextView) findViewById(R.id.txtTitle);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
 
         final int categoryId = intent.getIntExtra("categoryId", 0);
         category = categoryDataSource.getCategoryById(categoryId);
@@ -125,14 +125,13 @@ public class Category extends AppCompatActivity {
         });
 
 
-// Fill the ListView with products
-
-        ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
-         header = getLayoutInflater().inflate(R.layout.product_row_header, null);
+    // Fill the ListView with products
+        final ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
+        header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
-
         adapter = new ProductsAdapter(this, productsToDisplay);
         lvProducts.setAdapter(adapter);
+
         // Total quantity of products and value of stock
         showTotalInStock();
 
@@ -142,6 +141,7 @@ public class Category extends AppCompatActivity {
         btnModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
@@ -175,11 +175,10 @@ public class Category extends AppCompatActivity {
 
                         title.setText(userEntry.getText().toString());
 
-                        if (productsToDisplay!=null){
-                            adapter.notifyDataSetChanged();
-                        }
                         popupWindow.dismiss();
 
+                        startActivity(intent);
+                        finish();
                     }
                 });
 
@@ -253,6 +252,7 @@ public class Category extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.category_short);
         title.setText(category.getName());
 
+        adapter.notifyDataSetChanged();
         ((TextView) header.findViewById(R.id.square)).setText(R.string.inventory_shorted);
         ((TextView) header.findViewById(R.id.no_art)).setText(R.string.article_number_short);
         ((TextView) header.findViewById(R.id.name)).setText(R.string.name_short);

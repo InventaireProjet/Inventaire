@@ -26,6 +26,8 @@ import java.util.List;
 
 public class WarehouseStock extends AppCompatActivity {
 
+
+    TextView title;
     Button btnDelete;
     Button btnNext;
     Button btnPrevious;
@@ -41,26 +43,12 @@ public class WarehouseStock extends AppCompatActivity {
     int nbWarehouses;
     Button buttonDeleteWarehouse;
     Button buttonCancel;
+    View header;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-    }
-
-
-    //Refreshing the adapter so it shows the changes
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        //Language management to refresh
-        Methods.setLocale(this);
-        getSupportActionBar().setTitle(R.string.warehouse_stock);
 
         productDataSource =  ProductDataSource.getInstance(this);
         warehouseDataSource =  WarehouseDataSource.getInstance(this);
@@ -81,7 +69,7 @@ public class WarehouseStock extends AppCompatActivity {
 
 
         //Warehouse name retrieved from the previous screen
-        final TextView title = (TextView) findViewById(R.id.txtTitle);
+        title = (TextView) findViewById(R.id.txtTitle);
         Intent intent = getIntent();
         final int warehouseId = intent.getIntExtra("warehouseId", 1);
 
@@ -91,7 +79,6 @@ public class WarehouseStock extends AppCompatActivity {
 
         //Define the products to display
         productsToDisplay = productDataSource.getAllProductsByWarehouse(warehouseId);
-
 
         squareInventoryState.setBackgroundColor(Methods.giveColor(squareInventoryState, Methods.getInventoryState(productsToDisplay)));
 
@@ -139,7 +126,7 @@ public class WarehouseStock extends AppCompatActivity {
 
 // Fill the ListView with products
         ListView lvProducts = (ListView) findViewById(R.id.lvProducts);
-        View header = getLayoutInflater().inflate(R.layout.product_row_header, null);
+         header = getLayoutInflater().inflate(R.layout.product_row_header, null);
         lvProducts.addHeaderView(header);
         adapter = new ProductsAdapter(this, productsToDisplay);
         lvProducts.setAdapter(adapter);
@@ -199,6 +186,33 @@ public class WarehouseStock extends AppCompatActivity {
         squareTotalStock.setBackgroundColor(Methods.giveColor(squareTotalStock, Methods.getInventoryState(productsToDisplay)));
         showTotalInStock();
 */
+
+
+    }
+
+
+    //Refreshing the adapter so it shows the changes
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        //Language management to refresh
+        Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.warehouse_stock);
+
+        title.setText(warehouse.getName());
+
+        ((TextView) header.findViewById(R.id.square)).setText(R.string.inventory_shorted);
+        ((TextView) header.findViewById(R.id.no_art)).setText(R.string.article_number_short);
+        ((TextView) header.findViewById(R.id.name)).setText(R.string.name_short);
+        ((TextView) header.findViewById(R.id.category)).setText(R.string.category_short);
+        ((TextView) header.findViewById(R.id.quantity)).setText(R.string.quantity_short);
+        ((TextView) header.findViewById(R.id.price)).setText(R.string.price);
+
+        showTotalInStock();;
+        btnDelete.setText(R.string.delete);
+        adapter.notifyDataSetChanged();
 
     }
 

@@ -24,75 +24,36 @@ public class Warehouse extends AppCompatActivity {
 
     Button btnModify;
     Button btnDelete;
+    Button viewStockBtn;
     PopupWindow popupWindow;
     WarehouseDataSource warehouseDataSource;
     ProductDataSource productDataSource;
     StockDataSource stockDataSource;
     ObjectWarehouse warehouse;
     List<ObjectProducts> productsInWarehouse;
+    TextView warehouseName ;
+    TextView inventoriedElements;
+    View squareInventoryState;
+    TextView inventoryState ;
+    TextView freeSpaceTitle;
+    TextView freeSpaceNumber ;
+    TextView freeSpacePercentage;
+    TextView storageCapacityTitle;
+    TextView capacityNumber;
+    TextView address;
+    TextView phoneTitle;
+    TextView phoneEntry;
+    TextView addressTitle;
+    TextView street ;
+    TextView streetNo ;
+    TextView postalCode ;
+    TextView city ;
+    TextView country ;
+    int freeSpace;
+    int freeSpaceInPercent;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        int id = item.getItemId();
-
-        Intent intent;
-
-        switch (id) {
-
-            case R.id.action_settings:
-                intent = new Intent(this, AppSettingsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.go_home:
-                intent = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.goto_products:
-                intent = new Intent(getBaseContext(), MyProducts.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.goto_categories:
-                intent = new Intent(getBaseContext(), MyCategories.class);
-                startActivity(intent);
-                return true;
-
-
-            case R.id.goto_warehouses:
-                intent = new Intent(getBaseContext(), MyWarehouses.class);
-                startActivity(intent);
-                return true;
-
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected void onResume() {
-        super.onResume();
-
-        //Language management
-        Methods.setLocale(this);
-        getSupportActionBar().setTitle(R.string.warehouse);
 
         setContentView(R.layout.activity_warehouse);
 
@@ -101,20 +62,25 @@ public class Warehouse extends AppCompatActivity {
         stockDataSource = StockDataSource.getInstance(this);
 
         //Layout elements
-        TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
-        View squareInventoryState = findViewById(R.id.squareInventoryState);
-        TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
-        TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
-        TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
-        TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
-        TextView phoneEntry = (TextView) findViewById(R.id.phoneEntry);
-        TextView street = (TextView) findViewById(R.id.street);
-        TextView streetNo = (TextView) findViewById(R.id.streetNo);
-        TextView postalCode = (TextView) findViewById(R.id.postalCode);
-        TextView city = (TextView) findViewById(R.id.city);
-        TextView country = (TextView) findViewById(R.id.country);
-
-        Button viewStockBtn = (Button) findViewById(R.id.viewStockBtn);
+        warehouseName = (TextView) findViewById(R.id.warehouseName);
+        squareInventoryState = findViewById(R.id.squareInventoryState);
+        inventoryState = (TextView) findViewById(R.id.inventoryState);
+        freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
+        freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
+        capacityNumber = (TextView) findViewById(R.id.capacityNumber);
+        phoneEntry = (TextView) findViewById(R.id.phoneEntry);
+        street = (TextView) findViewById(R.id.street);
+        streetNo = (TextView) findViewById(R.id.streetNo);
+        postalCode = (TextView) findViewById(R.id.postalCode);
+        city = (TextView) findViewById(R.id.city);
+        country = (TextView) findViewById(R.id.country);
+        inventoriedElements = (TextView) findViewById(R.id.inventoriedElements);
+        freeSpaceTitle = (TextView) findViewById(R.id.freeSpace);
+        storageCapacityTitle =(TextView) findViewById(R.id.capacity);
+        address = (TextView) findViewById(R.id.address);
+        phoneTitle= (TextView) findViewById(R.id.phone);
+        addressTitle =(TextView) findViewById(R.id.location);
+        viewStockBtn = (Button) findViewById(R.id.viewStockBtn);
         btnModify = (Button) findViewById(R.id.buttonModify);
         btnDelete = (Button) findViewById(R.id.buttonDelete);
 
@@ -137,17 +103,17 @@ public class Warehouse extends AppCompatActivity {
         inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
         //Second part
-        int freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
-        freeSpaceNumber.setText(freeSpace + " places");
+        freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
+        freeSpaceNumber.setText(freeSpace +" " +getString(R.string.places));
 
         if (warehouse.getStockCapacity() != 0) {
-            int freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
+            freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
             freeSpacePercentage.setText(freeSpaceInPercent + "%");
         }
 
 
         //Third part
-        capacityNumber.setText(warehouse.getStockCapacity() + " places");
+        capacityNumber.setText(warehouse.getStockCapacity() +" " +getString(R.string.places));
 
         //Fourth part
         phoneEntry.setText(warehouse.getTelNumber());
@@ -222,6 +188,78 @@ public class Warehouse extends AppCompatActivity {
 
             }
         });
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        int id = item.getItemId();
+
+        Intent intent;
+
+        switch (id) {
+
+            case R.id.action_settings:
+                intent = new Intent(this, AppSettingsActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.go_home:
+                intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.goto_products:
+                intent = new Intent(getBaseContext(), MyProducts.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.goto_categories:
+                intent = new Intent(getBaseContext(), MyCategories.class);
+                startActivity(intent);
+                return true;
+
+
+            case R.id.goto_warehouses:
+                intent = new Intent(getBaseContext(), MyWarehouses.class);
+                startActivity(intent);
+                return true;
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        //Language management
+        Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.warehouse);
+
+
+        inventoriedElements.setText(R.string.inventoried_elements);
+        freeSpaceTitle.setText(R.string.free_space);
+        storageCapacityTitle.setText(R.string.warehouse_capacity);
+        address.setText(R.string.warehouse_address);
+        phoneTitle.setText(R.string.phone_short);
+        addressTitle.setText(R.string.warehouse_address_colon);
+        viewStockBtn.setText(R.string.view_stock_button);
+        btnModify.setText(R.string.modify);
+        btnDelete.setText(R.string.delete);
+
+
     }
 
     @Override

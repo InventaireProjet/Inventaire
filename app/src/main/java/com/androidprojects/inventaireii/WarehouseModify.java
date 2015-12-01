@@ -22,6 +22,38 @@ import java.util.List;
 
 public class WarehouseModify extends AppCompatActivity {
 
+    TextView warehouseName;
+    EditText editWarehouseName;
+    TextView txtPlaces ;
+    TextView street ;
+    TextView streetNo;
+    TextView postalCode;
+    TextView city ;
+    TextView country;
+    TextView inventoriedElements;
+    View squareInventoryState;
+    TextView inventoryState ;
+    TextView freeSpaceTitle;
+    TextView freeSpaceNumber ;
+    TextView freeSpacePercentage;
+    TextView storageCapacityTitle;
+    TextView capacityNumber;
+    TextView address;
+    TextView phoneTitle;
+    TextView phoneEntry;
+    TextView addressTitle;
+    EditText editCapacityNumber;
+    EditText editPhoneEntry ;
+    EditText editStreet ;
+    EditText editStreetNo;
+    EditText editPostalCode;
+    EditText editCity ;
+    EditText editCountry;
+    int freeSpace;
+    int freeSpaceInPercent;
+    Button viewStockBtn ;
+    Button btnModify ;
+    Button btnDelete ;
     Button btnCancel;
     Button btnValidate;
     ObjectWarehouse warehouse;
@@ -33,16 +65,6 @@ public class WarehouseModify extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        //Refresh the language
-        Methods.setLocale(this);
-        getSupportActionBar().setTitle(R.string.warehouse_modification);
-
         setContentView(R.layout.activity_warehouse);
 
         productDataSource =  ProductDataSource.getInstance(this);
@@ -50,31 +72,39 @@ public class WarehouseModify extends AppCompatActivity {
         stockDataSource = StockDataSource.getInstance(this);
 
         //Layout elements
-        TextView warehouseName = (TextView) findViewById(R.id.warehouseName);
-        final EditText editWarehouseName = (EditText) findViewById(R.id.editWarehouseName);
-        View squareInventoryState = findViewById(R.id.squareInventoryState);
-        TextView inventoryState = (TextView) findViewById(R.id.inventoryState);
-        TextView freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
-        TextView freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
-        TextView capacityNumber = (TextView) findViewById(R.id.capacityNumber);
-        TextView txtPlaces = (TextView) findViewById(R.id.txtPlaces);
-        TextView phoneEntry = (TextView) findViewById(R.id.phoneEntry);
-        TextView street = (TextView) findViewById(R.id.street);
-        TextView streetNo = (TextView) findViewById(R.id.streetNo);
-        TextView postalCode = (TextView) findViewById(R.id.postalCode);
-        TextView city = (TextView) findViewById(R.id.city);
-        TextView country = (TextView) findViewById(R.id.country);
-        final EditText editCapacityNumber = (EditText) findViewById(R.id.editCapacityNumber);
-        final EditText editPhoneEntry = (EditText) findViewById(R.id.editPhoneEntry);
-        final EditText editStreet = (EditText) findViewById(R.id.editStreet);
-        final EditText editStreetNo = (EditText) findViewById(R.id.editStreetNo);
-        final EditText editPostalCode = (EditText) findViewById(R.id.editPostalCode);
-        final EditText editCity = (EditText) findViewById(R.id.editCity);
-        final EditText editCountry = (EditText) findViewById(R.id.editCountry);
+        warehouseName = (TextView) findViewById(R.id.warehouseName);
+        editWarehouseName = (EditText) findViewById(R.id.editWarehouseName);
+        squareInventoryState = findViewById(R.id.squareInventoryState);
+        inventoryState = (TextView) findViewById(R.id.inventoryState);
+        freeSpaceNumber = (TextView) findViewById(R.id.freeSpaceNumber);
+        freeSpacePercentage = (TextView) findViewById(R.id.freeSpacePercentage);
+        capacityNumber = (TextView) findViewById(R.id.capacityNumber);
+        txtPlaces = (TextView) findViewById(R.id.txtPlaces);
+        phoneEntry = (TextView) findViewById(R.id.phoneEntry);
+        street = (TextView) findViewById(R.id.street);
+        streetNo = (TextView) findViewById(R.id.streetNo);
+        postalCode = (TextView) findViewById(R.id.postalCode);
+        city = (TextView) findViewById(R.id.city);
+        country = (TextView) findViewById(R.id.country);
+        editCapacityNumber = (EditText) findViewById(R.id.editCapacityNumber);
+        editPhoneEntry = (EditText) findViewById(R.id.editPhoneEntry);
+        editStreet = (EditText) findViewById(R.id.editStreet);
+        editStreetNo = (EditText) findViewById(R.id.editStreetNo);
+        editPostalCode = (EditText) findViewById(R.id.editPostalCode);
+        editCity = (EditText) findViewById(R.id.editCity);
+        editCountry = (EditText) findViewById(R.id.editCountry);
 
-        Button viewStockBtn = (Button) findViewById(R.id.viewStockBtn);
-        Button btnModify = (Button) findViewById(R.id.buttonModify);
-        Button btnDelete = (Button) findViewById(R.id.buttonDelete);
+        inventoriedElements = (TextView) findViewById(R.id.inventoriedElements);
+        freeSpaceTitle = (TextView) findViewById(R.id.freeSpace);
+        storageCapacityTitle =(TextView) findViewById(R.id.capacity);
+        address = (TextView) findViewById(R.id.address);
+        phoneTitle= (TextView) findViewById(R.id.phone);
+        addressTitle =(TextView) findViewById(R.id.location);
+
+
+        viewStockBtn = (Button) findViewById(R.id.viewStockBtn);
+        btnModify = (Button) findViewById(R.id.buttonModify);
+        btnDelete = (Button) findViewById(R.id.buttonDelete);
         btnCancel = (Button) findViewById(R.id.buttonCancel);
         btnValidate = (Button) findViewById(R.id.buttonValidate);
 
@@ -108,11 +138,11 @@ public class WarehouseModify extends AppCompatActivity {
         inventoryState.setText(warehouse.getInventoriedObjects() + "/" + warehouse.getNumberObjects());
 
         //Second part
-        int freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
-        freeSpaceNumber.setText(freeSpace + " places");
+        freeSpace = warehouse.getStockCapacity() - warehouse.getNumberObjects();
+        freeSpaceNumber.setText(freeSpace + " " + getString(R.string.places));
 
         if (warehouse.getStockCapacity() != 0) {
-            int freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
+            freeSpaceInPercent = freeSpace * 100 / warehouse.getStockCapacity();
             freeSpacePercentage.setText(freeSpaceInPercent + "%");
         }
 
@@ -212,7 +242,25 @@ public class WarehouseModify extends AppCompatActivity {
             }
 
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //Refresh the language
+        Methods.setLocale(this);
+        getSupportActionBar().setTitle(R.string.warehouse_modification);
+
+        inventoriedElements.setText(R.string.inventoried_elements);
+        freeSpaceTitle.setText(R.string.free_space);
+        storageCapacityTitle.setText(R.string.warehouse_capacity);
+        address.setText(R.string.warehouse_address);
+        phoneTitle.setText(R.string.phone_short);
+        addressTitle.setText(R.string.warehouse_address_colon);
+        viewStockBtn.setText(R.string.view_stock_button);
+        btnCancel.setText(R.string.cancel);
+        btnValidate.setText(R.string.validate);
 
     }
 
