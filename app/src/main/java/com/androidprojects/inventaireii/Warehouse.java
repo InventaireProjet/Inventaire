@@ -51,6 +51,7 @@ public class Warehouse extends AppCompatActivity {
     TextView country ;
     int freeSpace;
     int freeSpaceInPercent;
+    boolean popupWindowIsOn;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,16 +151,17 @@ public class Warehouse extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                Methods.setLocale(getBaseContext());
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 View popupView = layoutInflater.inflate(R.layout.delete_warehouse_popup, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
-
+                popupWindowIsOn = true;
 
                 // Catch the elements of the pop-up view
-                Button buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
+                final Button buttonDeleteWarehouse = (Button) popupView.findViewById(R.id.buttonDeleteWarehouse);
                 Button buttonCancel = (Button) popupView.findViewById(R.id.buttonCancel);
 
 
@@ -170,6 +172,7 @@ public class Warehouse extends AppCompatActivity {
 
                         warehouseDataSource.deleteWarehouseAndProducts(warehouseId);
 
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                         Intent intent = new Intent(getBaseContext(), MyWarehouses.class);
                         startActivity(intent);
@@ -180,17 +183,35 @@ public class Warehouse extends AppCompatActivity {
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                     }
                 });
 
-                popupWindow.showAsDropDown(buttonDeleteWarehouse, 0, -100);
+                btnDelete.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.showAsDropDown(buttonDeleteWarehouse, 0, -100);
+                    }
+                });
 
             }
         });
 
+        if (savedInstanceState != null) {
+            popupWindowIsOn = savedInstanceState.getBoolean("popupWindowIsOn");
+            if (popupWindowIsOn) {
+                btnDelete.performClick();
+            }
+        }
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("popupWindowIsOn", popupWindowIsOn);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
