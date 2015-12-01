@@ -81,7 +81,7 @@
     <string name="no_warehousename">Enter a warehouse name.</string>
     <string name="no_category">No category</string>
     <string name="no_categoryName">Enter a category name to create a new category</string>
-    <string name="inventory_finished_exclamation">Inventory finished !</string>
+    <string name="inventory_finished_exclamation">Inventory finished!</string>
     <string name="no_warehouse">No warehouse</string>
     <string name="you_have_to_create_warehouse">You have to create at least one warehouse</string>
     <string name="stock_added">Stock added</string>
@@ -97,7 +97,7 @@
     <string name="preferences">Preferences</string>
     <string name="language">Language</string>
     <string name="choose_language">Choose your language</string>
-    <string name="question_restart_inventory">Do your really want to launch the inventory ?\n\nIf yes, the inventory process will be restarted and all you products will be displayed as not inventoried.</string>
+    <string name="question_restart_inventory">Do your really want to launch the inventory?\n\nIf yes, the inventory process will be restarted and all you products will be displayed as not inventoried.</string>
     <string name="progress_of_your_inventory_colon">Inventory progress:</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
@@ -111,6 +111,9 @@
     <string name="and_its_capacity"> and its capacity is </string>
     <string name="quantity_not_updated">Quantity not updated</string>
     <string name="price_not_changed">Price not changed</string>
+    <string name="btn_next">&gt;</string>
+    <string name="btn_previous"><![CDATA[<]]></string>
+    <string name="home">home</string>
 
 
 </resources>

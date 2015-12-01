@@ -2,8 +2,6 @@ package com.androidprojects.inventaireii.db;
 
 import android.provider.BaseColumns;
 
-import com.androidprojects.inventaireii.Product;
-
 /**
  * Created by David on 07.11.2015.
  */

@@ -54,7 +54,7 @@
                 android:layout_width="@dimen/navigation_button"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="&gt;"
+                android:text="@string/btn_next"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/dark_Grey"
                 android:visibility="invisible"/>
@@ -64,7 +64,7 @@
                 android:layout_width="@dimen/navigation_button"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/buttonNext"
-                android:text="&lt;"
+                android:text="@string/btn_previous"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/dark_Grey"
                 android:visibility="invisible"/>
@@ -140,8 +140,6 @@
             android:text="@string/delete"
             android:textColor="@color/button_text"
             android:visibility="invisible"/>
-        />
-
 
     </LinearLayout>
 </LinearLayout>

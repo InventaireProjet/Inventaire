@@ -2,16 +2,13 @@ package com.androidprojects.inventaireii;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
-import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,7 +72,7 @@ public class Methods extends AppCompatActivity {
             switch (getInventoryState(p)) {
                 case "done": nbControlled++ ; break ;
                 case "todo": nbNotControlled++ ; break;
-                //If one product is in "doing" state, the whole is necessary in that state
+                //If one product is in "doing" state, the whole is necessarily in that state
                 default: return "doing";
             }
         }

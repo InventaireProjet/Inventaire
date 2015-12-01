@@ -14,9 +14,9 @@ import java.util.List;
 
 public class WarehouseDataSource {
 
+    private static WarehouseDataSource instance;
     private SQLiteDatabase db;
     private Context context;
-    private static WarehouseDataSource instance;
 
     private   WarehouseDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
@@ -73,6 +73,7 @@ public class WarehouseDataSource {
             warehouse.setLocation(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CITY)));
             warehouse.setPostalCode(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ZIPCODE)));
             warehouse.setCountry(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_COUNTRY)));
+            cursor.close();
         }
 
         return warehouse;
@@ -129,15 +130,6 @@ public class WarehouseDataSource {
                 new String[] { String.valueOf(warehouse.getId()) });
     }
 
-    // Delete a Warehouse without deletion of its products : will not be used in this application at this moment
-
-    public void deleteWarehouse(long id){
-
-        // Delete stocks contained in this Warehouse
-        StockDataSource stockDataSource = StockDataSource.getInstance(context);
-        stockDataSource.deleteAllStocksByWarehouse(id);
-
-    }
 
     // Delete a Warehouse WITH deletion of its products
 

@@ -4,15 +4,15 @@
     tools:context="com.androidprojects.inventaireii.Product">
 
     <item android:id="@+id/goto_categories"
-        android:title="@string/categories_initial"
         android:orderInCategory="2"
+        android:title="@string/categories_initial"
         app:showAsAction="always" />
 
     <item android:id="@+id/goto_warehouses"
-        android:title="M"
         android:orderInCategory="3"
+        android:title="@string/warehouses_initial"
         app:showAsAction="always" />
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_settings" android:orderInCategory="100"
+        android:title="@string/action_settings" app:showAsAction="never" />
 </menu>

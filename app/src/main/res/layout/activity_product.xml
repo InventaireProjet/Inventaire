@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_height="match_parent" android:background="@color/back_color"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:background="@color/back_color"
     tools:context="com.androidprojects.inventaireii.Product">
 
     <ScrollView
@@ -26,61 +26,61 @@
 
                 <!-- Title and 3 buttons : controlled, previous, next -->
                 <LinearLayout
+                    android:id="@+id/llTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/llTitle">
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:id="@+id/txtTitle"
-                        android:textColor="@color/text_color"
-                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/text_color"/>
                     <Button
+                        android:id="@+id/buttonAllControlled"
                         android:layout_width="@dimen/square_width"
                         android:layout_height="@dimen/square_height"
-                        android:background="@color/indicator_done"
-                        android:id="@+id/buttonAllControlled"/>
+                        android:background="@color/indicator_done"/>
                     <Button
+                        android:id="@+id/buttonPrevious"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/dark_Grey"
-                        android:text="&lt;"
+                        android:text="@string/btn_previous"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/buttonPrevious"/>
+                        android:textColor="@color/dark_Grey"/>
                     <Button
+                        android:id="@+id/buttonNext"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/dark_Grey"
-                        android:text="&gt;"
+                        android:text="@string/btn_next"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/buttonNext"/>
+                        android:textColor="@color/dark_Grey"/>
                 </LinearLayout>
 
                 <include layout="@layout/blue_line"/>
 
                 <!-- Some information -->
                 <TextView
+                    android:id="@+id/txtArtNb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtArtNb"
                     android:textColor="@color/text_color"
                     />
 
                 <TextView
+                    android:id="@+id/txtCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtCategory"
                     android:textColor="@color/text_color"/>
 
                 <TextView
+                    android:id="@+id/txtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtPrice"
                     android:textColor="@color/text_color"/>
             </LinearLayout>
 
@@ -101,27 +101,27 @@
                         android:id="@+id/txtQuantityStorage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/light_blue"
                         android:text="@string/quantity_and_storage"
-                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/light_blue"/>
 
                     <Button
                         android:id="@+id/buttonAddStock"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/add"
-                        android:layout_marginLeft="30dp"/>
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/add"/>
 
                 </LinearLayout>
 
                 <include layout="@layout/blue_line"/>
 
                 <ListView
+                    android:id="@+id/lvStocks"
                     android:layout_width="fill_parent"
                     android:layout_height="100dp"
                     android:layout_weight="3"
-                    android:background="@color/list_backcolor"
-                    android:id="@+id/lvStocks">
+                    android:background="@color/list_backcolor">
                 </ListView>
 
                 <!-- Totals under the list of Warehouses stocks -->
@@ -131,42 +131,42 @@
                     android:layout_weight="2">
 
                     <View
+                        android:id="@+id/squareTotalStock"
                         android:layout_width="@dimen/square_width"
                         android:layout_height="@dimen/square_height"
-                        android:id="@+id/squareTotalStock"
                         android:background="@color/dark_Grey"/>
 
                     <TextView
+                        android:id="@+id/txtLabelTotalStock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/squareTotalStock"
-                        android:id="@+id/txtLabelTotalStock"
-                        android:textColor="@color/text_color"
-                        android:text="@string/total_stock"/>
+                        android:text="@string/total_stock"
+                        android:textColor="@color/text_color"/>
 
                     <TextView
+                        android:id="@+id/txtValueTotalStock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/txtLabelTotalStock"
                         android:layout_marginLeft="@dimen/middle_space"
-                        android:id="@+id/txtValueTotalStock"
+                        android:layout_toRightOf="@+id/txtLabelTotalStock"
                         android:textColor="@color/text_color" />
 
                     <TextView
+                        android:id="@+id/txtLabelStockValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtLabelTotalStock"
                         android:layout_alignLeft="@+id/txtLabelTotalStock"
-                        android:id="@+id/txtLabelStockValue"
-                        android:textColor="@color/text_color"
-                        android:text="@string/stock_value"/>
+                        android:layout_below="@+id/txtLabelTotalStock"
+                        android:text="@string/stock_value"
+                        android:textColor="@color/text_color"/>
 
                     <TextView
+                        android:id="@+id/txtValueStockValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtValueTotalStock"
                         android:layout_alignLeft="@+id/txtValueTotalStock"
-                        android:id="@+id/txtValueStockValue"
+                        android:layout_below="@+id/txtValueTotalStock"
                         android:textColor="@color/text_color"/>
 
                 </RelativeLayout>
@@ -183,17 +183,17 @@
                     android:id="@+id/txtDescriptionTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/light_blue"
                     android:text="@string/product_description"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/light_blue"/>
                 <include layout="@layout/blue_line"/>
 
                 <TextView
+                    android:id="@+id/txtDescription"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:lines="3"
                     android:background="@color/list_backcolor"
-                    android:id="@+id/txtDescription"/>
+                    android:lines="3"/>
 
             </LinearLayout>
 
@@ -205,24 +205,24 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/buttonModify"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:id="@+id/buttonModify"
+                    android:layout_weight="1"
                     android:background="@color/button_background"
-                    android:textColor="@color/button_text"
-                    android:text="@string/modify" />
+                    android:text="@string/modify"
+                    android:textColor="@color/button_text" />
 
                 <Button
+                    android:id="@+id/buttonSuppress"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/buttonSuppress"
+                    android:layout_weight="1"
                     android:background="@color/button_background"
-                    android:textColor="@color/button_text"
-                    android:text="@string/suppress"/>
+                    android:text="@string/suppress"
+                    android:textColor="@color/button_text"/>
 
             </LinearLayout>
 

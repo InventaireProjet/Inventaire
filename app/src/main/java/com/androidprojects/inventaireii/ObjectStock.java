@@ -1,8 +1,5 @@
 package com.androidprojects.inventaireii;
 
-import com.androidprojects.inventaireii.ObjectProducts;
-import com.androidprojects.inventaireii.ObjectWarehouse;
-
 /**
  * Created by Administrateur on 26.10.2015.
  */

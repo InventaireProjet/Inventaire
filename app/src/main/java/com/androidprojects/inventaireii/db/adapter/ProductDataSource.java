@@ -16,11 +16,11 @@ import java.util.List;
 
 public class ProductDataSource {
 
+    private static ProductDataSource instance;
     private SQLiteDatabase db;
     private Context context;
     private CategoryDataSource categoryDataSource ;
     private StockDataSource stockDataSource;
-    private static ProductDataSource instance;
 
     private  ProductDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
@@ -54,20 +54,6 @@ public class ProductDataSource {
         return  id;
     }
 
-    // Get the number of products
-    public int getNumberOfProducts() {
-        int number = 0;
-        String sql = "SELECT COUNT(*) as Number FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS;
-        Cursor cursor = this.db.rawQuery(sql, null);
-
-        if (cursor != null){
-            cursor.moveToFirst();
-            number = cursor.getInt(cursor.getColumnIndex("Number"));
-            cursor.close();
-        }
-
-        return number;
-    }
 
     //Find a product by Id
 
