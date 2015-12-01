@@ -149,10 +149,10 @@ public class Category extends AppCompatActivity {
                 View popupView = layoutInflater.inflate(R.layout.new_category_popup, null);
                 popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
-               popupWindow.showAtLocation(popupView, Gravity.CENTER, 0,0);
 
                 //To view the keyboard
                 popupWindow.setFocusable(true);
+                popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
                 // Catch the elements of the pop-up view
                 final TextView titleModify = (TextView) popupView.findViewById(R.id.txtTitle);
