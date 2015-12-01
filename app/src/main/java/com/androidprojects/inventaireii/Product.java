@@ -29,6 +29,7 @@ public class Product extends AppCompatActivity {
     ArrayAdapter adapter;
     ProductDataSource productDataSource;
     StockDataSource stockDataSource;
+    boolean popupWindowIsOn;
 
     // Declaration of the views
     View squareTotalStock;
@@ -47,6 +48,7 @@ public class Product extends AppCompatActivity {
     TextView txtDescription;
     Button buttonModify;
     Button buttonSuppress;
+    PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,9 +190,11 @@ public class Product extends AppCompatActivity {
                         (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View popupView =
                         layoutInflater.inflate(R.layout.activity_popup_ok_cancel, null);
-                final PopupWindow popupWindow = new PopupWindow(popupView,
+                popupWindow = new PopupWindow(popupView,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
+
+                popupWindowIsOn = true;
 
                 // Catch the elements of the pop-up Window
                 TextView txtQuestion = (TextView) popupView.findViewById(R.id.txtQuestion);
@@ -208,10 +212,11 @@ public class Product extends AppCompatActivity {
                         }
 
                         productDataSource.deleteProduct(product);
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                         Toast toast = Toast.makeText(getBaseContext(),
                                 R.string.product_deleted, Toast.LENGTH_LONG);
-                        
+
                         toast.show();
 
                         finish();
@@ -223,14 +228,28 @@ public class Product extends AppCompatActivity {
                 buttonCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        popupWindowIsOn = false;
                         popupWindow.dismiss();
                     }
                 });
 
-                popupWindow.showAsDropDown(txtDescription, 0, -100);
+                buttonSuppress.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow.showAsDropDown(txtQuantityStorage, 0, -100);
+                    }
+                });
+
 
             }
         });
+
+        if (savedInstanceState != null) {
+            popupWindowIsOn = savedInstanceState.getBoolean("popupWindowIsOn");
+            if (popupWindowIsOn) {
+                buttonSuppress.performClick();
+            }
+        }
     }
 
     @Override
@@ -300,6 +319,12 @@ public class Product extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("popupWindowIsOn", popupWindowIsOn);
     }
 
     private int giveColor(Boolean controlled) {
