@@ -53,7 +53,7 @@ public class ProductNewOrModify extends AppCompatActivity {
         // Fill the Spinner with all categories
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         categoryList = categoryDataSource.getAllCategories();
-            // add a "no category" in position 0
+        // add a "no category" in position 0
         categoryList.add(0, new ObjectCategories("", getResources().getString(R.string.no_category),""));
         categoriesNames = new ArrayList<>();
         for (ObjectCategories cat : categoryList)

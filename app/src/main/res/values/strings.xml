@@ -114,6 +114,7 @@
     <string name="btn_next">&gt;</string>
     <string name="btn_previous"><![CDATA[<]]></string>
     <string name="home">home</string>
+    <string name="stock_suppressed">Stock suppressed</string>
 
 
 </resources>

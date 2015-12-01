@@ -72,7 +72,6 @@ public class StockNewOrModify extends AppCompatActivity {
         spinnerWarehouse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = (String) parent.getItemAtPosition(position);
                 ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.button_text));
             }
 
@@ -137,6 +136,13 @@ public class StockNewOrModify extends AppCompatActivity {
             public void onClick(View v) {
                 product.removeStock(stock);
                 stockDataSource.deleteStock(stock);
+                Toast.makeText(StockNewOrModify.this,
+                        getResources().getString(R.string.stock_suppressed),
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getBaseContext(), Product.class);
+                intent.putExtra("position", product.getId());
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -197,10 +203,10 @@ public class StockNewOrModify extends AppCompatActivity {
                 Toast toast = Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG);
                 toast.show();
 
+                // Return to the product
                 Intent intent = new Intent(getBaseContext(), Product.class);
                 intent.putExtra("position", product.getId());
                 startActivity(intent);
-
                 finish();
 
             }

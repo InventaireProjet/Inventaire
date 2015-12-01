@@ -23,14 +23,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    // Declarations of variables
+    // Declaration of variables
     int nbItems = 0;
     int nbInventoriedItems = 0;
     StockDataSource stockDataSource;
     ProductDataSource productDataSource;
     boolean popupWindowIsOn;
 
-    // Declarations of views
+    // Declaration of views
     TextView txtTitle;
     TextView txtInventoryRunning;
     TextView txtInventoryState;
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Methods.setLocale(this);
         setContentView(R.layout.activity_main);
-
 
         stockDataSource = StockDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.app_name);
 
 
-        /* Display of Inventory-depending fields */
+        // Display of Inventory-depending fields
         setInventoryFields();
 
 
