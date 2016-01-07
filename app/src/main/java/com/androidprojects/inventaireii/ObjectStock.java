@@ -7,13 +7,13 @@ public class ObjectStock {
     private int id;
     private int quantity;
     private boolean controlled;
-    private ObjectProducts product;
+    private int productID;
     private ObjectWarehouse warehouse;
 
-    public ObjectStock(int quantity, boolean controlled, ObjectProducts product, ObjectWarehouse warehouse) {
+    public ObjectStock(int quantity, boolean controlled, int productID, ObjectWarehouse warehouse) {
         this.quantity = quantity;
         this.controlled = controlled;
-        this.product = product;
+        this.productID = productID;
         this.warehouse = warehouse;
     }
 
@@ -45,12 +45,12 @@ public class ObjectStock {
         this.controlled = controlled;
     }
 
-    public ObjectProducts getProduct() {
-        return product;
+    public int getProduct() {
+        return productID;
     }
 
     public void setProduct(ObjectProducts product) {
-        this.product = product;
+        this.productID = product.getId();
     }
 
     public ObjectWarehouse getWarehouse() {

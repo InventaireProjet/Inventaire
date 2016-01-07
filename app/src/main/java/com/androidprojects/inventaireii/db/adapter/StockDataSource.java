@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class StockDataSource {
 
+    private static StockDataSource instance;
     private SQLiteDatabase db;
     private Context context = null;
     private ProductDataSource productDataSource ;
     private WarehouseDataSource warehouseDataSource;
-    private static StockDataSource instance;
 
     private  StockDataSource (Context context) {
         productDataSource = ProductDataSource.getInstance(context);
@@ -46,7 +46,7 @@ public class StockDataSource {
         ContentValues values = new ContentValues();
         values.put(InventoryContract.StockEntry.KEY_QUANTITY, stock.getQuantity());
         values.put(InventoryContract.StockEntry.KEY_CONTROLLED, stock.isControlled());
-        values.put(InventoryContract.StockEntry.KEY_PRODUCT_ID, stock.getProduct().getId());
+        values.put(InventoryContract.StockEntry.KEY_PRODUCT_ID, stock.getProduct());
         values.put(InventoryContract.StockEntry.KEY_WAREHOUSE_ID, stock.getWarehouse().getId());
 
         id = this.db.insert(InventoryContract.StockEntry.TABLE_STOCKS, null, values);
@@ -192,7 +192,7 @@ public class StockDataSource {
         values.put(InventoryContract.StockEntry.KEY_QUANTITY, stock.getQuantity());
         values.put(InventoryContract.StockEntry.KEY_CONTROLLED, stock.isControlled());
         values.put(InventoryContract.StockEntry.KEY_WAREHOUSE_ID, stock.getWarehouse().getId());
-        values.put(InventoryContract.StockEntry.KEY_PRODUCT_ID, stock.getProduct().getId());
+        values.put(InventoryContract.StockEntry.KEY_PRODUCT_ID, stock.getProduct());
 
         return this.db.update(InventoryContract.StockEntry.TABLE_STOCKS, values,
                 InventoryContract.StockEntry.KEY_ID + " = ?",

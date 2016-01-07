@@ -24,17 +24,6 @@ import java.util.List;
 
 public class StockNewOrModify extends AppCompatActivity {
 
-    private ObjectProducts product;
-    private ObjectStock stock;
-    private int productId;
-    private int stockId;
-    private List<ObjectWarehouse> warehousesList;
-
-    private StockDataSource stockDataSource;
-    private ProductDataSource productDataSource;
-    private WarehouseDataSource warehouseDataSource;
-    private ArrayAdapter adapter;
-
     // Declaration of views
     TextView txtProductName;
     TextView txtControlled;
@@ -45,8 +34,15 @@ public class StockNewOrModify extends AppCompatActivity {
     Button buttonCancel;
     Button buttonSuppress;
     Button buttonSave;
-
-
+    private ObjectProducts product;
+    private ObjectStock stock;
+    private int productId;
+    private int stockId;
+    private List<ObjectWarehouse> warehousesList;
+    private StockDataSource stockDataSource;
+    private ProductDataSource productDataSource;
+    private WarehouseDataSource warehouseDataSource;
+    private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +158,7 @@ public class StockNewOrModify extends AppCompatActivity {
                     }
                     stock = new ObjectStock(quantity,
                             switchControlled.isChecked(),
-                            product,
+                            product.getId(),
                             warehouse);
                     // Control if there is place enough in the warehouse
                     int warehouseNumberOfObjects = stockDataSource.getNumberObjects(warehouse.getId());
