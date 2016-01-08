@@ -80,6 +80,17 @@
                 android:background="@color/button_background"
                 android:text="@string/start_inventory"
                 android:textColor="@color/button_text"/>
+
+            <Button
+                android:id="@+id/buttonSynchronize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/main_activity_bottom_margin"
+                android:background="@color/button_background"
+                android:text="@string/synchronize_data"
+                android:textColor="@color/button_text"/>
+
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

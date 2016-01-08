@@ -115,6 +115,7 @@
     <string name="btn_previous"><![CDATA[<]]></string>
     <string name="home">home</string>
     <string name="stock_suppressed">Stock suppressed</string>
+    <string name="synchronize_data">Synchronize</string>
 
 
 </resources>
