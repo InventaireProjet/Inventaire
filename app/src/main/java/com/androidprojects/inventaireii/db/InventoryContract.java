@@ -2,9 +2,6 @@ package com.androidprojects.inventaireii.db;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by David on 07.11.2015.
- */
 public final class InventoryContract {
 
     // Should never be instantiated
@@ -113,6 +110,27 @@ public final class InventoryContract {
                 + "FOREIGN KEY (" + StockEntry.KEY_WAREHOUSE_ID
                     + ") REFERENCES " + WarehouseEntry.TABLE_WAREHOUSES
                     + " (" + WarehouseEntry.KEY_ID + ") "
+                + ");";
+    }
+
+    /* CHANGES */
+    public static abstract class ChangeEntry implements BaseColumns {
+        // Table name
+        public static final String TABLE_CHANGES = "changes";
+
+        // Changes Column names
+        public static final String KEY_ID = "id";
+        public static final String KEY_TABLE = "table";
+        public static final String KEY_ELEMENT_ID = "elementId";
+        public static final String KEY_TYPE_OF_CHANGE = "typeOfChange";
+
+        // Table changes create statement
+        public static final String CREATE_TABLE_CHANGES = "CREATE TABLE "
+                + TABLE_CHANGES + "("
+                + ChangeEntry.KEY_ID + " INTEGER PRIMARY KEY, "
+                + ChangeEntry.KEY_TABLE + " TEXT, "
+                + ChangeEntry.KEY_ELEMENT_ID + " INTEGER, "
+                + ChangeEntry.KEY_TYPE_OF_CHANGE + " TEXT"
                 + ");";
     }
 }
