@@ -13,9 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
+import com.example.myapplication.backend.objectCategoriesApi.model.*;
+import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
 
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     int nbInventoriedItems = 0;
     StockDataSource stockDataSource;
     ProductDataSource productDataSource;
+    CategoryDataSource categoryDataSource;
     boolean popupWindowIsOn;
 
     // Declaration of views
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtWarehouseAccess;
     PopupWindow popupWindow;
     Button buttonStartInventory;
+    Button buttonSynchronize;
 
 
 
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         stockDataSource = StockDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
-
+categoryDataSource = CategoryDataSource.getInstance(this);
         // Access by product
         txtProductAccess = (TextView) findViewById(R.id.txtProductAccess);
         txtProductAccess.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Pop-up Window on click on 'New Inventory'
         buttonStartInventory = (Button) findViewById(R.id.buttonStartInventory);
+
         buttonStartInventory.setOnClickListener(new Button.OnClickListener() {
 
             @Override
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         restartInventory();
-                        popupWindowIsOn = false;
+                       popupWindowIsOn = false;
                         popupWindow.dismiss();
                     }
                 });
@@ -131,6 +137,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+
+            }
+        });
+
+        buttonSynchronize = (Button) findViewById(R.id.buttonSynchronize);
+
+        buttonSynchronize.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick (View v){
+                Toast toast = android.widget.Toast.makeText(getBaseContext(), "Category sent", android.widget.Toast.LENGTH_LONG);
+                toast.show();
+                ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(1);
+
+                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory);
+
+               endpointsAsyncTask.execute();
 
             }
         });

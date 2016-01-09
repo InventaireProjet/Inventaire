@@ -64,6 +64,26 @@ public class CategoryDataSource {
         return category;
     }
 
+
+    //Find a category by Id
+
+    public com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories getCategoryByIdSync (long id) {
+        String sql = "SELECT * FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES +
+                " WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + id;
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor!=null) {
+            cursor.moveToFirst();
+        }
+
+        com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories category = new com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories();
+        category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
+        category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
+        cursor.close();
+        return category;
+    }
+
     // Get all categories
 
     public List<ObjectCategories> getAllCategories () {
@@ -85,6 +105,9 @@ public class CategoryDataSource {
         }
         return categories;
     }
+
+
+
 
     //Update a category
 
