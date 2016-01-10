@@ -47,7 +47,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
                     // - turn off compression when running against local devappserver
                     // if you deploy on the cloud backend, use your app name
                     // such as https://<your-app-id>.appspot.com
-                    .setRootUrl("https://inventaireii.appspot.com")
+                    //.setRootUrl("https://inventaireii.appspot.com/_ah/spi/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
