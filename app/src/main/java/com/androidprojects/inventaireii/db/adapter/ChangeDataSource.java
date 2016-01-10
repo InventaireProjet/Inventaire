@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.androidprojects.inventaireii.ObjectChange;
 import com.androidprojects.inventaireii.db.InventoryContract.ChangeEntry;
@@ -59,12 +60,12 @@ public class ChangeDataSource {
                 // if it's createObject, there is no need to update it. It will be
                 // created in its current state...
                 // we just let the mention and don't add anything :
-                if (getChangeByObject(change.getTable(), change.getId()) == null)
+                if (getChangeByObject(change.getTable(), change.getElementId()) == null)
                     _createChange(change);
                 break;
             case deleteObject:
                 // first we look if there is a mention of this object
-                ObjectChange existingChange = getChangeByObject(change.getTable(), change.getId());
+                ObjectChange existingChange = getChangeByObject(change.getTable(), change.getElementId());
 
                 // if the mention is a 'insert', we just have to suppress this 'insert'
                 // the object will never be created in the cloud
@@ -96,22 +97,25 @@ public class ChangeDataSource {
 
         id = this.db.insert(ChangeEntry.TABLE_CHANGES, null, values);
 
+        // TODO: 10.01.2016 suppress this toast...
+        String message = change.getTable()+"/"+id + " created";
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
         return id;
     }
 
     /**
      * Find a change for one object (by table name and id)
      */
-    private ObjectChange getChangeByObject(String tableName, int id) {
+    private ObjectChange getChangeByObject(String tableName, long elementId) {
         ObjectChange change = null;
         String sql = "SELECT * FROM " + ChangeEntry.TABLE_CHANGES
-                + " WHERE " + ChangeEntry.KEY_TABLE + " = " + tableName
-                + " AND " + ChangeEntry.KEY_ID + " = " + id;
+                + " WHERE " + ChangeEntry.KEY_TABLE + " = '" + tableName + "'"
+                + " AND " + ChangeEntry.KEY_ID + " = " + elementId;
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             change = getChangeFromCursor(cursor);
             cursor.close();
         }
@@ -134,5 +138,12 @@ public class ChangeDataSource {
         this.db.delete(ChangeEntry.TABLE_CHANGES,
                 ChangeEntry.KEY_ID + " = ?",
                 new String[]{String.valueOf(id)});
+    }
+
+    /**
+     * Delete all lines in the table (after synchronization)
+     */
+    public void deleteAllChanges() {
+        this.db.delete(ChangeEntry.TABLE_CHANGES, null, null);
     }
 }

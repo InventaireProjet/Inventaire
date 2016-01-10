@@ -14,7 +14,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     // Infos about database
     private static final String DATABASE_NAME = "inventory";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static SQLiteHelper instance;
     private SQLiteDatabase db;
 

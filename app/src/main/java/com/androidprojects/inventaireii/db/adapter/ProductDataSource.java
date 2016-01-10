@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.androidprojects.inventaireii.ObjectCategories;
+import com.androidprojects.inventaireii.ObjectChange;
 import com.androidprojects.inventaireii.ObjectProducts;
 import com.androidprojects.inventaireii.ObjectStock;
 import com.androidprojects.inventaireii.db.InventoryContract;
@@ -21,10 +22,12 @@ public class ProductDataSource {
     private Context context;
     private CategoryDataSource categoryDataSource ;
     private StockDataSource stockDataSource;
+    private ChangeDataSource changeDataSource;
 
     private  ProductDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
+        changeDataSource = ChangeDataSource.getInstance(context);
         this.context = context;
     }
 
@@ -50,6 +53,10 @@ public class ProductDataSource {
         values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, categoryId);
 
         id = this.db.insert(InventoryContract.ProductEntry.TABLE_PRODUCTS, null, values);
+
+        // save this insert in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_PRODUCTS,
+                id, ObjectChange.TypeOfChange.insertObject));
 
         return  id;
     }
@@ -174,6 +181,10 @@ public class ProductDataSource {
             categoryId = product.getCategory().getId();
         values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, categoryId);
 
+       // save this update in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_PRODUCTS,
+                product.getId(), ObjectChange.TypeOfChange.updateObject));
+
         return this.db.update(InventoryContract.ProductEntry.TABLE_PRODUCTS, values, InventoryContract.ProductEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(product.getId()) });
     }
@@ -188,6 +199,10 @@ public class ProductDataSource {
             product.removeStock(s);
             stockDataSource.deleteStock(s);
         }
+
+        // save this delete in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_PRODUCTS,
+                product.getId(), ObjectChange.TypeOfChange.deleteObject));
 
         this.db.delete(InventoryContract.ProductEntry.TABLE_PRODUCTS, InventoryContract.ProductEntry.KEY_ID + " = ?",
                 new String[]{String.valueOf(product.getId())});

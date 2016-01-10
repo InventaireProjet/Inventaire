@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.androidprojects.inventaireii.ObjectCategories;
+import com.androidprojects.inventaireii.ObjectChange;
 import com.androidprojects.inventaireii.ObjectProducts;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
@@ -19,10 +20,12 @@ public class CategoryDataSource {
     private SQLiteDatabase db;
     private Context context;
     private ProductDataSource productDataSource;
+    private ChangeDataSource changeDataSource;
 
     private   CategoryDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db= sqLiteHelper.getWritableDatabase();
+        changeDataSource = ChangeDataSource.getInstance(context);
         this.context = context;
     }
 
@@ -41,6 +44,9 @@ public class CategoryDataSource {
         values.put(InventoryContract.CategorieEntry.KEY_NAME, category.getName());
 
         id = this.db.insert(InventoryContract.CategorieEntry.TABLE_CATEGORIES, null, values);
+
+        // save this insert in the change table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_CATEGORIES, id, ObjectChange.TypeOfChange.insertObject));
 
         return  id;
     }
@@ -115,6 +121,9 @@ public class CategoryDataSource {
         ContentValues values = new ContentValues();
         values.put(InventoryContract.CategorieEntry.KEY_NAME, category.getName());
 
+        // save this update in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_CATEGORIES, category.getId(), ObjectChange.TypeOfChange.updateObject));
+
         return this.db.update(InventoryContract.CategorieEntry.TABLE_CATEGORIES, values, InventoryContract.CategorieEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(category.getId()) });
     }
@@ -132,6 +141,9 @@ public class CategoryDataSource {
 
         this.db.delete(InventoryContract.CategorieEntry.TABLE_CATEGORIES, InventoryContract.CategorieEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
+
+        // save this delete int the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_CATEGORIES, id, ObjectChange.TypeOfChange.deleteObject));
 
     }
 

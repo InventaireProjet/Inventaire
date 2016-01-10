@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.androidprojects.inventaireii.ObjectChange;
 import com.androidprojects.inventaireii.ObjectProducts;
 import com.androidprojects.inventaireii.ObjectStock;
 import com.androidprojects.inventaireii.ObjectWarehouse;
@@ -14,9 +15,7 @@ import com.androidprojects.inventaireii.db.SQLiteHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by David on 19.11.2015.
- */
+
 public class StockDataSource {
 
     private static StockDataSource instance;
@@ -24,10 +23,12 @@ public class StockDataSource {
     private Context context = null;
     private ProductDataSource productDataSource ;
     private WarehouseDataSource warehouseDataSource;
+    private ChangeDataSource changeDataSource;
 
     private  StockDataSource (Context context) {
         productDataSource = ProductDataSource.getInstance(context);
         warehouseDataSource = WarehouseDataSource.getInstance(context);
+        changeDataSource = ChangeDataSource.getInstance(context);
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
         this.context = context;
@@ -50,6 +51,10 @@ public class StockDataSource {
         values.put(InventoryContract.StockEntry.KEY_WAREHOUSE_ID, stock.getWarehouse().getId());
 
         id = this.db.insert(InventoryContract.StockEntry.TABLE_STOCKS, null, values);
+
+        // Save this insert in changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_STOCKS,
+                id, ObjectChange.TypeOfChange.insertObject));
 
         return  id;
     }
@@ -107,6 +112,42 @@ public class StockDataSource {
                 stock.setWarehouse(warehouse);
 
                 // the Product is well known
+                stock.setProduct(product);
+
+                // Add this stock to the list
+                stocks.add(stock);
+
+            } while (cursor.moveToNext());
+        }
+
+        return stocks;
+    }
+
+    /* Get all stocks of a warehouse */
+    public ArrayList<ObjectStock> getAllStocksByWarehouse(long id) {
+        ArrayList<ObjectStock> stocks = new ArrayList<>();
+        String sql = "SELECT s.* FROM " + InventoryContract.StockEntry.TABLE_STOCKS + " AS s, "
+                + InventoryContract.WarehouseEntry.TABLE_WAREHOUSES + " AS w"
+                + " WHERE s." + InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = " + id
+                + ";";
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ObjectStock stock = new ObjectStock();
+                stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
+                stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
+                stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED))>0);
+
+                // get the Warehouse
+                int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
+                ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+                stock.setWarehouse(warehouse);
+
+                // get the Product
+                int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
+                ObjectProducts product = productDataSource.getProductById(productId);
                 stock.setProduct(product);
 
                 // Add this stock to the list
@@ -194,6 +235,10 @@ public class StockDataSource {
         values.put(InventoryContract.StockEntry.KEY_WAREHOUSE_ID, stock.getWarehouse().getId());
         values.put(InventoryContract.StockEntry.KEY_PRODUCT_ID, stock.getProduct());
 
+        // Save this update in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_STOCKS,
+                stock.getId(), ObjectChange.TypeOfChange.updateObject));
+
         return this.db.update(InventoryContract.StockEntry.TABLE_STOCKS, values,
                 InventoryContract.StockEntry.KEY_ID + " = ?",
                 new String[]{ String.valueOf(stock.getId())});
@@ -201,6 +246,11 @@ public class StockDataSource {
 
     /* Delete a stock */
     public void deleteStock(ObjectStock stock) {
+
+        // Save this delete in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_STOCKS,
+                stock.getId(), ObjectChange.TypeOfChange.deleteObject));
+
         this.db.delete(InventoryContract.StockEntry.TABLE_STOCKS,
                 InventoryContract.StockEntry.KEY_ID + " = ?",
                 new String[]{String.valueOf(stock.getId())});
@@ -208,6 +258,16 @@ public class StockDataSource {
 
     /* Delete all stocks of a Warehouse */
     public void deleteAllStocksByWarehouse(long id) {
+
+        // to save all those 'delete' in the changes table, we need the list
+        List<ObjectStock> stocksToDelete = getAllStocksByWarehouse(id);
+
+        // save those 'delete in the changes table
+        for (ObjectStock s : stocksToDelete) {
+            changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_STOCKS,
+                    s.getId(), ObjectChange.TypeOfChange.deleteObject));
+        }
+
         this.db.delete(InventoryContract.StockEntry.TABLE_STOCKS,
                 InventoryContract.StockEntry.KEY_WAREHOUSE_ID + " = ?",
                 new String[]{String.valueOf(id)});

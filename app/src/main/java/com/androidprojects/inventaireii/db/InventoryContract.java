@@ -120,7 +120,7 @@ public final class InventoryContract {
 
         // Changes Column names
         public static final String KEY_ID = "id";
-        public static final String KEY_TABLE = "table";
+        public static final String KEY_TABLE = "tableName";
         public static final String KEY_ELEMENT_ID = "elementId";
         public static final String KEY_TYPE_OF_CHANGE = "typeOfChange";
 
@@ -130,7 +130,7 @@ public final class InventoryContract {
                 + ChangeEntry.KEY_ID + " INTEGER PRIMARY KEY, "
                 + ChangeEntry.KEY_TABLE + " TEXT, "
                 + ChangeEntry.KEY_ELEMENT_ID + " INTEGER, "
-                + ChangeEntry.KEY_TYPE_OF_CHANGE + " TEXT"
+                + ChangeEntry.KEY_TYPE_OF_CHANGE + " TEXT "
                 + ");";
     }
 }

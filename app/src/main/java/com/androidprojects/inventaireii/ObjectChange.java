@@ -18,13 +18,13 @@ public class ObjectChange {
     private int id;
 
     private String table;
-    private int elementId;
+    private long elementId;
     private TypeOfChange typeOfChange;
 
     // Constructors
     public ObjectChange() {}
 
-    public ObjectChange(String table, int elementId, TypeOfChange typeOfChange) {
+    public ObjectChange(String table, long elementId, TypeOfChange typeOfChange) {
         this.setTable(table);
         this.setElementId(elementId);
         this.setTypeOfChange(typeOfChange);
@@ -48,11 +48,11 @@ public class ObjectChange {
         this.table = table;
     }
 
-    public int getElementId() {
+    public long getElementId() {
         return elementId;
     }
 
-    public void setElementId(int elementId) {
+    public void setElementId(long elementId) {
         this.elementId = elementId;
     }
 

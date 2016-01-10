@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.androidprojects.inventaireii.ObjectChange;
 import com.androidprojects.inventaireii.ObjectWarehouse;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
@@ -18,9 +20,12 @@ public class WarehouseDataSource {
     private SQLiteDatabase db;
     private Context context;
 
+    private ChangeDataSource changeDataSource;
+
     private   WarehouseDataSource (Context context) {
         SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(context);
         db = sqLiteHelper.getWritableDatabase();
+        changeDataSource = ChangeDataSource.getInstance(context);
         this.context = context;
     }
 
@@ -46,6 +51,10 @@ public class WarehouseDataSource {
         values.put(InventoryContract.WarehouseEntry.KEY_COUNTRY, warehouse.getCountry());
 
         id = this.db.insert(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES, null, values);
+
+        // save this insert in changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_WAREHOUSES,
+                id, ObjectChange.TypeOfChange.insertObject));
 
         return  id;
     }
@@ -125,6 +134,9 @@ public class WarehouseDataSource {
         values.put(InventoryContract.WarehouseEntry.KEY_ZIPCODE, warehouse.getPostalCode());
         values.put(InventoryContract.WarehouseEntry.KEY_COUNTRY, warehouse.getCountry());
 
+        // save this update in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_WAREHOUSES,
+                warehouse.getId(), ObjectChange.TypeOfChange.updateObject));
 
         return this.db.update(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES, values, InventoryContract.WarehouseEntry.KEY_ID + " = ?",
                 new String[] { String.valueOf(warehouse.getId()) });
@@ -143,6 +155,10 @@ public class WarehouseDataSource {
         this.db.delete(InventoryContract.WarehouseEntry.TABLE_WAREHOUSES,
                 InventoryContract.WarehouseEntry.KEY_ID + " = ?",
                 new String[]{String.valueOf(id)});
+
+        // Save this delete in the changes table
+        changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_WAREHOUSES,
+                id, ObjectChange.TypeOfChange.deleteObject));
     }
 
 }
