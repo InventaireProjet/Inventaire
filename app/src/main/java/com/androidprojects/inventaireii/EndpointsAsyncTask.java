@@ -41,14 +41,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
         if(objectCategoriesApi == null){
             // Only do this once
             ObjectCategoriesApi.Builder builder = new ObjectCategoriesApi.Builder(AndroidHttp.newCompatibleTransport(),
-                    new AndroidJsonFactory(), null)
-                    // options for running against local devappserver
-                    // - 10.0.2.2 is localhost's IP address in Android emulator
-                    // - turn off compression when running against local devappserver
-                    // if you deploy on the cloud backend, use your app name
-                    // such as https://<your-app-id>.appspot.com
-                    //.setRootUrl("https://inventaireii.appspot.com/_ah/spi/")
-                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
                             abstractGoogleClientRequest.setDisableGZipContent(true);

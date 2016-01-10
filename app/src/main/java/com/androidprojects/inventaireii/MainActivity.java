@@ -148,7 +148,7 @@ categoryDataSource = CategoryDataSource.getInstance(this);
             @Override
             public void onClick (View v){
 
-                ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(1);
+                ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(2);
 
                 EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory);
 
