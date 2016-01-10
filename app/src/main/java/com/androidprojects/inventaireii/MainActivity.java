@@ -147,13 +147,14 @@ categoryDataSource = CategoryDataSource.getInstance(this);
 
             @Override
             public void onClick (View v){
-                Toast toast = android.widget.Toast.makeText(getBaseContext(), "Category sent", android.widget.Toast.LENGTH_LONG);
-                toast.show();
+
                 ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(1);
 
                 EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory);
 
                endpointsAsyncTask.execute();
+                Toast toast = android.widget.Toast.makeText(getBaseContext(), objectCategory.getName(), android.widget.Toast.LENGTH_LONG);
+                toast.show();
 
             }
         });
