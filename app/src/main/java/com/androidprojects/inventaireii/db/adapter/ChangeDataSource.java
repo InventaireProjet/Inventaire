@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import com.androidprojects.inventaireii.ObjectCategories;
 import com.androidprojects.inventaireii.ObjectChange;
+import com.androidprojects.inventaireii.ObjectProducts;
+import com.androidprojects.inventaireii.ObjectStock;
+import com.androidprojects.inventaireii.ObjectWarehouse;
 import com.androidprojects.inventaireii.db.InventoryContract.ChangeEntry;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
 
@@ -22,6 +25,9 @@ public class ChangeDataSource {
     private SQLiteDatabase db;
     private Context context;
     private CategoryDataSource categoryDataSource;
+    private WarehouseDataSource warehouseDataSource;
+    private ProductDataSource productDataSource;
+    private StockDataSource stockDataSource;
 
     // Private constructor (Singleton)
     private ChangeDataSource (Context context) {
@@ -110,6 +116,39 @@ public class ChangeDataSource {
     }
 
     /**
+     * Delete a 'change'
+     */
+    public void deleteChange(int id) {
+        this.db.delete(ChangeEntry.TABLE_CHANGES,
+                ChangeEntry.KEY_ID + " = ?",
+                new String[]{String.valueOf(id)});
+    }
+
+    /**
+     * Delete all lines in the table (after synchronization)
+     */
+    public void deleteAllChanges() {
+        this.db.delete(ChangeEntry.TABLE_CHANGES, null, null);
+    }
+
+    /**
+     * Get functions :
+     * private ObjectChange getChangeByObject(String tableName, long elementId)
+     * private ArrayList<ObjectChange> getChangesByTableAndTypeOfChange(String tableName, TypeOfChange typeOfChange)
+     *
+     * public ArrayList<ObjectCategories> getCategoriesToUpdate()
+     * public ArrayList<ObjectCategories> getCategoriesToInsert()
+     * public ArrayList<ObjectCategories> getCategoriesToDelete()
+     *
+     * public ArrayList<ObjectCategories> getCategoriesTo(TypeOfChange typeOfChange)
+     * public ArrayList<ObjectWarehouse> getWarehousesTo(TypeOfChange typeOfChange)
+     * public ArrayList<ObjectProducts> getProductsTo(TypeOfChange typeOfChange)
+     * public ArrayList<ObjectStock> getStocksTo(TypeOfChange typeOfChange)
+     *
+     * private ObjectChange getChangeFromCursor(Cursor cursor)
+     */
+
+    /**
      * Get a change for one object (by table name and id)
      */
     private ObjectChange getChangeByObject(String tableName, long elementId) {
@@ -159,9 +198,12 @@ public class ChangeDataSource {
 
         // Get all lines in table 'changes'
         ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.updateObject);
+
+        // Get corresponding categories
         for (ObjectChange change : changes) {
             categories.add(categoryDataSource.getCategoryById(change.getElementId()));
         }
+
         return categories;
     }
 
@@ -174,9 +216,12 @@ public class ChangeDataSource {
 
         // Get all lines in table 'changes'
         ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.insertObject);
+
+        // Get corresponding categories
         for (ObjectChange change : changes) {
             categories.add(categoryDataSource.getCategoryById(change.getElementId()));
         }
+
         return categories;
     }
 
@@ -189,10 +234,85 @@ public class ChangeDataSource {
 
         // Get all lines in table 'changes'
         ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.deleteObject);
+
+        // Get corresponding categories
         for (ObjectChange change : changes) {
             categories.add(categoryDataSource.getCategoryById(change.getElementId()));
         }
+
         return categories;
+    }
+
+    /**
+     * Get all categories to delete, update, insert
+     */
+    public ArrayList<ObjectCategories> getCategoriesTo(TypeOfChange typeOfChange) {
+        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
+        categoryDataSource = CategoryDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, typeOfChange);
+
+        // Get corresponding categories
+        for (ObjectChange change : changes) {
+            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
+        }
+
+        return categories;
+    }
+
+    /**
+     * Get all warehouses to update, delete or insert
+     */
+    public ArrayList<ObjectWarehouse> getWarehousesTo(TypeOfChange typeOfChange) {
+        ArrayList<ObjectWarehouse> warehouses = new ArrayList<ObjectWarehouse>();
+        warehouseDataSource = WarehouseDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_WAREHOUSES, typeOfChange);
+
+        // Get corresponding warehouses
+        for (ObjectChange change : changes) {
+            warehouses.add(warehouseDataSource.getWarehouseById(change.getElementId()));
+        }
+
+        return warehouses;
+    }
+
+    /**
+     * Get all products to update, delete or insert
+     */
+    public ArrayList<ObjectProducts> getProductsTo(TypeOfChange typeOfChange) {
+        ArrayList<ObjectProducts> products = new ArrayList<ObjectProducts>();
+        productDataSource = ProductDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_PRODUCTS, typeOfChange);
+
+        // Get corresponding products
+        for (ObjectChange change : changes) {
+            products.add(productDataSource.getProductById(change.getElementId()));
+        }
+
+        return products;
+    }
+
+    /**
+     * Get all stocks to update, delete or insert
+     */
+    public ArrayList<ObjectStock> getStocksTo(TypeOfChange typeOfChange) {
+        ArrayList<ObjectStock> stocks = new ArrayList<ObjectStock>();
+        stockDataSource = StockDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_STOCKS, typeOfChange);
+
+        // Get corresponding products
+        for (ObjectChange change : changes) {
+            stocks.add(stockDataSource.getStockById(change.getElementId()));
+        }
+
+        return stocks;
     }
 
 
@@ -209,19 +329,5 @@ public class ChangeDataSource {
         return change;
     }
 
-    /**
-     * Delete a 'change'
-     */
-    public void deleteChange(int id) {
-        this.db.delete(ChangeEntry.TABLE_CHANGES,
-                ChangeEntry.KEY_ID + " = ?",
-                new String[]{String.valueOf(id)});
-    }
 
-    /**
-     * Delete all lines in the table (after synchronization)
-     */
-    public void deleteAllChanges() {
-        this.db.delete(ChangeEntry.TABLE_CHANGES, null, null);
-    }
 }
