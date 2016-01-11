@@ -71,7 +71,7 @@ public class CategoryDataSource {
     }
 
 
-    //Find a category by Id
+    //Find a category by Id for synchronization
 
     public com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories getCategoryByIdSync (long id) {
         String sql = "SELECT * FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES +

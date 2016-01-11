@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
-import com.example.myapplication.backend.objectProductsApi.ObjectProductsApi;
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -19,13 +19,13 @@ import com.example.myapplication.backend.objectCategoriesApi.ObjectCategoriesApi
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategories>> {
     private static final String TAG = EndpointsAsyncTask.class.getName();
     private static ObjectCategoriesApi objectCategoriesApi = null;
-    private static ObjectCategoriesApi objectProductsApi = null;
+   /* private static ObjectCategoriesApi objectProductsApi = null;
     private static ObjectCategoriesApi objectStockApi = null;
-    private static ObjectCategoriesApi objectWarehouseApi = null;
+    private static ObjectCategoriesApi objectWarehouseApi = null;*/
     private ObjectCategories objectCategories;
-    private ObjectProducts objectProducts;
+  /*  private ObjectProducts objectProducts;
     private ObjectStock objectStock;
-    private ObjectWarehouse objectWarehouse;
+    private ObjectWarehouse objectWarehouse;*/
 
 
 
