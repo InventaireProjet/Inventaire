@@ -118,6 +118,7 @@
     <string name="home">home</string>
     <string name="stock_suppressed">Stock supprimé</string>
     <string name="synchronize_data">Synchroniser</string>
+    <string name="Synchronized">Synchronisation effectuée</string>
 
 
 </resources>

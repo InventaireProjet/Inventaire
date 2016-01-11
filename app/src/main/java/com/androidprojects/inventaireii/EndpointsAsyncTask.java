@@ -44,7 +44,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
         insertCategory(objectCategories);
         insertCategory(objectCategories2);
-        updateCategory(objectCategories3);
+        insertCategory(objectCategories3);
         return null;
     }
 

@@ -11,7 +11,7 @@ public class ObjectStock {
     private int quantity;
     private boolean controlled;
    private Long productID;
-    private ObjectWarehouse warehouse;
+    private Long warehouseID;
 
 
 
@@ -46,11 +46,11 @@ public class ObjectStock {
         this.productID = product.getId();
     }
 
-    public ObjectWarehouse getWarehouse() {
-        return warehouse;
+    public Long getWarehouse() {
+        return warehouseID;
     }
 
-    public void setWarehouse(ObjectWarehouse warehouse) {
-        this.warehouse = warehouse;
+    public void setWarehouse(Long warehouse) {
+        this.warehouseID = warehouse;
     }
 }

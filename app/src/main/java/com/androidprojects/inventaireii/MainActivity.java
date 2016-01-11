@@ -155,10 +155,8 @@ categoryDataSource = CategoryDataSource.getInstance(this);
                 EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory, objectCategory2, objectCategory3);
 
                endpointsAsyncTask.execute();
-                Toast toast = android.widget.Toast.makeText(getBaseContext(), objectCategory.getName()+"added", android.widget.Toast.LENGTH_LONG);
+                Toast toast = android.widget.Toast.makeText(getBaseContext(), R.string.Synchronized, android.widget.Toast.LENGTH_LONG);
                 toast.show();
-                Toast toast2 = android.widget.Toast.makeText(getBaseContext(), objectCategory2.getName()+"removed", android.widget.Toast.LENGTH_LONG);
-                toast2.show();
 
             }
         });

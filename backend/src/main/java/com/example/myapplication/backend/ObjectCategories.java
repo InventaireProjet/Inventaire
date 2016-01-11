@@ -8,9 +8,9 @@ public class ObjectCategories {
 
     @Id
     private Long id;
-    private String color;
+
     private String name;
-    private String inventoryState;
+
 
 
 
@@ -23,21 +23,6 @@ public class ObjectCategories {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getInventoryState() {
-        return inventoryState;
-    }
-
-    public void setInventoryState(String inventoryState) {
-        this.inventoryState = inventoryState;
-    }
 
     public String getName() {
         return name;

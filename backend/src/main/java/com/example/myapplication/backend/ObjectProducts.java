@@ -15,7 +15,7 @@ public class ObjectProducts {
     private String description;
     private double price;
     private ObjectCategories category;
-    private ArrayList<ObjectStock> stocks = new ArrayList<ObjectStock>();
+
 
 
     public Long getId() {
@@ -66,27 +66,6 @@ public class ObjectProducts {
         this.description = description;
     }
 
-    public ArrayList<ObjectStock> getStocks() {
-        return stocks;
-    }
 
-    public void setStocks(ArrayList<ObjectStock> stocks) {
-        this.stocks = stocks;
-    }
-
-    public void addStock(ObjectStock stock) {
-        stocks.add(stock);
-    }
-
-    public void removeStock(ObjectStock stock) {stocks.remove(stock); }
-
-    public int getQuantity() {
-        int quantity = 0;
-        for (ObjectStock stock : stocks) {
-            quantity += stock.getQuantity();
-        }
-
-        return quantity;
-    }
 
 }

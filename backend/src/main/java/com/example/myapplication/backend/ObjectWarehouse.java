@@ -8,10 +8,7 @@ public class ObjectWarehouse {
 
     @Id
     private  Long id;
-    private String color;
     private String name;
-    private int inventoriedObjects;
-    private int numberObjects;
     private int stockCapacity;
     private String telNumber;
     private String street;
@@ -34,22 +31,6 @@ public class ObjectWarehouse {
 
     public void setStockCapacity(int stockCapacity) {
         this.stockCapacity = stockCapacity;
-    }
-
-    public int getInventoriedObjects() {
-        return inventoriedObjects;
-    }
-
-    public void setInventoriedObjects(int inventoriedObjects) {
-        this.inventoriedObjects = inventoriedObjects;
-    }
-
-    public int getNumberObjects() {
-        return numberObjects;
-    }
-
-    public void setNumberObjects(int numberObjects) {
-        this.numberObjects = numberObjects;
     }
 
     public String getTelNumber() {
@@ -98,14 +79,6 @@ public class ObjectWarehouse {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public String getName() {
