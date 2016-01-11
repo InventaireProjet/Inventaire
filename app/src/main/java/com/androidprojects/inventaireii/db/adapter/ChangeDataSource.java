@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
-import com.androidprojects.inventaireii.ObjectCategories;
 import com.androidprojects.inventaireii.ObjectChange;
-import com.androidprojects.inventaireii.ObjectProducts;
-import com.androidprojects.inventaireii.ObjectStock;
-import com.androidprojects.inventaireii.ObjectWarehouse;
+import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
+import com.example.myapplication.backend.objectProductsApi.model.ObjectProducts;
+import com.example.myapplication.backend.objectStockApi.model.ObjectStock;
+import com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse;
 import com.androidprojects.inventaireii.db.InventoryContract.ChangeEntry;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
 
@@ -185,59 +185,6 @@ public class ChangeDataSource {
         }
         return changes;
     }
-    /**
-     * Get all categories to update
-     */
-    public ArrayList<ObjectCategories> getCategoriesToUpdate() {
-        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
-        categoryDataSource = CategoryDataSource.getInstance(context);
-
-        // Get all lines in table 'changes'
-        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.updateObject);
-
-        // Get corresponding categories
-        for (ObjectChange change : changes) {
-            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
-        }
-
-        return categories;
-    }
-
-    /**
-     * Get all categories to insert
-     */
-    public ArrayList<ObjectCategories> getCategoriesToInsert() {
-        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
-        categoryDataSource = CategoryDataSource.getInstance(context);
-
-        // Get all lines in table 'changes'
-        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.insertObject);
-
-        // Get corresponding categories
-        for (ObjectChange change : changes) {
-            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
-        }
-
-        return categories;
-    }
-
-    /**
-     * Get all categories to delete
-     */
-    public ArrayList<ObjectCategories> getCategoriesToDelete() {
-        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
-        categoryDataSource = CategoryDataSource.getInstance(context);
-
-        // Get all lines in table 'changes'
-        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.deleteObject);
-
-        // Get corresponding categories
-        for (ObjectChange change : changes) {
-            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
-        }
-
-        return categories;
-    }
 
     /**
      * Get all categories to delete, update, insert
@@ -251,7 +198,7 @@ public class ChangeDataSource {
 
         // Get corresponding categories
         for (ObjectChange change : changes) {
-            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
+            categories.add(categoryDataSource.getCategoryByIdSync(change.getElementId()));
         }
 
         return categories;
@@ -269,7 +216,7 @@ public class ChangeDataSource {
 
         // Get corresponding warehouses
         for (ObjectChange change : changes) {
-            warehouses.add(warehouseDataSource.getWarehouseById(change.getElementId()));
+            warehouses.add(warehouseDataSource.getWarehouseByIdSync(change.getElementId()));
         }
 
         return warehouses;
@@ -287,7 +234,7 @@ public class ChangeDataSource {
 
         // Get corresponding products
         for (ObjectChange change : changes) {
-            products.add(productDataSource.getProductById(change.getElementId()));
+            products.add(productDataSource.getProductByIdSync(change.getElementId()));
         }
 
         return products;
@@ -305,7 +252,7 @@ public class ChangeDataSource {
 
         // Get corresponding products
         for (ObjectChange change : changes) {
-            stocks.add(stockDataSource.getStockById(change.getElementId()));
+            stocks.add(stockDataSource.getStockByIdSync(change.getElementId()));
         }
 
         return stocks;
