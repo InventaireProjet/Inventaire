@@ -11,6 +11,7 @@ import com.androidprojects.inventaireii.ObjectStock;
 import com.androidprojects.inventaireii.ObjectWarehouse;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
+import com.example.myapplication.backend.objectProductsApi.ObjectProductsApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -321,13 +322,31 @@ public class StockDataSource {
     }
 
 
+    public com.example.myapplication.backend.objectStockApi.model.ObjectStock getStockByIdSync(int id) {
+        String sql = "SELECT * FROM " + InventoryContract.StockEntry.TABLE_STOCKS
+                + " WHERE " + InventoryContract.ProductEntry.KEY_ID + " = " + id;
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        com.example.myapplication.backend.objectStockApi.model.ObjectStock stock = null;
+
+        if (cursor.moveToFirst()) {
+            stock = new com.example.myapplication.backend.objectStockApi.model.ObjectStock();
+            stock.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
+            stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
+            stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED)) > 0);
+
+            // get the Warehouse
+            int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
+            stock.setWarehouseID((long) warehouseId);
+
+            // get the Product
+            int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
+            stock.setProductID((long) productId);
+        }
+        return stock;
 
 
 
-
-
-
-
-
-
+    }
 }

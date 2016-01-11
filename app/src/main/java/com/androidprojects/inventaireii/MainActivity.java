@@ -18,8 +18,11 @@ import com.androidprojects.inventaireii.db.adapter.ChangeDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
+import com.androidprojects.inventaireii.db.adapter.WarehouseDataSource;
 import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
 import com.example.myapplication.backend.objectProductsApi.model.ObjectProducts;
+import com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse;
+
 
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     StockDataSource stockDataSource;
     ProductDataSource productDataSource;
     CategoryDataSource categoryDataSource;
+    WarehouseDataSource warehouseDataSource;
     ChangeDataSource changeDataSource;
     boolean popupWindowIsOn;
 
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         productDataSource = ProductDataSource.getInstance(this);
         categoryDataSource = CategoryDataSource.getInstance(this);
         changeDataSource = ChangeDataSource.getInstance(this);
+        warehouseDataSource = WarehouseDataSource.getInstance(this);
 
         // Access by product
         txtProductAccess = (TextView) findViewById(R.id.txtProductAccess);
@@ -156,8 +161,10 @@ public class MainActivity extends AppCompatActivity {
                 ObjectCategories objectCategory2 = categoryDataSource.getCategoryByIdSync(2);
                 ObjectCategories objectCategory3 = categoryDataSource.getCategoryByIdSync(1);
                 ObjectProducts objectProducts= productDataSource.getProductByIdSync(1);
+                ObjectWarehouse objectWarehouse = warehouseDataSource.getWarehouseByIdSync(1);
+                com.example.myapplication.backend.objectStockApi.model.ObjectStock objectStock = stockDataSource.getStockByIdSync(2);
 
-                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory, objectCategory2, objectCategory3, objectProducts);
+                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectStock, objectWarehouse);
 
                endpointsAsyncTask.execute();
                 Toast toast = android.widget.Toast.makeText(getBaseContext(), R.string.Synchronized, android.widget.Toast.LENGTH_LONG);
