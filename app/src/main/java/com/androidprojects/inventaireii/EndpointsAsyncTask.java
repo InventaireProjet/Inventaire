@@ -19,10 +19,12 @@ import com.example.myapplication.backend.objectCategoriesApi.ObjectCategoriesApi
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategories>> {
     private static final String TAG = EndpointsAsyncTask.class.getName();
     private static ObjectCategoriesApi objectCategoriesApi = null;
-   /* private static ObjectCategoriesApi objectProductsApi = null;
-    private static ObjectCategoriesApi objectStockApi = null;
-    private static ObjectCategoriesApi objectWarehouseApi = null;*/
+    /* private static ObjectCategoriesApi objectProductsApi = null;
+     private static ObjectCategoriesApi objectStockApi = null;
+     private static ObjectCategoriesApi objectWarehouseApi = null;*/
     private ObjectCategories objectCategories;
+    private ObjectCategories objectCategories2;
+    private ObjectCategories objectCategories3;
   /*  private ObjectProducts objectProducts;
     private ObjectStock objectStock;
     private ObjectWarehouse objectWarehouse;*/
@@ -31,22 +33,31 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
     EndpointsAsyncTask(){}
 
-    EndpointsAsyncTask(ObjectCategories objectCategories){
+    EndpointsAsyncTask(ObjectCategories objectCategories, ObjectCategories objectCategories2, ObjectCategories objectCategories3){
         this.objectCategories = objectCategories;
+        this.objectCategories2 = objectCategories2;
+        this.objectCategories3 = objectCategories3;
     }
 
     @Override
     protected List<ObjectCategories> doInBackground(Void... params) {
 
+        insertCategory(objectCategories);
+        insertCategory(objectCategories2);
+        updateCategory(objectCategories3);
+        return null;
+    }
+
+    private void insertCategory(ObjectCategories objectCategories) {
         if(objectCategoriesApi == null){
             // Only do this once
             ObjectCategoriesApi.Builder builder = new ObjectCategoriesApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                        @Override
-                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                            abstractGoogleClientRequest.setDisableGZipContent(true);
-                        }
-                    });
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
             objectCategoriesApi = builder.build();
 
         }
@@ -56,20 +67,75 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
             // For instance insert
             if(objectCategories != null){
                 objectCategoriesApi.insert(objectCategories).execute();
-                Log.i(TAG, "insert employee");
+                Log.i(TAG, "insert objectCategories");
             }
-            // and for instance return the list of all employees
-            return objectCategoriesApi.list().execute().getItems();
+
 
         } catch (IOException e){
             Log.e(TAG, e.toString());
-            return new ArrayList<ObjectCategories>();
+
         }
     }
 
 
+    private void deleteCategories(ObjectCategories objectCategories) {
+        if (objectCategoriesApi == null) {
+            // Only do this once
+            ObjectCategoriesApi.Builder builder = new ObjectCategoriesApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null)
+                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        @Override
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                            abstractGoogleClientRequest.setDisableGZipContent(true);
+                        }
+                    });
+            objectCategoriesApi = builder.build();
+        }
+
+        try {
+
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if (objectCategories != null) {
+                objectCategoriesApi.remove(objectCategories.getId()).execute();
+                Log.i(TAG, "remove objectCategories");
+            }
+            // and for instance return the list of all objectCategoriess
+
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    private void updateCategory (ObjectCategories objectCategories) {
+        if(objectCategoriesApi == null){
+            // Only do this once
+            ObjectCategoriesApi.Builder builder = new ObjectCategoriesApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectCategoriesApi = builder.build();
+
+        }
+
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(objectCategories != null){
+                objectCategoriesApi.update(objectCategories.getId(), objectCategories).execute();
+                Log.i(TAG, "update objectCategories");
+            }
 
 
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
+}
 
 
    /* EndpointsAsyncTask(){}
@@ -159,4 +225,4 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
             Log.e(TAG, e.toString());
         }
     }*/
-}
+
