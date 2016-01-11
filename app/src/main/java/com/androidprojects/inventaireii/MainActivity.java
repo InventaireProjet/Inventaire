@@ -100,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(MainActivity.this, changeDataSource.getCategoriesTo(ObjectChange.TypeOfChange.insertObject).size(), Toast.LENGTH_SHORT).show();
-
                 // Create the pop-up window
                 Methods.setLocale(getBaseContext());
                 LayoutInflater layoutInflater =
