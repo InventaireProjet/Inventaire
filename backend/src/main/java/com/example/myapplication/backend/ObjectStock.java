@@ -42,15 +42,15 @@ public class ObjectStock {
         return  productID;
     }
 
-    public void setProductID(ObjectProducts product) {
-        this.productID = product.getId();
+    public void setProductID(Long productID) {
+        this.productID = productID;
     }
 
-    public Long getWarehouse() {
+    public Long getWarehouseID() {
         return warehouseID;
     }
 
-    public void setWarehouse(Long warehouse) {
-        this.warehouseID = warehouse;
+    public void setWarehouseID(Long warehouseID) {
+        this.warehouseID = warehouseID;
     }
 }

@@ -7,6 +7,8 @@ import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategor
 
 import com.example.myapplication.backend.objectProductsApi.ObjectProductsApi;
 import com.example.myapplication.backend.objectProductsApi.model.ObjectProducts;
+import com.example.myapplication.backend.objectStockApi.model.ObjectStock;
+import com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse;
 import com.example.myapplication.backend.objectStockApi.ObjectStockApi;
 import com.example.myapplication.backend.objectWarehouseApi.ObjectWarehouseApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -24,39 +26,45 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
     private static final String TAG = EndpointsAsyncTask.class.getName();
     private static ObjectCategoriesApi objectCategoriesApi = null;
     private static ObjectProductsApi objectProductsApi = null;
-    /*  private static ObjectStockApi objectStockApi = null;
-     private static ObjectWarehouseApi objectWarehouseApi = null;*/
+    private static ObjectStockApi objectStockApi = null;
+    private static ObjectWarehouseApi objectWarehouseApi = null;
     private ObjectCategories objectCategories;
     private ObjectCategories objectCategories2;
     private ObjectCategories objectCategories3;
-  private ObjectProducts objectProducts;
-  /*    private ObjectStock objectStock;
-    private ObjectWarehouse objectWarehouse;*/
+    private ObjectProducts objectProducts;
+    private ObjectStock objectStock;
+    private ObjectWarehouse objectWarehouse;
 
 
 
     EndpointsAsyncTask(){}
 
-    EndpointsAsyncTask(ObjectCategories objectCategories, ObjectCategories objectCategories2, ObjectCategories objectCategories3, ObjectProducts objectProducts){
+    EndpointsAsyncTask(ObjectStock objectStock, ObjectWarehouse objectWarehouse){
         this.objectCategories = objectCategories;
         this.objectCategories2 = objectCategories2;
         this.objectCategories3 = objectCategories3;
         this.objectProducts = objectProducts;
+        this.objectStock = objectStock;
+        this.objectWarehouse= objectWarehouse;
     }
 
     @Override
     protected List<ObjectCategories> doInBackground(Void... params) {
 
-        insertCategory(objectCategories);
+        /*insertCategory(objectCategories);
         insertCategory(objectCategories2);
         insertCategory(objectCategories3);
-        insertProduct(objectProducts);
+        insertProduct(objectProducts);*/
+        insertWarehouse(objectWarehouse);
+        insertStock(objectStock);
+
         return null;
     }
 
     private void insertCategory(ObjectCategories objectCategories) {
         if(objectCategoriesApi == null){
-            // Only do this once
+
+
             ObjectCategoriesApi.Builder builder = new ObjectCategoriesApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                 @Override
@@ -69,8 +77,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
         }
 
         try{
-            // Call here the wished methods on the Endpoints
-            // For instance insert
+
             if(objectCategories != null){
                 objectCategoriesApi.insert(objectCategories).execute();
                 Log.i(TAG, "insert objectCategories");
@@ -106,7 +113,6 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
                 objectCategoriesApi.remove(objectCategories.getId()).execute();
                 Log.i(TAG, "remove objectCategories");
             }
-            // and for instance return the list of all objectCategoriess
 
         } catch (IOException e) {
             Log.e(TAG, e.toString());
@@ -228,7 +234,180 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
         }
     }
+    private void insertWarehouse(ObjectWarehouse objectWarehouse) {
+        if(objectWarehouseApi == null){
 
+
+            ObjectWarehouseApi.Builder builder = new ObjectWarehouseApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectWarehouseApi = builder.build();
+
+        }
+
+        try{
+
+            if(objectWarehouse != null){
+                objectWarehouseApi.insert(objectWarehouse).execute();
+                Log.i(TAG, "insert objectWarehouse");
+            }
+
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
+
+
+    private void deleteWarehouse(ObjectWarehouse objectWarehouse) {
+        if (objectWarehouseApi == null) {
+            // Only do this once
+            ObjectWarehouseApi.Builder builder = new ObjectWarehouseApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null)
+                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        @Override
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                            abstractGoogleClientRequest.setDisableGZipContent(true);
+                        }
+                    });
+            objectWarehouseApi = builder.build();
+        }
+
+        try {
+
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if (objectWarehouse != null) {
+                objectWarehouseApi.remove(objectWarehouse.getId()).execute();
+                Log.i(TAG, "remove objectWarehouse");
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    private void updateWarehouse (ObjectWarehouse objectWarehouse) {
+        if(objectWarehouseApi == null){
+            // Only do this once
+            ObjectWarehouseApi.Builder builder = new ObjectWarehouseApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectWarehouseApi = builder.build();
+
+        }
+
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(objectWarehouse != null){
+                objectWarehouseApi.update(objectWarehouse.getId(), objectWarehouse).execute();
+                Log.i(TAG, "update objectWarehouse");
+            }
+
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
+
+    private void insertStock(ObjectStock objectStock) {
+        if(objectStockApi == null){
+
+
+            ObjectStockApi.Builder builder = new ObjectStockApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectStockApi = builder.build();
+
+        }
+
+        try{
+
+            if(objectStock != null){
+                objectStockApi.insert(objectStock).execute();
+                Log.i(TAG, "insert objectStock");
+            }
+
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
+
+
+    private void deleteStock(ObjectStock objectStock) {
+        if (objectStockApi == null) {
+            // Only do this once
+            ObjectStockApi.Builder builder = new ObjectStockApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null)
+                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        @Override
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                            abstractGoogleClientRequest.setDisableGZipContent(true);
+                        }
+                    });
+            objectStockApi = builder.build();
+        }
+
+        try {
+
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if (objectStock != null) {
+                objectStockApi.remove(objectStock.getId()).execute();
+                Log.i(TAG, "remove objectStock");
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    private void updateStock (ObjectStock objectStock) {
+        if(objectStockApi == null){
+
+
+            ObjectStockApi.Builder builder = new ObjectStockApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectStockApi = builder.build();
+
+        }
+
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(objectStock != null){
+                objectStockApi.update(objectStock.getId(), objectStock).execute();
+                Log.i(TAG, "update objectStock");
+            }
+
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
 
 
 }
