@@ -108,10 +108,6 @@ public class ChangeDataSource {
 
         id = this.db.insert(ChangeEntry.TABLE_CHANGES, null, values);
 
-        // TODO: 10.01.2016 suppress this toast...
-        String message = change.getTable()+"/"+id + " created";
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-
         return id;
     }
 

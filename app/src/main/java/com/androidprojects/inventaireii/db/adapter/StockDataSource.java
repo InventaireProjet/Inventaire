@@ -67,24 +67,24 @@ public class StockDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor != null)
-            cursor.moveToFirst();
+        ObjectStock stock = null;
 
-        ObjectStock stock = new ObjectStock();
-        stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
-        stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
-        stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED))>0);
+        if (cursor.moveToFirst()) {
+            stock = new ObjectStock();
+            stock.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
+            stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
+            stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED)) > 0);
 
-        // get the Warehouse
-        int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
-        ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
-        stock.setWarehouse(warehouse);
+            // get the Warehouse
+            int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
+            ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
+            stock.setWarehouse(warehouse);
 
-        // get the Product
-        int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
-        ObjectProducts product = productDataSource.getProductById(productId);
-        stock.setProduct(product);
-
+            // get the Product
+            int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
+            ObjectProducts product = productDataSource.getProductById(productId);
+            stock.setProduct(product);
+        }
         return stock;
     }
 

@@ -71,11 +71,10 @@ public class ProductDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor!=null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             product = getProductFromCursor(cursor);
-            cursor.close();
         }
+        cursor.close();
 
         return product;
     }
