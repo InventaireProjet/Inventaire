@@ -104,7 +104,7 @@ public class StockDataSource {
             stock.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
             stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
             stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED)) > 0);
-            stock.setWarehouse(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID)));
+            stock.setWarehouseID(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID)));
             stock.setProductID(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID)));
             /*
             // get the Warehouse
@@ -340,7 +340,7 @@ public class StockDataSource {
                 // get the Warehouse
                 int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
                 ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
-                stock.setWarehouse((long) warehouse.getId());
+                stock.setWarehouseID((long) warehouse.getId());
 
                 // the Product is well known
                 stock.setProductID(product.getId());
