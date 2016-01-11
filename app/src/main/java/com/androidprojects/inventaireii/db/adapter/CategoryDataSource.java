@@ -59,13 +59,12 @@ public class CategoryDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor!=null) {
-            cursor.moveToFirst();
+        ObjectCategories category = null;
+        if (cursor.moveToFirst()) {
+            category = new ObjectCategories();
+            category.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
         }
-
-        ObjectCategories category = new ObjectCategories();
-        category.setId(cursor.getInt(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
-        category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
         cursor.close();
         return category;
     }
