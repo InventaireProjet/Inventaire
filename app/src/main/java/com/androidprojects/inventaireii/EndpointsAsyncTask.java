@@ -5,6 +5,10 @@ import android.util.Log;
 
 import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
 
+import com.example.myapplication.backend.objectProductsApi.ObjectProductsApi;
+import com.example.myapplication.backend.objectProductsApi.model.ObjectProducts;
+import com.example.myapplication.backend.objectStockApi.ObjectStockApi;
+import com.example.myapplication.backend.objectWarehouseApi.ObjectWarehouseApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -19,24 +23,25 @@ import com.example.myapplication.backend.objectCategoriesApi.ObjectCategoriesApi
 public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategories>> {
     private static final String TAG = EndpointsAsyncTask.class.getName();
     private static ObjectCategoriesApi objectCategoriesApi = null;
-    /* private static ObjectCategoriesApi objectProductsApi = null;
-     private static ObjectCategoriesApi objectStockApi = null;
-     private static ObjectCategoriesApi objectWarehouseApi = null;*/
+    private static ObjectProductsApi objectProductsApi = null;
+    /*  private static ObjectStockApi objectStockApi = null;
+     private static ObjectWarehouseApi objectWarehouseApi = null;*/
     private ObjectCategories objectCategories;
     private ObjectCategories objectCategories2;
     private ObjectCategories objectCategories3;
-  /*  private ObjectProducts objectProducts;
-    private ObjectStock objectStock;
+  private ObjectProducts objectProducts;
+  /*    private ObjectStock objectStock;
     private ObjectWarehouse objectWarehouse;*/
 
 
 
     EndpointsAsyncTask(){}
 
-    EndpointsAsyncTask(ObjectCategories objectCategories, ObjectCategories objectCategories2, ObjectCategories objectCategories3){
+    EndpointsAsyncTask(ObjectCategories objectCategories, ObjectCategories objectCategories2, ObjectCategories objectCategories3, ObjectProducts objectProducts){
         this.objectCategories = objectCategories;
         this.objectCategories2 = objectCategories2;
         this.objectCategories3 = objectCategories3;
+        this.objectProducts = objectProducts;
     }
 
     @Override
@@ -45,6 +50,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
         insertCategory(objectCategories);
         insertCategory(objectCategories2);
         insertCategory(objectCategories3);
+        insertProduct(objectProducts);
         return null;
     }
 
@@ -135,6 +141,96 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
         }
     }
+
+    private void insertProduct(ObjectProducts objectProducts) {
+        if(objectProductsApi == null){
+            // Only do this once
+            ObjectProductsApi.Builder builder = new ObjectProductsApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectProductsApi = builder.build();
+
+        }
+
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(objectProducts != null){
+                objectProductsApi.insert(objectProducts).execute();
+                Log.i(TAG, "insert objectCategories");
+            }
+
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
+
+
+    private void deleteProducts(ObjectProducts objectProducts) {
+        if (objectProductsApi == null) {
+            // Only do this once
+            ObjectProductsApi.Builder builder = new ObjectProductsApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null)
+                    .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                        @Override
+                        public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                            abstractGoogleClientRequest.setDisableGZipContent(true);
+                        }
+                    });
+            objectProductsApi = builder.build();
+        }
+
+        try {
+
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if (objectProducts != null) {
+                objectProductsApi.remove(objectProducts.getId()).execute();
+                Log.i(TAG, "remove objectProducts");
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    private void updateProducts (ObjectProducts objectProducts) {
+        if(objectProductsApi == null){
+            // Only do this once
+            ObjectProductsApi.Builder builder = new ObjectProductsApi.Builder(AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(), null).setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                @Override
+                public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                    abstractGoogleClientRequest.setDisableGZipContent(true);
+                }
+            });
+            objectProductsApi = builder.build();
+
+        }
+
+        try{
+            // Call here the wished methods on the Endpoints
+            // For instance insert
+            if(objectProducts != null){
+                objectProductsApi.update(objectProducts.getId(), objectProducts).execute();
+                Log.i(TAG, "update objectProducts");
+            }
+
+
+        } catch (IOException e){
+            Log.e(TAG, e.toString());
+
+        }
+    }
+
+
+
 }
 
 

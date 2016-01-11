@@ -18,8 +18,8 @@ import com.androidprojects.inventaireii.db.adapter.ChangeDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
-import com.example.myapplication.backend.objectCategoriesApi.model.*;
 import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
+import com.example.myapplication.backend.objectProductsApi.model.ObjectProducts;
 
 
 import java.util.ArrayList;
@@ -155,8 +155,9 @@ public class MainActivity extends AppCompatActivity {
                 ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(3);
                 ObjectCategories objectCategory2 = categoryDataSource.getCategoryByIdSync(2);
                 ObjectCategories objectCategory3 = categoryDataSource.getCategoryByIdSync(1);
+                ObjectProducts objectProducts= productDataSource.getProductByIdSync(1);
 
-                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory, objectCategory2, objectCategory3);
+                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectCategory, objectCategory2, objectCategory3, objectProducts);
 
                endpointsAsyncTask.execute();
                 Toast toast = android.widget.Toast.makeText(getBaseContext(), R.string.Synchronized, android.widget.Toast.LENGTH_LONG);

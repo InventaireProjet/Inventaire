@@ -12,6 +12,7 @@ import com.androidprojects.inventaireii.ObjectStock;
 import com.androidprojects.inventaireii.db.InventoryContract;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,7 +169,7 @@ public class ProductDataSource {
 
     //Update a product
 
-   public int updateProduct(ObjectProducts product) {
+    public int updateProduct(ObjectProducts product) {
         ContentValues values = new ContentValues();
         values.put(InventoryContract.ProductEntry.KEY_ART_NB, product.getArtNb());
         values.put(InventoryContract.ProductEntry.KEY_NAME, product.getName());
@@ -180,7 +181,7 @@ public class ProductDataSource {
             categoryId = product.getCategory().getId();
         values.put(InventoryContract.ProductEntry.KEY_CATEGORY_ID, categoryId);
 
-       // save this update in the changes table
+        // save this update in the changes table
         changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_PRODUCTS,
                 product.getId(), ObjectChange.TypeOfChange.updateObject));
 
@@ -207,4 +208,45 @@ public class ProductDataSource {
                 new String[]{String.valueOf(product.getId())});
 
     }
+// Get product by id for synchronization
+    public com.example.myapplication.backend.objectProductsApi.model.ObjectProducts getProductByIdSync(long id) {
+
+        com.example.myapplication.backend.objectProductsApi.model.ObjectProducts product = null;
+        String sql = "SELECT * FROM " + InventoryContract.ProductEntry.TABLE_PRODUCTS +
+                " WHERE " + InventoryContract.ProductEntry.KEY_ID + " = " + id;
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if (cursor!=null) {
+            cursor.moveToFirst();
+            product = getProductFromCursorSync(cursor);
+            cursor.close();
+        }
+
+        return product;
+
+    }
+
+    //For sync, another type of  ObjectProducts
+
+    private com.example.myapplication.backend.objectProductsApi.model.ObjectProducts getProductFromCursorSync(Cursor cursor) {
+        com.example.myapplication.backend.objectProductsApi.model.ObjectProducts product = new com.example.myapplication.backend.objectProductsApi.model.ObjectProducts();
+        product.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ID)));
+        product.setArtNb(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_ART_NB)));
+        product.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_NAME)));
+        product.setDescription(cursor.getString(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_DESCRIPTION)));
+        product.setPrice(cursor.getDouble(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_PRICE)));
+
+        // Get the category, if there is one (else KEY_CATEGORY_ID = 0)
+        int categoryId = cursor.getInt(cursor.getColumnIndex(InventoryContract.ProductEntry.KEY_CATEGORY_ID));
+        if (categoryId > 0) {
+            categoryDataSource = CategoryDataSource.getInstance(context);
+            com.example.myapplication.backend.objectProductsApi.model.ObjectCategories cat = categoryDataSource.getCategoryByIdSyncProd(categoryId);
+            product.setCategory(cat);
+        }
+
+
+        return product;
+    }
+
 }
