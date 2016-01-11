@@ -6,9 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.androidprojects.inventaireii.ObjectCategories;
 import com.androidprojects.inventaireii.ObjectChange;
 import com.androidprojects.inventaireii.db.InventoryContract.ChangeEntry;
 import com.androidprojects.inventaireii.db.SQLiteHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.androidprojects.inventaireii.ObjectChange.*;
 
@@ -17,6 +21,7 @@ public class ChangeDataSource {
     private static ChangeDataSource instance;
     private SQLiteDatabase db;
     private Context context;
+    private CategoryDataSource categoryDataSource;
 
     // Private constructor (Singleton)
     private ChangeDataSource (Context context) {
@@ -105,7 +110,7 @@ public class ChangeDataSource {
     }
 
     /**
-     * Find a change for one object (by table name and id)
+     * Get a change for one object (by table name and id)
      */
     private ObjectChange getChangeByObject(String tableName, long elementId) {
         ObjectChange change = null;
@@ -122,6 +127,79 @@ public class ChangeDataSource {
         return change;
     }
 
+    /**
+     * Get a list of a type of change for one table
+     * For example, all 'delete' from table 'Categories'
+     */
+    private ArrayList<ObjectChange> getChangesByTableAndTypeOfChange(String tableName, TypeOfChange typeOfChange) {
+        ArrayList<ObjectChange> changes = new ArrayList<ObjectChange>();
+        String sql = "SELECT * FROM " + ChangeEntry.TABLE_CHANGES
+                + " WHERE " + ChangeEntry.KEY_TABLE + " = '" + tableName + "'"
+                + " AND " + ChangeEntry.KEY_TYPE_OF_CHANGE + " = '" + typeOfChange.toString() + "';";
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                ObjectChange change = getChangeFromCursor(cursor);
+
+                changes.add(change);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        return changes;
+    }
+    /**
+     * Get all categories to update
+     */
+    public ArrayList<ObjectCategories> getCategoriesToUpdate() {
+        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
+        categoryDataSource = CategoryDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.updateObject);
+        for (ObjectChange change : changes) {
+            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
+        }
+        return categories;
+    }
+
+    /**
+     * Get all categories to insert
+     */
+    public ArrayList<ObjectCategories> getCategoriesToInsert() {
+        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
+        categoryDataSource = CategoryDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.insertObject);
+        for (ObjectChange change : changes) {
+            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
+        }
+        return categories;
+    }
+
+    /**
+     * Get all categories to delete
+     */
+    public ArrayList<ObjectCategories> getCategoriesToDelete() {
+        ArrayList<ObjectCategories> categories = new ArrayList<ObjectCategories>();
+        categoryDataSource = CategoryDataSource.getInstance(context);
+
+        // Get all lines in table 'changes'
+        ArrayList<ObjectChange> changes = getChangesByTableAndTypeOfChange(ObjectChange.TABLE_CATEGORIES, TypeOfChange.deleteObject);
+        for (ObjectChange change : changes) {
+            categories.add(categoryDataSource.getCategoryById(change.getElementId()));
+        }
+        return categories;
+    }
+
+
+
+    /**
+     * Get the change from the cursor
+     */
     private ObjectChange getChangeFromCursor(Cursor cursor) {
         ObjectChange change = new ObjectChange();
         change.setId(cursor.getInt(cursor.getColumnIndex(ChangeEntry.KEY_ID)));

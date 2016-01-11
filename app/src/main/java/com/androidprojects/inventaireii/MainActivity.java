@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidprojects.inventaireii.db.adapter.CategoryDataSource;
+import com.androidprojects.inventaireii.db.adapter.ChangeDataSource;
 import com.androidprojects.inventaireii.db.adapter.ProductDataSource;
 import com.androidprojects.inventaireii.db.adapter.StockDataSource;
 import com.androidprojects.inventaireii.Preferences.AppSettingsActivity;
@@ -21,6 +22,7 @@ import com.example.myapplication.backend.objectCategoriesApi.model.*;
 import com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     StockDataSource stockDataSource;
     ProductDataSource productDataSource;
     CategoryDataSource categoryDataSource;
+    ChangeDataSource changeDataSource;
     boolean popupWindowIsOn;
 
     // Declaration of views
@@ -56,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         stockDataSource = StockDataSource.getInstance(this);
         productDataSource = ProductDataSource.getInstance(this);
-categoryDataSource = CategoryDataSource.getInstance(this);
+        categoryDataSource = CategoryDataSource.getInstance(this);
+        changeDataSource = ChangeDataSource.getInstance(this);
+
         // Access by product
         txtProductAccess = (TextView) findViewById(R.id.txtProductAccess);
         txtProductAccess.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +152,6 @@ categoryDataSource = CategoryDataSource.getInstance(this);
 
             @Override
             public void onClick (View v){
-
                 ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(3);
                 ObjectCategories objectCategory2 = categoryDataSource.getCategoryByIdSync(2);
                 ObjectCategories objectCategory3 = categoryDataSource.getCategoryByIdSync(1);
