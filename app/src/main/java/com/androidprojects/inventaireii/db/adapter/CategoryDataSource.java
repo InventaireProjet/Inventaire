@@ -78,13 +78,13 @@ public class CategoryDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor!=null) {
-            cursor.moveToFirst();
-        }
+        com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories category = null;
 
-        com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories category = new com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories();
-        category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
-        category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
+        if (cursor.moveToFirst()) {
+            category = new com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories();
+            category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
+        }
         cursor.close();
         return category;
     }
@@ -98,13 +98,14 @@ public class CategoryDataSource {
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        if (cursor!=null) {
-            cursor.moveToFirst();
+        com.example.myapplication.backend.objectProductsApi.model.ObjectCategories category = null;
+
+        if (cursor.moveToFirst()) {
+            category = new com.example.myapplication.backend.objectProductsApi.model.ObjectCategories();
+            category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
         }
 
-        com.example.myapplication.backend.objectProductsApi.model.ObjectCategories category = new com.example.myapplication.backend.objectProductsApi.model.ObjectCategories();
-        category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
-        category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
         cursor.close();
         return category;
     }
