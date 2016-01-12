@@ -151,16 +151,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Creation of a synchronizing button
         buttonSynchronize = (Button) findViewById(R.id.buttonSynchronize);
 
+        //Set the action of the buttonSynchronize
         buttonSynchronize.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick (View v){
 
+                //Instatiation of the EndpointsAsyncTask by passing a context to it
                 EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(getBaseContext());
 
+                //Execution of the endpointsAsyncTask, all the methods are executed in background
                endpointsAsyncTask.execute();
+
+                //Little piece of information to the user
                 Toast toast = android.widget.Toast.makeText(getBaseContext(), R.string.Synchronized, android.widget.Toast.LENGTH_LONG);
                 toast.show();
 

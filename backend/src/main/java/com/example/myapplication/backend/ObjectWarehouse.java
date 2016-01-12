@@ -3,6 +3,12 @@ package com.example.myapplication.backend;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+
+/* Creation of the ObjectWarehouse Entity in the backend with its parameters, the same as in the
+corresponding table
+ */
+
+
 @Entity
 public class ObjectWarehouse {
 

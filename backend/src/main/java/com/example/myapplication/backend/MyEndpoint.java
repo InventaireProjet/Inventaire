@@ -15,6 +15,8 @@ import javax.inject.Named;
 /**
  * An endpoint class we are exposing
  */
+//Test class, we let it here as a souvenir...
+
 @Api(
         name = "myApi",
         version = "v1",

@@ -48,6 +48,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
     EndpointsAsyncTask(){}
 
+    //Creating the asynctask by simply giving a context to the ChangeDataSource
     EndpointsAsyncTask(Context context){
 
         changeDataSource = ChangeDataSource.getInstance(context);
@@ -55,6 +56,9 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
     }
 
+
+    /*All the 12 methods are called here by interrogating the changeDataSource for each catagory
+    * and each type of change, all the elements of the lists are sent one by one*/
     @Override
     protected List<ObjectCategories> doInBackground(Void... params) {
 
@@ -151,7 +155,9 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
         return null;
     }
-
+/*All the 12 following methods follow the same construction. Just note that the setGoogleUrl is not useful
+here, using it can cause a false redirection of the data which won't be transmitted to the cloud
+ */
     private void insertCategory(ObjectCategories objectCategories) {
         if(objectCategoriesApi == null){
 

@@ -208,7 +208,9 @@ public class ProductDataSource {
                 new String[]{String.valueOf(product.getId())});
 
     }
-// Get product by id for synchronization
+
+
+    //Transposition of find a category by Id for synchronization, retuning backend object being necessary
     public com.example.myapplication.backend.objectProductsApi.model.ObjectProducts getProductByIdSync(long id) {
 
         com.example.myapplication.backend.objectProductsApi.model.ObjectProducts product = null;
@@ -227,7 +229,7 @@ public class ProductDataSource {
 
     }
 
-    //For sync, another type of  ObjectProducts
+    //Transposition of the original method for synchronization, retuning backend object being necessary
 
     private com.example.myapplication.backend.objectProductsApi.model.ObjectProducts getProductFromCursorSync(Cursor cursor) {
         com.example.myapplication.backend.objectProductsApi.model.ObjectProducts product = new com.example.myapplication.backend.objectProductsApi.model.ObjectProducts();
