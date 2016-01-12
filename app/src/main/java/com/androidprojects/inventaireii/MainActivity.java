@@ -157,14 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick (View v){
-                ObjectCategories objectCategory = categoryDataSource.getCategoryByIdSync(3);
-                ObjectCategories objectCategory2 = categoryDataSource.getCategoryByIdSync(2);
-                ObjectCategories objectCategory3 = categoryDataSource.getCategoryByIdSync(1);
-                ObjectProducts objectProducts= productDataSource.getProductByIdSync(1);
-                ObjectWarehouse objectWarehouse = warehouseDataSource.getWarehouseByIdSync(1);
-                com.example.myapplication.backend.objectStockApi.model.ObjectStock objectStock = stockDataSource.getStockByIdSync(2);
 
-                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(objectStock, objectWarehouse);
+                EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask(getBaseContext());
 
                endpointsAsyncTask.execute();
                 Toast toast = android.widget.Toast.makeText(getBaseContext(), R.string.Synchronized, android.widget.Toast.LENGTH_LONG);
