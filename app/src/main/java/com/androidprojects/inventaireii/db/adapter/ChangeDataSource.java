@@ -198,7 +198,15 @@ public class ChangeDataSource {
 
         // Get corresponding categories
         for (ObjectChange change : changes) {
-            categories.add(categoryDataSource.getCategoryByIdSync(change.getElementId()));
+            ObjectCategories category;
+            // if it's a deleted category, it is no more in the DB ! But we need only its id
+            if (typeOfChange == TypeOfChange.deleteObject) {
+                category = new ObjectCategories();
+                category.setId(change.getElementId());
+            } else {
+                category = categoryDataSource.getCategoryByIdSync(change.getElementId());
+            }
+            categories.add(category);
         }
 
         return categories;
@@ -216,7 +224,15 @@ public class ChangeDataSource {
 
         // Get corresponding warehouses
         for (ObjectChange change : changes) {
-            warehouses.add(warehouseDataSource.getWarehouseByIdSync(change.getElementId()));
+            ObjectWarehouse warehouse;
+            // if it's a deleted object, it is no more in the DB ! But we need only its id
+            if (typeOfChange == TypeOfChange.deleteObject) {
+                warehouse = new ObjectWarehouse();
+                warehouse.setId(change.getElementId());
+            } else {
+                warehouse = warehouseDataSource.getWarehouseByIdSync(change.getElementId());
+            }
+            warehouses.add(warehouse);
         }
 
         return warehouses;
@@ -234,7 +250,15 @@ public class ChangeDataSource {
 
         // Get corresponding products
         for (ObjectChange change : changes) {
-            products.add(productDataSource.getProductByIdSync(change.getElementId()));
+            ObjectProducts product;
+            // if it's a deleted product, it is no more in the DB ! But we need only its id
+            if (typeOfChange == TypeOfChange.deleteObject) {
+                product = new ObjectProducts();
+                product.setId(change.getElementId());
+            } else {
+                product = productDataSource.getProductByIdSync(change.getElementId());
+            }
+            products.add(product);
         }
 
         return products;
@@ -252,7 +276,15 @@ public class ChangeDataSource {
 
         // Get corresponding products
         for (ObjectChange change : changes) {
-            stocks.add(stockDataSource.getStockByIdSync(change.getElementId()));
+            ObjectStock stock;
+            // if it's a deleted stock, it is no more in the DB ! But we need only its id
+            if (typeOfChange == TypeOfChange.deleteObject) {
+                stock = new ObjectStock();
+                stock.setId(change.getElementId());
+            } else {
+                stock = stockDataSource.getStockByIdSync(change.getElementId());
+            }
+            stocks.add(stock);
         }
 
         return stocks;
