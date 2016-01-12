@@ -146,6 +146,9 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
             deleteStock(stock);
         }
 
+
+        changeDataSource.deleteAllChanges();
+
         return null;
     }
 
