@@ -80,7 +80,7 @@ public class ChangeDataSource {
 
                 // if the mention is a 'insert', we just have to suppress this 'insert'
                 // the object will never be created in the cloud
-                if (existingChange.getTypeOfChange().equals(TypeOfChange.insertObject)) {
+                if (existingChange != null && existingChange.getTypeOfChange().equals(TypeOfChange.insertObject)) {
                     deleteChange(existingChange.getId());
                     break;
                 }
@@ -88,7 +88,7 @@ public class ChangeDataSource {
                 // if the mention is a 'update', we don't need any more to update, so we
                 // suppress this mention.
                 // we don't break because we have to add the 'delete' line.
-                if (existingChange.getTypeOfChange().equals(TypeOfChange.updateObject)) {
+                if (existingChange != null && existingChange.getTypeOfChange().equals(TypeOfChange.updateObject)) {
                     deleteChange(existingChange.getId());
                 }
 
