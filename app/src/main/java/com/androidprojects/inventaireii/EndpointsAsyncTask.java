@@ -253,7 +253,7 @@ public class EndpointsAsyncTask extends AsyncTask<Void, Void, List<ObjectCategor
 
             if(objectProducts != null){
                 objectProductsApi.insert(objectProducts).execute();
-                Log.i(TAG, "insert objectCategories");
+                Log.i(TAG, "insert objectProduct");
             }
 
 
