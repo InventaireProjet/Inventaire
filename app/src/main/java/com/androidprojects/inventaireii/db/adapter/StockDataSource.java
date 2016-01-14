@@ -89,36 +89,6 @@ public class StockDataSource {
         return stock;
     }
 
-    /* Find a stock by Id for synchronization */
-
-    public com.example.myapplication.backend.objectStockApi.model.ObjectStock getStockByIdSync (long id) {
-        String sql = "SELECT * FROM " + InventoryContract.StockEntry.TABLE_STOCKS
-                + " WHERE " + InventoryContract.ProductEntry.KEY_ID + " = " + id;
-
-        Cursor cursor = this.db.rawQuery(sql, null);
-
-        com.example.myapplication.backend.objectStockApi.model.ObjectStock stock = null;
-
-        if (cursor.moveToFirst()) {
-            stock = new com.example.myapplication.backend.objectStockApi.model.ObjectStock();
-            stock.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
-            stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
-            stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED)) > 0);
-            stock.setWarehouseID(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID)));
-            stock.setProductID(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID)));
-            /*
-            // get the Warehouse
-            int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
-            ObjectWarehouse warehouse = warehouseDataSource.getWarehouseById(warehouseId);
-            stock.setWarehouse(warehouse);
-
-            // get the Product
-            int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
-            ObjectProducts product = productDataSource.getProductById(productId);
-            stock.setProduct(product);*/
-        }
-        return stock;
-    }
 
 
     /* Get all stocks of a product */
@@ -355,7 +325,10 @@ public class StockDataSource {
     }
 
 
-    public com.example.myapplication.backend.objectStockApi.model.ObjectStock getStockByIdSync(int id) {
+
+    /* Find a stock by Id for synchronization */
+
+    public com.example.myapplication.backend.objectStockApi.model.ObjectStock getStockByIdSync (long id) {
         String sql = "SELECT * FROM " + InventoryContract.StockEntry.TABLE_STOCKS
                 + " WHERE " + InventoryContract.ProductEntry.KEY_ID + " = " + id;
 
@@ -368,18 +341,12 @@ public class StockDataSource {
             stock.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_ID)));
             stock.setQuantity(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_QUANTITY)));
             stock.setControlled(cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_CONTROLLED)) > 0);
+            stock.setWarehouseID(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID)));
+            stock.setProductID(cursor.getLong(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID)));
 
-            // get the Warehouse
-            int warehouseId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_WAREHOUSE_ID));
-            stock.setWarehouseID((long) warehouseId);
-
-            // get the Product
-            int productId = cursor.getInt(cursor.getColumnIndex(InventoryContract.StockEntry.KEY_PRODUCT_ID));
-            stock.setProductID((long) productId);
         }
         return stock;
-
-
-
     }
+
+
 }

@@ -5,6 +5,12 @@ import com.googlecode.objectify.annotation.Id;
 
 import java.util.ArrayList;
 
+
+
+/* Creation of the ObjectProducts Entity in the backend with its parameters, the same as in the
+corresponding table
+ */
+
 @Entity
 public class ObjectProducts {
 

@@ -70,48 +70,6 @@ public class CategoryDataSource {
     }
 
 
-    //Find a category by Id for synchronization
-
-    public com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories getCategoryByIdSync (long id) {
-        String sql = "SELECT * FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES +
-                " WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + id;
-
-        Cursor cursor = this.db.rawQuery(sql, null);
-
-        com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories category = null;
-
-        if (cursor.moveToFirst()) {
-            category = new com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories();
-            category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
-            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
-        }
-        cursor.close();
-        return category;
-    }
-
-
-    //Find a category by Id for synchronization with products from backend
-
-    public com.example.myapplication.backend.objectProductsApi.model.ObjectCategories getCategoryByIdSyncProd (long id) {
-        String sql = "SELECT * FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES +
-                " WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + id;
-
-        Cursor cursor = this.db.rawQuery(sql, null);
-
-        com.example.myapplication.backend.objectProductsApi.model.ObjectCategories category = null;
-
-        if (cursor.moveToFirst()) {
-            category = new com.example.myapplication.backend.objectProductsApi.model.ObjectCategories();
-            category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
-            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
-        }
-
-        cursor.close();
-        return category;
-    }
-
-
-
 
 
     // Get all categories
@@ -170,5 +128,55 @@ public class CategoryDataSource {
         changeDataSource.createChange(new ObjectChange(ObjectChange.TABLE_CATEGORIES, id, ObjectChange.TypeOfChange.deleteObject));
 
     }
+
+
+//Transposition of find a category by Id for synchronization, retuning backend object being necessary
+
+    public com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories getCategoryByIdSync (long id) {
+        String sql = "SELECT * FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES +
+                " WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + id;
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories category = null;
+
+        if (cursor.moveToFirst()) {
+            category = new com.example.myapplication.backend.objectCategoriesApi.model.ObjectCategories();
+            category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
+        }
+        cursor.close();
+        return category;
+    }
+
+
+    /*Find a category by Id for synchronization with products from backend, the change is in the type of object returned.
+    It is used by the backend ObjectProducts that have an ObjectCategories as a parameter.
+     */
+
+    public com.example.myapplication.backend.objectProductsApi.model.ObjectCategories getCategoryByIdSyncProd (long id) {
+        String sql = "SELECT * FROM " + InventoryContract.CategorieEntry.TABLE_CATEGORIES +
+                " WHERE " + InventoryContract.CategorieEntry.KEY_ID + " = " + id;
+
+        Cursor cursor = this.db.rawQuery(sql, null);
+
+        com.example.myapplication.backend.objectProductsApi.model.ObjectCategories category = null;
+
+        if (cursor.moveToFirst()) {
+            category = new com.example.myapplication.backend.objectProductsApi.model.ObjectCategories();
+            category.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_ID)));
+            category.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.CategorieEntry.KEY_NAME)));
+        }
+
+        cursor.close();
+        return category;
+    }
+
+
+
+
+
+
+
 
 }

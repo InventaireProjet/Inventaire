@@ -88,34 +88,6 @@ public class WarehouseDataSource {
         return warehouse;
     }
 
-    // Find a warehouse by id for synchronization
-
-    public com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse getWarehouseByIdSync (long id) {
-        String sql = "SELECT * FROM " + InventoryContract.WarehouseEntry.TABLE_WAREHOUSES +
-                " WHERE " + InventoryContract.WarehouseEntry.KEY_ID + " = " + id;
-
-        Cursor cursor = this.db.rawQuery(sql, null);
-
-        com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse warehouse
-                = new com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse();
-
-        if (cursor!=null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-
-            warehouse.setId(cursor.getLong(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ID)));
-            warehouse.setName(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_NAME)));
-            warehouse.setStockCapacity(cursor.getInt(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CAPACITY)));
-            warehouse.setTelNumber(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_PHONE_NUMBER)));
-            warehouse.setStreet(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_STREET)));
-            warehouse.setStreetNumber(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_STREET_NUMBER)));
-            warehouse.setLocation(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_CITY)));
-            warehouse.setPostalCode(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_ZIPCODE)));
-            warehouse.setCountry(cursor.getString(cursor.getColumnIndex(InventoryContract.WarehouseEntry.KEY_COUNTRY)));
-            cursor.close();
-        }
-
-        return warehouse;
-    }
 
 
 
@@ -193,14 +165,16 @@ public class WarehouseDataSource {
     }
 
 
-    public com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse getWarehouseByIdSync(int id) {
+    // Find a warehouse by id for synchronization
 
+    public com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse getWarehouseByIdSync (long id) {
         String sql = "SELECT * FROM " + InventoryContract.WarehouseEntry.TABLE_WAREHOUSES +
                 " WHERE " + InventoryContract.WarehouseEntry.KEY_ID + " = " + id;
 
         Cursor cursor = this.db.rawQuery(sql, null);
 
-        com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse warehouse = new com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse();
+        com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse warehouse
+                = new com.example.myapplication.backend.objectWarehouseApi.model.ObjectWarehouse();
 
         if (cursor!=null && cursor.getCount() > 0) {
             cursor.moveToFirst();
@@ -218,7 +192,7 @@ public class WarehouseDataSource {
         }
 
         return warehouse;
-
-
     }
+
+
 }
